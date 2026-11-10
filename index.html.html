@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Link Vault</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--card:#fff;--ink:#111;--sub:#777;--field:#f3f3f3;--line:#e6e6e6;--teal:#0d9488;--tealbg:#e0f0ee;--item:#f3f3f3;--chip:#f2f2f2;--shadow:rgba(13,148,136,.18);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--card:#1c1f1f;--ink:#f2f2f2;--sub:#9aa;--field:#2a2e2e;--line:#333;--teal:#14b8a6;--tealbg:#17302d;--item:#2a2e2e;--chip:#2f3434;--shadow:rgba(20,184,166,.2)}}
+:root[data-theme="dark"]{--card:#1c1f1f;--ink:#f2f2f2;--sub:#9aa;--field:#2a2e2e;--line:#333;--teal:#14b8a6;--tealbg:#17302d;--item:#2a2e2e;--chip:#2f3434;--shadow:rgba(20,184,166,.2)}
+*{box-sizing:border-box}
+html,body{margin:0;background:transparent;font-family:Inter,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink)}
+body{background:var(--card)}
+.card{max-width:440px;margin:0 auto;padding:20px;background:var(--card)}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.head h1{font-family:Fraunces,Georgia,serif;font-size:21px;margin:0;flex:1}
+.badge{background:var(--tealbg);color:var(--teal);font-family:Fraunces,Georgia,serif;font-weight:700;font-size:13px;min-width:34px;text-align:center;padding:5px 10px;border-radius:99px}
+input,textarea{width:100%;border:0;background:var(--field);color:var(--ink);border-radius:12px;padding:11px 14px;font:inherit;font-size:13px;outline:none}
+input:focus,textarea:focus{box-shadow:0 0 0 2px var(--teal)}
+.row{display:flex;gap:10px;margin-top:10px}
+.add{background:var(--teal);color:#fff;border:0;border-radius:12px;font:700 13px Inter,sans-serif;padding:0 22px;cursor:pointer}
+.cats{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.cat{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--chip);cursor:pointer;font-size:15px;padding:0}
+.cat.on{border:2px solid var(--teal);box-shadow:0 0 0 2px var(--tealbg)}
+.chips{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.chip{height:26px;min-width:34px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:var(--chip);color:var(--ink);font:700 11px Inter,sans-serif;cursor:pointer}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;align-items:center;gap:12px;background:var(--item);border:1px solid var(--line);border-radius:14px;padding:9px 10px}
+.ico{width:30px;height:30px;border-radius:8px;background:var(--tealbg);display:grid;place-items:center;font-size:15px;flex:none}
+.txt{flex:1;min-width:0}
+.t{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d{font-size:11px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb{width:26px;height:26px;border-radius:50%;border:0;background:var(--tealbg);color:var(--teal);cursor:pointer;font-size:12px;text-decoration:none;display:grid;place-items:center;flex:none}
+.empty{text-align:center;color:var(--sub);font-size:12px;padding:16px 0}
+.export{width:100%;margin-top:12px;border:1.5px dashed var(--teal);background:var(--tealbg);color:var(--teal);font:700 13px Inter,sans-serif;border-radius:12px;padding:11px;cursor:pointer}
+.panel{display:none;margin-top:10px}
+.panel.show{display:block}
+.panel textarea{height:110px;resize:vertical;font-size:11px}
+.panel .row button{flex:1;padding:9px}
+.foot{display:flex;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.lab{flex:1;font-size:9.5px;letter-spacing:.06em;font-weight:600;color:var(--sub);text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.lab i{width:6px;height:6px;border-radius:50%;background:var(--teal)}
+.fb{width:30px;height:30px;border-radius:50%;border:0;background:var(--tealbg);color:var(--teal);margin-left:8px;cursor:pointer;font-size:14px}
+.lab i.busy{background:#f59e0b}.lab i.err{background:#ef4444}.lab i.off{background:#aaa}
+.cfg label{display:block;font-size:11px;color:var(--sub);margin:8px 0 4px}
+.cfg .row button{flex:1;padding:9px}
+.msg{font-size:11px;color:var(--teal);margin-top:8px;min-height:14px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="head">
+    <svg width="28" height="24" viewBox="0 0 28 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs><path d="M2 3h8l3 3h13v15H2z" fill="url(#g)"/></svg>
+    <h1>Link Vault</h1><span class="badge" id="count">0</span>
+  </div>
+  <input id="url" placeholder="Paste a URL..." inputmode="url" autocomplete="off">
+  <div class="row"><input id="title" placeholder="Title (optional)"><button class="add" id="add">Add</button></div>
+  <div class="cats" id="cats"></div>
+  <div class="chips" id="chips"></div>
+  <div class="list" id="list"></div>
+  <button class="export" id="export">↓ Export</button>
+  <div class="panel" id="panel">
+    <textarea id="box" placeholder="Export / Import (JSON)"></textarea>
+    <div class="row"><button class="add" id="copy">Copy</button><button class="add" id="imp">Import</button></div>
+  </div>
+  <div class="panel cfg" id="cfg">
+    <label>GitHub username (깃허브 아이디)</label><input id="gu" autocomplete="off" autocapitalize="off">
+    <label>Repository name (저장소 이름)</label><input id="gr" autocomplete="off" autocapitalize="off" placeholder="link-vault">
+    <label>Token (토큰 · 비밀번호처럼 보관)</label><input id="gt" type="password" autocomplete="off">
+    <div class="row"><button class="add" id="gsave">Save &amp; Sync</button><button class="add" id="gout">Disconnect</button><button class="add" id="gtheme">Theme</button></div>
+  </div>
+  <div class="msg" id="msg"></div>
+  <div class="foot">
+    <span class="lab"><i id="dot" class="off"></i>Link Vault · Bookmarks</span>
+    <button class="fb" id="bImp" title="Import">⤒</button>
+    <button class="fb" id="bLinks" title="Copy all links">🔗</button>
+    <button class="fb" id="bTheme" title="Theme">⚙</button>
+  </div>
+</div>
+<script>
+var CATS=[["ticket","🎟️"],["news","📰"],["video","🎬"],["music","🎵"],["docs","📚"],["work","💼"],["tools","🛠️"],["idea","💡"]];
+var KEY="linkvault:v1",CKEY="linkvault:cfg",PATH="links.json";
+var S={items:[],sel:"news",filter:"all",theme:""};
+var CFG={user:"",repo:"",token:""};
+try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(p&&Array.isArray(p.items))S.items=p.items;if(p&&p.theme)S.theme=p.theme}}catch(e){}
+try{var c=localStorage.getItem(CKEY);if(c){var q=JSON.parse(c);if(q)CFG={user:q.user||"",repo:q.repo||"",token:q.token||""}}}catch(e){}
+if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);
+function save(){try{localStorage.setItem(KEY,JSON.stringify({items:S.items,theme:S.theme}))}catch(e){}}
+function saveCfg(){try{localStorage.setItem(CKEY,JSON.stringify(CFG))}catch(e){}}
+function $(id){return document.getElementById(id)}
+function icon(c){for(var i=0;i<CATS.length;i++)if(CATS[i][0]===c)return CATS[i][1];return "🔗"}
+function host(u){try{return new URL(u).hostname.replace(/^www\./,"")}catch(e){return u}}
+function say(m){$("msg").textContent=m;setTimeout(function(){$("msg").textContent=""},4000)}
+function btn(cls,txt,fn){var b=document.createElement("button");b.className=cls;b.textContent=txt;b.onclick=fn;return b}
+function synced(){return !!(CFG.user&&CFG.repo&&CFG.token)}
+function setDot(k){$("dot").className=k}
+function enc(t){return btoa(unescape(encodeURIComponent(t)))}
+function dec(b){return decodeURIComponent(escape(atob(b.replace(/\n/g,""))))}
+function url(get){return "https://api.github.com/repos/"+encodeURIComponent(CFG.user)+"/"+encodeURIComponent(CFG.repo)+"/contents/"+PATH+(get?"?t="+Date.now():"")}
+function hdr(){return{"Authorization":"Bearer "+CFG.token,"Accept":"application/vnd.github+json"}}
+function errText(e){var m=e&&e.message||"";
+  if(m==="401")return "Token is wrong or expired (토큰 확인)";
+  if(m==="403")return "No permission: token needs Contents Read and write";
+  if(m==="404")return "Username or repo name not found (이름 확인)";
+  return "Sync failed ("+(m||"network")+")"}
+async function remoteGet(){
+  var r=await fetch(url(true),{headers:hdr(),cache:"no-store"});
+  if(r.status===404)return{items:[],sha:null};
+  if(!r.ok)throw new Error(String(r.status));
+  var j=await r.json();var d=JSON.parse(dec(j.content));
+  return{items:Array.isArray(d)?d:(d.items||[]),sha:j.sha};
+}
+async function remoteApply(fn,tries){
+  var g=await remoteGet();
+  var items=fn(g.items.slice());
+  var body={message:"Update links",content:enc(JSON.stringify({items:items},null,1))};
+  if(g.sha)body.sha=g.sha;
+  var r=await fetch(url(false),{method:"PUT",headers:hdr(),body:JSON.stringify(body)});
+  if((r.status===409||r.status===422)&&tries<2)return remoteApply(fn,tries+1);
+  if(!r.ok)throw new Error(String(r.status));
+  return items;
+}
+var chain=Promise.resolve();
+function op(fn){
+  S.items=fn(S.items.slice());save();render();
+  if(!synced())return;
+  setDot("busy");
+  chain=chain.then(function(){return remoteApply(fn,0)}).then(function(items){S.items=items;save();render();setDot("")}).catch(function(e){setDot("err");say(errText(e))});
+}
+function pull(){
+  if(!synced()){setDot("off");return}
+  setDot("busy");
+  chain=chain.then(function(){return remoteGet()}).then(function(g){S.items=g.items;save();render();setDot("")}).catch(function(e){setDot("err");say(errText(e))});
+}
+function union(a,b){var have={};a.forEach(function(i){have[i.url]=1});b.forEach(function(i){if(!have[i.url]){a.push(i);have[i.url]=1}});return a}
+function render(){
+  $("count").textContent=S.items.length;
+  var cats=$("cats");cats.textContent="";
+  CATS.forEach(function(c){cats.appendChild(btn("cat"+(S.sel===c[0]?" on":""),c[1],function(){S.sel=c[0];render()}))});
+  var chips=$("chips");chips.textContent="";
+  chips.appendChild(btn("chip"+(S.filter==="all"?" on":""),"All",function(){S.filter="all";render()}));
+  var used={};S.items.forEach(function(i){used[i.cat]=1});
+  CATS.forEach(function(c){if(used[c[0]])chips.appendChild(btn("chip"+(S.filter===c[0]?" on":""),c[1],function(){S.filter=c[0];render()}))});
+  if(S.filter!=="all"&&!used[S.filter])S.filter="all";
+  var list=$("list");list.textContent="";
+  var shown=S.items.filter(function(i){return S.filter==="all"||i.cat===S.filter});
+  if(!shown.length){var e=document.createElement("div");e.className="empty";e.textContent="No links yet";list.appendChild(e)}
+  shown.forEach(function(it){
+    var row=document.createElement("div");row.className="item";
+    var ic=document.createElement("div");ic.className="ico";ic.textContent=icon(it.cat);
+    var tx=document.createElement("div");tx.className="txt";
+    var t=document.createElement("div");t.className="t";t.textContent=it.title;
+    var d=document.createElement("div");d.className="d";d.textContent=host(it.url);
+    tx.appendChild(t);tx.appendChild(d);
+    var a=document.createElement("a");a.className="rb";a.textContent="↗";a.href=it.url;a.target="_blank";a.rel="noopener noreferrer";
+    var x=btn("rb","✕",function(){op(function(arr){return arr.filter(function(i){return i.id!==it.id})})});
+    row.appendChild(ic);row.appendChild(tx);row.appendChild(a);row.appendChild(x);list.appendChild(row);
+  });
+}
+function add(){
+  var u=$("url").value.trim();if(!u)return;
+  if(!/^https?:\/\//i.test(u))u="https://"+u;
+  try{new URL(u)}catch(e){say("Invalid URL");return}
+  var it={id:Date.now()+""+Math.floor(Math.random()*1000),url:u,title:$("title").value.trim()||host(u),cat:S.sel};
+  $("url").value="";$("title").value="";
+  op(function(a){return union(a.slice().reverse(),[it]).reverse()});
+}
+function copyText(s){
+  if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(s).then(function(){return true},function(){return false})}
+  return Promise.resolve(false);
+}
+function show(id){["panel","cfg"].forEach(function(p){$(p).classList.toggle("show",p===id&&!$(p).classList.contains("show"))})}
+$("add").onclick=add;
+$("url").onkeydown=$("title").onkeydown=function(e){if(e.key==="Enter")add()};
+$("export").onclick=function(){
+  var s=JSON.stringify(S.items.map(function(i){return{title:i.title,url:i.url,cat:i.cat}}),null,1);
+  $("box").value=s;$("cfg").classList.remove("show");$("panel").classList.add("show");
+  copyText(s).then(function(ok){say(ok?"Copied to clipboard":"Select all and copy the text above")});
+};
+$("copy").onclick=function(){copyText($("box").value).then(function(ok){say(ok?"Copied":"Select all and copy manually")})};
+$("imp").onclick=function(){
+  try{
+    var arr=JSON.parse($("box").value);if(!Array.isArray(arr))throw 0;
+    var add=arr.filter(function(r){return r&&r.url}).map(function(r,n){return{id:Date.now()+""+n+Math.floor(Math.random()*1000),url:r.url,title:r.title||host(r.url),cat:r.cat||"news"}});
+    op(function(a){return union(a,add)});say("Imported");
+  }catch(e){say("Paste exported JSON first")}
+};
+$("bImp").onclick=function(){$("box").value="";$("cfg").classList.remove("show");$("panel").classList.add("show");$("box").focus()};
+$("bLinks").onclick=function(){copyText(S.items.map(function(i){return i.title+" - "+i.url}).join("\n")).then(function(ok){say(ok?"All links copied":"Copy failed")})};
+$("bTheme").onclick=function(){
+  $("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;
+  $("panel").classList.remove("show");$("cfg").classList.toggle("show");
+};
+$("gtheme").onclick=function(){
+  var dark=document.documentElement.getAttribute("data-theme")==="dark"||(!S.theme&&window.matchMedia("(prefers-color-scheme: dark)").matches);
+  S.theme=dark?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save();
+};
+$("gsave").onclick=function(){
+  CFG={user:$("gu").value.trim(),repo:$("gr").value.trim(),token:$("gt").value.trim()};saveCfg();
+  if(!synced()){setDot("off");say("Fill in all three boxes");return}
+  var snap=S.items.slice();
+  op(function(a){return union(a,snap)});
+  $("cfg").classList.remove("show");
+};
+$("gout").onclick=function(){CFG={user:"",repo:"",token:""};saveCfg();$("gu").value=$("gr").value=$("gt").value="";setDot("off");say("Disconnected (this device only)")};
+document.addEventListener("visibilitychange",function(){if(!document.hidden)pull()});
+render();pull();
+</script>
+</body>
+</html>
