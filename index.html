@@ -69,6 +69,7 @@ input:focus,textarea:focus{box-shadow:0 0 0 2px var(--teal)}
     <label>GitHub username (깃허브 아이디)</label><input id="gu" autocomplete="off" autocapitalize="off">
     <label>Repository name (저장소 이름)</label><input id="gr" autocomplete="off" autocapitalize="off" placeholder="link-vault">
     <label>Token (토큰 · 비밀번호처럼 보관)</label><input id="gt" type="password" autocomplete="off">
+    <button class="chip" id="gshow" style="margin-top:8px">Show / Hide token</button>
     <div class="row"><button class="add" id="gsave">Save &amp; Sync</button><button class="add" id="gout">Disconnect</button><button class="add" id="gtheme">Theme</button></div>
   </div>
   <div class="msg" id="msg"></div>
@@ -86,6 +87,7 @@ var S={items:[],sel:"news",filter:"all",theme:""};
 var CFG={user:"",repo:"",token:""};
 try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(p&&Array.isArray(p.items))S.items=p.items;if(p&&p.theme)S.theme=p.theme}}catch(e){}
 try{var c=localStorage.getItem(CKEY);if(c){var q=JSON.parse(c);if(q)CFG={user:q.user||"",repo:q.repo||"",token:q.token||""}}}catch(e){}
+CFG.token=cleanTok(CFG.token);CFG.user=cleanName(CFG.user);CFG.repo=cleanName(CFG.repo);
 if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);
 function save(){try{localStorage.setItem(KEY,JSON.stringify({items:S.items,theme:S.theme}))}catch(e){}}
 function saveCfg(){try{localStorage.setItem(CKEY,JSON.stringify(CFG))}catch(e){}}
@@ -94,6 +96,8 @@ function icon(c){for(var i=0;i<CATS.length;i++)if(CATS[i][0]===c)return CATS[i][
 function host(u){try{return new URL(u).hostname.replace(/^www\./,"")}catch(e){return u}}
 function say(m){$("msg").textContent=m;setTimeout(function(){$("msg").textContent=""},4000)}
 function btn(cls,txt,fn){var b=document.createElement("button");b.className=cls;b.textContent=txt;b.onclick=fn;return b}
+function cleanTok(t){t=String(t||"");var m=t.match(/(github_pat_|ghp_|gho_|ghu_|ghs_|ghr_)[A-Za-z0-9_]+/);return m?m[0]:t.replace(/[^\x21-\x7e]/g,"")}
+function cleanName(t){return String(t||"").replace(/[^A-Za-z0-9._-]/g,"")}
 function synced(){return !!(CFG.user&&CFG.repo&&CFG.token)}
 function setDot(k){$("dot").className=k}
 function enc(t){return btoa(unescape(encodeURIComponent(t)))}
@@ -101,7 +105,7 @@ function dec(b){return decodeURIComponent(escape(atob(b.replace(/\n/g,""))))}
 function url(get){return "https://api.github.com/repos/"+encodeURIComponent(CFG.user)+"/"+encodeURIComponent(CFG.repo)+"/contents/"+PATH+(get?"?t="+Date.now():"")}
 function hdr(){return{"Authorization":"Bearer "+CFG.token,"Accept":"application/vnd.github+json"}}
 function errText(e){var m=e&&e.message||"";
-  if(m==="401")return "Token is wrong or expired (토큰 확인)";
+  if(m==="401")return "Token rejected (토큰 확인). length "+CFG.token.length+" (normal 93), starts "+CFG.token.slice(0,11)+", ends ..."+CFG.token.slice(-4);
   if(m==="403")return "No permission: token needs Contents Read and write";
   if(m==="404")return "Username or repo name not found (이름 확인)";
   return "Sync failed ("+(m||"network")+")"}
@@ -197,8 +201,9 @@ $("gtheme").onclick=function(){
   var dark=document.documentElement.getAttribute("data-theme")==="dark"||(!S.theme&&window.matchMedia("(prefers-color-scheme: dark)").matches);
   S.theme=dark?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save();
 };
+$("gshow").onclick=function(){var i=$("gt");i.type=i.type==="password"?"text":"password"};
 $("gsave").onclick=function(){
-  CFG={user:$("gu").value.trim(),repo:$("gr").value.trim(),token:$("gt").value.trim()};saveCfg();
+  CFG={user:cleanName($("gu").value),repo:cleanName($("gr").value),token:cleanTok($("gt").value)};$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;saveCfg();
   if(!synced()){setDot("off");say("Fill in all three boxes");return}
   var snap=S.items.slice();
   op(function(a){return union(a,snap)});
