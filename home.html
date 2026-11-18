@@ -107,7 +107,7 @@ input:focus,textarea:focus{box-shadow:0 0 0 2px var(--teal)}
   </div>
   <div class="msg" id="msg"></div>
   <div class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Home Vault · Finder v3</span>
+    <span class="lab"><i id="dot" class="off"></i>Home Vault · Finder v4</span>
     <button class="fb" id="bCopy" title="목록 복사">🔗</button>
     <button class="fb" id="bCfg" title="설정">⚙</button>
   </div>
@@ -244,8 +244,10 @@ function renderTabs(){
 function hit(z,b,q){return (z.name+" "+b.name).toLowerCase().indexOf(q)>=0||b.items.some(function(i){return i.name.toLowerCase().indexOf(q)>=0})}
 function inputRow(key,ph,label,fn){
   var row=el("div","mini"),i=el("input");i.placeholder=ph;i.dataset.k=key;
-  var b=el("button",null,label);b.onclick=function(){fn(i.value.trim())};
-  i.onkeydown=function(e){if(e.key==="Enter")fn(i.value.trim())};
+  var b=el("button",null,label);
+  function go(){var v=i.value.trim();i.value="";fn(v)}
+  b.onclick=go;
+  i.onkeydown=function(e){if(e.key==="Enter")go()};
   row.appendChild(i);row.appendChild(b);return row}
 function renderRooms(){
   var R=$("rooms");R.textContent="";var q=S.q.toLowerCase();
