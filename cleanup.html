@@ -1161,6 +1161,28 @@ button{touch-action:manipulation}
   .chips{gap:8px}
   .gr{gap:3px}
 }
+
+/* ===== wide screens: use the space (2 columns), phones stay 1 column ===== */
+@media (min-width:860px){
+  body{padding:28px 24px 56px}
+  .card{max-width:1160px;padding:36px 40px}
+  .card>.tabs{max-width:560px}
+  #logv>.tabs{max-width:460px}
+  .top2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start;margin-bottom:24px}
+  .top2 .mission,.top2 .upto{margin-bottom:0}
+  #src{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+  #src .src{margin-bottom:0}
+  #src .addbox{grid-column:1/-1;margin-top:0}
+  #garden{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+  #garden .ghead,#garden .terrarium-stage,#garden .gcard:last-child{grid-column:1/-1}
+  #garden .gcard{margin-top:0}
+  .terrarium-svg{max-width:680px;margin:0 auto}
+  .mgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:1280px){
+  .card{max-width:1280px}
+  .mgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
 </style>
 </head>
 <body>
@@ -1176,8 +1198,8 @@ button{touch-action:manipulation}
     <button class="tab on" id="tC">정리</button>
     <button class="tab" id="tL">기록</button>
   </div>
-  <div class="mission" id="mission"></div>
-  <div class="upto" id="upto"></div>
+  <div class="top2" id="top2"><div class="mission" id="mission"></div>
+  <div class="upto" id="upto"></div></div>
   <div id="src"></div>
   <div id="logv" hidden></div>
   <div id="garden" hidden></div>
@@ -1209,7 +1231,7 @@ button{touch-action:manipulation}
   </div>
   <div class="msg" id="msg" role="status" aria-live="polite"></div>
   <div class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Clean Quest v12</span>
+    <span class="lab"><i id="dot" class="off"></i>Clean Quest v13</span>
     <button class="fb" id="bCfg" title="설정" aria-label="설정">⚙</button>
   </div>
 </div>
@@ -1468,6 +1490,7 @@ function render(){
   keep(function(){
     renderHero();
     var t=S.tab;
+    $("top2").hidden=t!=="clean";
     $("mission").hidden=t!=="clean";
     $("upto").hidden=t!=="clean";
     $("src").hidden=t!=="clean";
