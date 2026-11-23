@@ -306,7 +306,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   </div>
 
   <footer class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Cosmetic Vault v1.7</span>
+    <span class="lab"><i id="dot" class="off"></i>Cosmetic Vault v1.8</span>
     <button class="fb" id="bCopy" title="보관 현황 복사" aria-label="보관 현황 복사">🔗</button>
     <button class="fb" id="bCfg" title="설정" aria-label="설정">⚙</button>
   </footer>
@@ -323,7 +323,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 var KEY="cosmeticvault:v1",CKEY="homevault:cfg",FILE="cosmetic.json";   /* CKEY = Home Vault · Clean Quest 와 같은 연결 정보 */
 var CATS=[
   {id:"toner",label:"스킨/토너",icon:"💧"},{id:"serum",label:"세럼/앰플",icon:"✨"},{id:"cream",label:"크림/로션",icon:"🧴"},
-  {id:"mask",label:"마스크팩",icon:"🎭"},{id:"sun",label:"선케어",icon:"☀️"},{id:"clean",label:"클렌징",icon:"🫧"},{id:"etc",label:"메이크업/기타",icon:"💄"}];
+  {id:"mask",label:"마스크팩",icon:"🎭"},{id:"sun",label:"선케어",icon:"☀️"},{id:"clean",label:"클렌징",icon:"🫧"},
+  {id:"body",label:"바디",icon:"🛁"},{id:"hair",label:"헤어",icon:"💇"},   /* v1.8 */
+  {id:"etc",label:"메이크업/기타",icon:"💄"}];   /* etc 는 늘 맨 끝 (모르는 종류가 여기로) */
 var CAT_IDS=CATS.map(function(c){return c.id});
 var STATUS={active:"사용 중",stock:"쟁여둠",used:"다 쓴 것"};
 var REMAIN=["여유","절반 이하","거의 소진"];
