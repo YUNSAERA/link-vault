@@ -1,0 +1,30 @@
+{
+ "name": "Clean Quest",
+ "short_name": "Clean Quest",
+ "description": "디지털 정리 퀘스트",
+ "id": "./cleanup.html",
+ "start_url": "./cleanup.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#f5f6f8",
+ "theme_color": "#0f766e",
+ "lang": "ko",
+ "icons": [
+  {
+   "src": "cleanup-icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "cleanup-icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "cleanup-icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

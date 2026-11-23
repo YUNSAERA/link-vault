@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <title>Clean Quest</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- [신규] 홈 화면에 앱처럼 추가 -->
+<link rel="manifest" href="cleanup-manifest.json">
+<meta name="theme-color" content="#0f766e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Clean Quest">
+<link rel="apple-touch-icon" href="cleanup-icon-192.png">
+<link rel="icon" href="cleanup-icon-192.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;600;700&family=Gowun+Dodum&display=swap">
 <style>
 /* ==========================================================================
@@ -1255,9 +1263,37 @@ body.calm-embed .head .mark,body.calm-embed .mission-kicker,body.calm-embed .foo
 body.calm-embed .next-step-hint,body.calm-embed .empty-state,body.calm-embed .day-summary,body.calm-embed .next-unlock{background:transparent;border:1px solid var(--line);box-shadow:none}
 body.calm-embed .msg{box-shadow:0 4px 16px rgba(0,0,0,.18)}
 @media (max-width:540px){.status-pill,.revisit-btn{font-size:12px}.save-stamp{font-size:11px}}
+/* =====================================================================
+   [신규] v16 — 앱 전환 바 · Home Vault 집 정리 카드
+   ===================================================================== */
+.appnav{display:flex;justify-content:center;gap:6px;max-width:640px;margin:0 auto 14px}
+.appnav a{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 13px;border-radius:999px;background:var(--card);box-shadow:var(--shadow-sm);white-space:nowrap}
+.appnav a:hover{color:var(--ink)}
+.appnav a.on{background:var(--accent);color:var(--card)}
+.appnav .s{display:none}
+@media (max-width:420px){.appnav a{padding:7px 11px}.appnav .l{display:none}.appnav .s{display:inline}}
+@media (min-width:860px){.appnav{max-width:1160px;justify-content:flex-start}}
+@media (min-width:1280px){.appnav{max-width:1280px}}
+.homeq{background:var(--item);border-radius:22px;padding:20px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.homeq .hrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.homeq .hsum{font-size:14px;color:var(--sub);margin-top:4px}
+.homeq .hsum b{color:var(--ink)}
+.homeq .hev{display:flex;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.homeq .hev:last-child{border-bottom:0}
+.homeq .hev span{flex:1;min-width:0}
+.homeq .hev small{color:var(--muted);font-size:12.5px;flex:none}
+.homeq .hlink{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13.5px;font-weight:600;text-decoration:none}
+.homeq .hempty{font-size:14px;color:var(--sub);line-height:1.6;margin-top:6px}
+body.compact .homeq{padding:14px 16px;margin-bottom:12px}
 </style>
 </head>
 <body>
+<!-- [신규] 세 앱 오가기 -->
+<nav class="appnav" aria-label="앱 이동">
+  <a href="cleanup.html" class="on" aria-current="page">🫙 <span class="l">Clean Quest</span><span class="s">정리</span></a>
+  <a href="index.html">🗂️ <span class="l">Link Vault</span><span class="s">링크</span></a>
+  <a href="home.html">🏠 <span class="l">Home Vault</span><span class="s">우리집</span></a>
+</nav>
 <div class="card">
   <div class="head">
     <div class="mark" aria-hidden="true">🫙</div>
@@ -1274,6 +1310,7 @@ body.calm-embed .msg{box-shadow:0 4px 16px rgba(0,0,0,.18)}
   </div>
   <div class="top2" id="top2"><div class="mission" id="mission"></div>
   <div class="upto" id="upto"></div></div>
+  <div class="homeq" id="homeq"></div><!-- [신규] Home Vault 집 정리 -->
   <div id="src"></div>
   <div id="logv" hidden></div>
   <div id="garden" hidden></div>
@@ -1323,7 +1360,7 @@ body.calm-embed .msg{box-shadow:0 4px 16px rgba(0,0,0,.18)}
     <textarea id="jsonBox" placeholder="복원할 JSON을 여기에 붙여넣으세요"></textarea>
   </div>
   <div class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Clean Quest v15</span>
+    <span class="lab"><i id="dot" class="off"></i>Clean Quest v16</span>
     <span class="save-stamp" id="saveStamp"></span><!-- 저장·동기화 시각 -->
     <button class="fb" id="bCfg" title="설정" aria-label="설정">⚙</button>
   </div>
@@ -1559,10 +1596,12 @@ function op(fn,o){
     .catch(onSyncFail);
 }
 function pull(){
-  if(!synced()){setDot("off");return}
+  loadHomeLocal();   /* [신규] */
+  if(!synced()){setDot("off");render();return}
   setDot("busy");
   chain=chain.then(remoteGet)
     .then(function(g){if(g.d){S.d=g.d;S.lastSyncedAt=clock();save();render()}setDot("")})
+    .then(function(){return fetchHome().catch(function(){})})   /* [신규] 집 정리 기록 (실패해도 조용히) */
     .catch(onSyncFail);
 }
 
@@ -1692,7 +1731,7 @@ function xp(){
       var dm=(S.d.days||{})[s.id]||{};Object.keys(dm).forEach(function(k){if(dm[k]===2)x+=1});
     }
   });
-  return x;
+  return x+homeEvents().length*HOME_XP;   /* [수정] 집 정리 경험치 */
 }
 function lvOf(x){return Math.floor(x/100)+1}
 function lvl(){return lvOf(xp())}
@@ -1727,15 +1766,39 @@ function gstats(){
   return o;
 }
 
+/* --- [신규] Home Vault 집 정리 (읽기만 함 · cleanup.json 에는 저장 안 함) ---
+   Home Vault 서랍의 '🧹 정리 완료' 기록(box.tidy 날짜들)을 home.json 에서 읽어
+   1번 = +15 XP, 잔디·연속 기록에도 하루 활동으로 셈. GitHub 연결 전이면 같은 주소의 이 기기 저장소에서 읽음 */
+var HOME_XP=15,HOME={zones:null};
+var HOME_CACHE={src:null,ev:[],by:{}};
+function homeEvents(){
+  if(HOME_CACHE.src===HOME.zones)return HOME_CACHE.ev;   /* 잔디(371칸)에서 자주 불려서 한 번만 계산 */
+  var ev=[];
+  (HOME.zones||[]).forEach(function(z){(z.boxes||[]).forEach(function(b){(Array.isArray(b.tidy)?b.tidy:[]).forEach(function(d){if(typeof d==="string")ev.push({date:d,box:b.name,zone:z.name})})})});
+  ev.sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0});
+  var by={};ev.forEach(function(e){by[e.date]=(by[e.date]||0)+1});
+  HOME_CACHE={src:HOME.zones,ev:ev,by:by};
+  return ev;
+}
+function homeCount(date){homeEvents();return HOME_CACHE.by[date]||0}
+function loadHomeLocal(){try{var p=JSON.parse(localStorage.getItem("homevault:v1")||"null");if(p&&p.data&&Array.isArray(p.data.zones))HOME.zones=p.data.zones}catch(e){}}
+async function fetchHome(){
+  var r=await fetch("https://api.github.com/repos/"+encodeURIComponent(CFG.user)+"/"+encodeURIComponent(CFG.repo)+"/contents/home.json?t="+Date.now(),{headers:hdr(),cache:"no-store"});
+  if(!r.ok)return;   /* home.json 이 없거나 못 읽어도 Clean Quest 는 그대로 */
+  var j=await r.json(),d=JSON.parse(dec(j.content));
+  if(d&&Array.isArray(d.zones)){HOME.zones=d.zones;render()}
+}
+
 /* --- 날짜별 기록 (잔디 · 연속) --- */
 function actN(id,date){return ((S.d.act[id]||{})[date])||0}
 function mark(id,date){return ((S.d.marks[id]||{})[date])||0}
 function dstate(id,date){if(actN(id,date)>0||mark(id,date)===1)return 1;if(mark(id,date)===2)return 2;return 0}
-function dayAny(date){if((S.d.log[date]||0)>0)return true;return S.d.sources.some(function(s){return dstate(s.id,date)===1})}
+/* [수정] 집 정리한 날도 활동한 날로 */
+function dayAny(date){if((S.d.log[date]||0)>0||homeCount(date)>0)return true;return S.d.sources.some(function(s){return dstate(s.id,date)===1})}
 function dayCount(date){
   var n=0;
   S.d.sources.forEach(function(s){n+=actN(s.id,date)+(mark(s.id,date)===1?1:0)});
-  return Math.max(n,S.d.log[date]||0);
+  return Math.max(n,S.d.log[date]||0)+homeCount(date);
 }
 function streak(){
   var n=0,t=new Date();
@@ -1748,6 +1811,7 @@ function bestStreak(){
   Object.keys(S.d.log).forEach(function(k){keys[k]=1});
   Object.keys(S.d.act).forEach(function(i){Object.keys(S.d.act[i]).forEach(function(k){keys[k]=1})});
   Object.keys(S.d.marks).forEach(function(i){Object.keys(S.d.marks[i]).forEach(function(k){keys[k]=1})});
+  homeEvents().forEach(function(e){keys[e.date]=1});   /* [수정] */
   var ks=Object.keys(keys).sort();
   if(!ks.length)return 0;
   var t=pdate(ks[0]),end=new Date(),best=0,run=0;
@@ -1760,6 +1824,7 @@ function yearContributionsCount(){
   var ago=new Date();ago.setFullYear(ago.getFullYear()-1);
   var minKey=ds(ago),td=today(),total=0;
   Object.keys(S.d.log).forEach(function(k){if(k>=minKey&&k<=td&&(S.d.log[k]||0)>0)total+=S.d.log[k]});
+  homeEvents().forEach(function(e){if(e.date>=minKey&&e.date<=td)total++});   /* [수정] */
   return total;
 }
 
@@ -2024,13 +2089,13 @@ function renderAll(){
     renderHero();
     renderStatus();
     var t=S.tab;
-    ["top2","mission","upto","src"].forEach(function(id){$(id).hidden=t!=="clean"});
+    ["top2","mission","upto","src","homeq"].forEach(function(id){$(id).hidden=t!=="clean"});   /* [수정] */
     $("logv").hidden=t!=="log";
     $("garden").hidden=t!=="garden";
     $("hero").hidden=t==="garden";
     $("statusBar").hidden=t==="garden";
     Object.keys(TABS).forEach(function(k){$(TABS[k]).className="tab"+(t===k?" on":"")});
-    if(t==="clean"){renderMission();renderUpto();renderSrc()}
+    if(t==="clean"){renderMission();renderUpto();renderHomeQ();renderSrc()}
     else if(t==="log")renderLog();
     else renderGarden();
     checkLevelUp();
@@ -2142,6 +2207,20 @@ function autoHint(s){
   }
   if(s.type==="list"){var L=S.d.lists[s.id]||[];return L.length?"체크리스트 "+L.filter(function(i){return i.done}).length+"/"+L.length+"개 완료":""}
   var c=S.d.counts[s.id];return c&&c.total?"남은 "+c.left+"개":"";
+}
+/* [신규] Home Vault 집 정리 카드 */
+function renderHomeQ(){
+  var H=$("homeq");H.textContent="";
+  var ev=homeEvents(),wk=sundayOf(new Date()),wks=ds(wk),week=ev.filter(function(e){return e.date>=wks}).length;
+  var top=el("div","hrow"),left=el("div");
+  left.appendChild(el("div","mission-kicker","HOME VAULT"));
+  left.appendChild(el("div","mission-title","🏠 집 정리"));
+  top.appendChild(left);
+  var a=el("a","hlink","Home Vault 열기 →");a.href="home.html";top.appendChild(a);
+  H.appendChild(top);
+  if(!ev.length){H.appendChild(el("div","hempty","Home Vault에서 서랍을 펼치고 '🧹 정리 완료'를 누르면 여기에 쌓여요. 한 번에 +"+HOME_XP+" XP, 잔디에도 칸이 채워져요."));return}
+  var sm=el("div","hsum");sm.innerHTML="정리한 서랍 <b>"+ev.length+"</b>번 · 이번 주 <b>"+week+"</b>번 · <b>+"+(ev.length*HOME_XP)+" XP</b>";H.appendChild(sm);
+  ev.slice(0,3).forEach(function(e){var r=el("div","hev");r.appendChild(el("span",null,"🧹 "+e.box+" · "+e.zone.replace(/^\S+\s/,"")));r.appendChild(el("small",null,e.date===today()?"오늘":(+e.date.slice(5,7))+"/"+(+e.date.slice(8))));H.appendChild(r)});
 }
 function renderUpto(){
   var U=$("upto");U.textContent="";
@@ -2537,6 +2616,8 @@ function daySummary(k){
   });
   var n=S.d.log[k]||0;
   if(!parts.length&&n>0)parts.push("기록 "+n+"건");
+  var hv=homeEvents().filter(function(e){return e.date===k});   /* [신규] */
+  if(hv.length)parts.push("🏠 집 정리 "+hv.length+"곳 ("+hv.map(function(e){return e.box}).join(", ")+")");
   var head=fmtUp(k)+(k===today()?" (오늘)":"");
   var line=parts.length?parts.join(" · "):"기록된 활동이 없어요.";
   var c=!parts.length?"쉬어간 날이에요. 부담 없이 한 칸만 열어도 충분해요.":(parts.length>=2||n>=3)?"여러 곳을 고르게 정돈한 날이에요.":"작은 한 걸음으로 정원을 살린 날이에요.";

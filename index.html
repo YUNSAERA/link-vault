@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <title>Link Vault</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- [신규] 홈 화면에 앱처럼 추가 -->
+<link rel="manifest" href="index-manifest.json">
+<meta name="theme-color" content="#0f766e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Link Vault">
+<link rel="apple-touch-icon" href="index-icon-192.png">
+<link rel="icon" href="index-icon-192.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;600;700&family=Gowun+Dodum&display=swap">
 <style>
 /* ===== 디자인 토큰 (라이트/다크) ===== */
@@ -226,9 +234,24 @@ body{padding:28px 16px 48px}
 @media (min-width:860px){body{padding:28px 24px 56px}.card{max-width:1160px;padding:36px 40px}}
 @media (min-width:1280px){.card{max-width:1280px}.list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:540px){body{padding:16px 12px 36px}.card{padding:20px 16px;border-radius:24px}.sect,.panel{padding:18px 16px;border-radius:20px}}
+/* [신규] v6 — 앱 전환 바 */
+.appnav{display:flex;justify-content:center;gap:6px;max-width:640px;margin:0 auto 14px}
+.appnav a{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 13px;border-radius:999px;background:var(--card);box-shadow:var(--sm);white-space:nowrap}
+.appnav a:hover{color:var(--ink)}
+.appnav a.on{background:var(--accent);color:var(--onacc)}
+.appnav .s{display:none}
+@media (max-width:420px){.appnav a{padding:7px 11px}.appnav .l{display:none}.appnav .s{display:inline}}
+@media (min-width:860px){.appnav{max-width:1160px;justify-content:flex-start}}
+@media (min-width:1280px){.appnav{max-width:1280px}}
 </style>
 </head>
 <body>
+<!-- [신규] 세 앱 오가기 -->
+<nav class="appnav" aria-label="앱 이동">
+  <a href="cleanup.html">🫙 <span class="l">Clean Quest</span><span class="s">정리</span></a>
+  <a href="index.html" class="on" aria-current="page">🗂️ <span class="l">Link Vault</span><span class="s">링크</span></a>
+  <a href="home.html">🏠 <span class="l">Home Vault</span><span class="s">우리집</span></a>
+</nav>
 <div class="card" id="mainCard">
   <header class="head">
     <div class="mark" aria-hidden="true" style="font-size:19px">🗂️</div>
@@ -301,7 +324,7 @@ body{padding:28px 16px 48px}
   <div class="msg" id="msg" role="status" aria-live="polite"></div>
 
   <footer class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Link Vault v5</span>
+    <span class="lab"><i id="dot" class="off"></i>Link Vault v6</span>
     <button class="fb" id="bCompact" title="컴팩트 보기" aria-label="컴팩트 보기">▤</button>
     <button class="fb" id="bDice" title="랜덤 링크 뽑기" aria-label="랜덤 링크 뽑기">🎲</button>
     <button class="fb" id="bMd" title="노션용 마크다운 복사" aria-label="노션용 마크다운 복사">M↓</button>
