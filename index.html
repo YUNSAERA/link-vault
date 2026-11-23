@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;600;700&family=Gowun+Dodum&display=swap">
 <style>
-/* ===== [기존] 디자인 토큰 (라이트/다크) ===== */
+/* ===== 디자인 토큰 (라이트/다크) ===== */
 :root{
   --font:'Inter','Noto Sans KR',-apple-system,sans-serif;
   --page:#f5f6f8;--card:#fff;--ink:#18181b;--sub:#5c5c66;--muted:#767680;
@@ -49,11 +49,9 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 .composer{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
 .urlwrap{position:relative;display:flex;align-items:center}
 .urlwrap input{padding-right:48px}
-/* [v3.5] 주소칸 지우기 버튼 */
+/* 주소칸 지우기 버튼 */
 .uclear{position:absolute;right:10px;width:28px;height:28px;border:0;border-radius:999px;background:var(--hover);color:var(--sub);font-size:12px;display:grid;place-items:center;padding:0}
 .uclear:hover{color:var(--ink)}
-.pastebtn{position:absolute;right:8px;border:0;background:var(--card);color:var(--sub);font-size:13px;font-weight:600;padding:7px 11px;border-radius:10px;box-shadow:var(--sm)}
-.pastebtn:hover{color:var(--accent)}
 .add{background:var(--accent);color:var(--onacc);border:0;border-radius:14px;font-weight:600;font-size:15px;padding:0 20px;min-height:46px;white-space:nowrap;flex:none;box-shadow:0 4px 14px -4px var(--ring)}
 .add:hover{background:var(--accent2)}
 .soft{background:var(--field);color:var(--sub);border:0;border-radius:14px;font-weight:600;font-size:14px;padding:10px 15px;min-height:42px}
@@ -126,7 +124,7 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 .fb{width:36px;height:36px;border-radius:999px;border:0;background:var(--field);color:var(--sub);font-size:14px;font-weight:700;display:grid;place-items:center;flex:none}
 .fb:hover{background:var(--hover);color:var(--ink)}
 
-/* ===== [신규] 중복·일괄 저장 알림, 자동 추천 배지 ===== */
+/* ===== 중복·일괄 저장 알림, 자동 추천 배지 ===== */
 .note{border-radius:14px;padding:11px 14px;font-size:13.5px;line-height:1.45;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--warn-soft);border:1px solid rgba(217,119,6,.25)}
 .note.acc{background:var(--soft);border-color:var(--ring)}
 .note .btns{display:flex;gap:6px}
@@ -135,7 +133,7 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 .mstat{font-size:13.5px;line-height:1.5;color:var(--sub);background:var(--field);border-radius:12px;padding:9px 12px}
 .mstat.bad{color:var(--warn);background:var(--warn-soft)}
 .auto-tag{font-size:12.5px;font-weight:600;color:var(--accent)}
-/* ===== [신규] 정렬, 메모, 파비콘, 고정, 오래 안 본 링크, 강조 ===== */
+/* ===== 정렬, 메모, 파비콘, 고정, 오래 안 본 링크, 강조 ===== */
 .search-row{display:flex;gap:8px;align-items:center}
 .sort-sel{width:auto;min-width:118px;padding:10px 12px;font-size:13.5px;font-weight:600;border-radius:13px;flex:none}
 .memo{font-size:13.5px;line-height:1.45;color:var(--sub);margin-top:5px;background:var(--card);padding:6px 10px;border-radius:10px}
@@ -151,7 +149,7 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 .edit-actions{display:flex;gap:8px;justify-content:flex-end}
 .fb.on{background:var(--soft);color:var(--accent)}
 #bMd{font-size:12px;white-space:nowrap;letter-spacing:-.04em}
-/* ===== [신규] 컴팩트 보기 ===== */
+/* ===== 컴팩트 보기 ===== */
 .card.compact .list{gap:7px}
 .card.compact .item{padding:10px 12px;border-radius:14px;align-items:center}
 .card.compact .ico{width:32px;height:32px;border-radius:10px;font-size:15px}
@@ -166,7 +164,7 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 @media (max-width:520px){body{padding:12px 10px 36px}.card{padding:20px 15px;border-radius:22px}.composer .row{flex-direction:column}.search-row{flex-direction:column;align-items:stretch}.sort-sel{width:100%}.panel .row{flex-direction:column}.item{padding:12px;gap:10px}.acts{max-width:104px;gap:4px}}
 
 /* =====================================================================
-   [v4] Clean Quest 디자인과 통일 (같은 색·그림자·글꼴·모서리·크기)
+   Clean Quest 디자인과 통일 (같은 색·그림자·글꼴·모서리·크기)
    ===================================================================== */
 :root{
   --body:'Inter','Noto Sans KR','Gowun Dodum',sans-serif;--title:'Inter','Noto Sans KR','Gowun Dodum',sans-serif;--font:var(--body);
@@ -238,17 +236,17 @@ body{padding:28px 16px 48px}
     <span class="badge" id="count">0</span>
   </header>
 
-  <!-- [v4] Clean Quest와 같은 섹션 카드 구조 -->
+  <!-- Clean Quest와 같은 섹션 카드 구조 -->
   <section class="sect" id="addSect">
   <div class="kicker">ADD LINK</div><div class="sect-title">링크 저장하기</div>
   <div class="composer">
     <div class="urlwrap"><input id="url" placeholder="URL을 붙여넣으세요 (여러 개도 한 번에 가능)" inputmode="url" autocomplete="off"><button type="button" class="uclear" id="uClear" hidden aria-label="입력 내용 모두 지우기" title="입력 내용 모두 지우기">✕</button></div>
-    <!-- [신규] 중복 알림 -->
+    <!-- 중복 알림 -->
     <div class="note" id="dupNotice" hidden><span id="dupText"></span><div class="btns"><button type="button" class="mini-btn" id="dupJump">기존 항목 보기</button><button type="button" class="mini-btn" id="dupReset">입력 지우기</button></div></div>
-    <!-- [신규] 일괄 저장 -->
+    <!-- 일괄 저장 -->
     <div class="note acc" id="bulkBar" hidden><span id="bulkText"></span><div class="btns"><button type="button" class="mini-btn acc" id="bulkSave">한 번에 저장</button><button type="button" class="mini-btn" id="bulkCancel">취소</button></div></div>
     <div class="row"><input id="title" placeholder="제목 (비워두면 자동으로 채워요)" autocomplete="off"><button type="button" class="add" id="add">링크 저장</button></div>
-    <!-- [신규] 한 줄 메모 -->
+    <!-- 한 줄 메모 -->
     <div class="mstat" id="metaStatus" hidden></div>
     <input id="memo" placeholder="한 줄 메모 (선택)" autocomplete="off">
   </div>
@@ -270,7 +268,7 @@ body{padding:28px 16px 48px}
   <div class="toolbar">
     <div class="search-row">
       <div class="search" id="searchBox" hidden><span class="ico2" aria-hidden="true">⌕</span><input id="search" placeholder="제목, 주소, 메모로 검색" autocomplete="off"><button type="button" class="sclear" id="sClear" hidden aria-label="검색어 지우기">✕</button></div>
-      <!-- [신규] 정렬 -->
+      <!-- 정렬 -->
       <select class="sort-sel" id="sortSel" aria-label="정렬 기준"><option value="smart">고정 · 최신순</option><option value="newest">최신 등록순</option><option value="oldest">오래된 순</option><option value="title">이름 가나다순</option><option value="visits">많이 연 순</option></select>
     </div>
     <div class="chips" id="chips"></div>
@@ -290,7 +288,7 @@ body{padding:28px 16px 48px}
     <label>저장소 이름</label><input id="gr" autocomplete="off" autocapitalize="off" placeholder="link-vault">
     <label>토큰 (비밀번호처럼 보관)</label><input id="gt" type="password" autocomplete="off">
     <button class="chip" id="gshow" style="margin-top:10px">토큰 보기 / 숨기기</button>
-    <!-- [신규] 제목 자동 불러오기 설정 -->
+    <!-- 제목 자동 불러오기 설정 -->
     <label>제목·설명 자동 불러오기</label>
     <button class="chip" id="metaToggle"></button>
     <label>화면 크기</label>
@@ -303,7 +301,7 @@ body{padding:28px 16px 48px}
   <div class="msg" id="msg" role="status" aria-live="polite"></div>
 
   <footer class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Link Vault v4</span>
+    <span class="lab"><i id="dot" class="off"></i>Link Vault v5</span>
     <button class="fb" id="bCompact" title="컴팩트 보기" aria-label="컴팩트 보기">▤</button>
     <button class="fb" id="bDice" title="랜덤 링크 뽑기" aria-label="랜덤 링크 뽑기">🎲</button>
     <button class="fb" id="bMd" title="노션용 마크다운 복사" aria-label="노션용 마크다운 복사">M↓</button>
@@ -314,58 +312,151 @@ body{padding:28px 16px 48px}
 </div>
 
 <script>
-/* =====================================================================
-   [기존] 기본값 · 상태 · 저장
-   ===================================================================== */
+/* ==========================================================================
+   Link Vault v5 — 코드 지도
+   --------------------------------------------------------------------------
+    0. 설정값 · 상태 ........ 기본 카테고리, 저장 키, 자동 분류 규칙, S(앱 상태)
+    1. 기본 도구 ............ $, el, btn, 주소 해석·중복 판정, 복사
+    2. 이 기기 저장 ......... 불러오기 / 저장
+    3. GitHub 동기화 · op ... 링크를 바꾸는 일은 모두 op() 를 지나감
+    4. 방문 기록 ............ 열면 바로 화면에, GitHub 에는 묶어서
+    5. 카테고리 자동 추천 ... 입력 중엔 추천만, 저장할 때 생성
+    6. 제목 · 메모 자동 채우기
+    7. 입력칸 ............... 중복 알림, 여러 개 한 번에, ✕ 지우기
+    8. 카테고리 관리 패널
+    9. 목록 ................ 필터·정렬, 링크 한 줄, 수정 폼
+   10. 저장하기 ............ 한 개 · 여러 개 · 백업 가져오기/내보내기
+   11. 하단 버튼 · 설정
+   12. 시작
+   ========================================================================== */
+
+/* ==========================================================================
+   0. 설정값 · 상태
+   ========================================================================== */
+/* 카테고리 = [id, 아이콘, 이름] */
 var DEF=[["ticket","🎟️","티켓·예약"],["news","📰","아티클"],["video","🎬","영상"],["music","🎵","음악"],["docs","📚","자료·문서"],["work","💼","업무"],["tools","🛠️","도구"],["idea","💡","아이디어"]];
-var KEY="linkvault:v1",CKEY="linkvault:cfg",PATH="links.json";
-var STALE_DAYS=30;                       /* [신규] '오래 안 본 링크' 기준 */
+var OTHER_CAT=["other","🔗","기타"];          /* 삭제된 카테고리의 링크가 보이는 곳 */
+var KEY="linkvault:v1";                         /* 이 기기 저장 키 (그대로 → 기존 데이터 유지) */
+var CKEY="linkvault:cfg";                       /* GitHub 설정 */
+var PATH="links.json";                          /* 저장소 안 파일 이름 */
+var STALE_DAYS=30;                              /* '오래 안 본 링크' 기준 */
+var VISIT_FLUSH_MS=10000;                       /* 방문 기록을 모아서 보내는 간격 */
+
+/* 주소·글자로 카테고리 추측: h = 도메인에 들어 있으면, k = 경로·제목에 들어 있으면 */
+var RULES=[
+  {id:"video",e:"🎬",l:"영상",h:["youtube.com","youtu.be","netflix.com","tving.com","wavve.com","tv.naver.com","chzzk.naver.com"],k:["영상","동영상"]},
+  {id:"music",e:"🎵",l:"음악",h:["spotify.com","music.apple.com","melon.com","soundcloud.com","genie.co.kr","bugs.co.kr"],k:["음악","노래"]},
+  {id:"ticket",e:"🎟️",l:"티켓·예약",h:["interpark","ticketlink","yeogi","yanolja","booking.com","airbnb.","yeyak.seoul.go.kr"],k:["예약","티켓","공연","전시"]},
+  {id:"work",e:"💼",l:"업무",h:["notion.so","notion.site","slack.com","linear.app","atlassian.net","trello.com"],k:["업무","회의"]},
+  {id:"tools",e:"🛠️",l:"도구",h:["github.com","figma.com","codepen.io","chatgpt.com","claude.ai","gemini.google.com"],k:["도구","툴"]},
+  {id:"housing",e:"🏠",l:"주거·부동산",h:["myhome.go.kr","applyhome.co.kr","lh.or.kr","i-sh.co.kr"],k:["임대주택","청약","부동산","아파트","전세","월세"]},
+  {id:"recipe",e:"🍳",l:"레시피",h:["10000recipe.com"],k:["레시피","recipe"]},
+  {id:"shop",e:"🛍️",l:"쇼핑",h:["coupang.com","smartstore.naver.com","brand.naver.com","musinsa.com","29cm.co.kr","amazon."],k:["쇼핑"]},
+  {id:"news",e:"📰",l:"아티클",h:["brunch.co.kr","medium.com","velog.io","substack.com","blog.naver.com","tistory.com","news."],k:["뉴스","아티클"]}
+];
+var FONTS={
+  noto:{body:"'Inter','Noto Sans KR','Gowun Dodum',sans-serif",title:"'Inter','Noto Sans KR','Gowun Dodum',sans-serif"},
+  jua:{body:"'Noto Sans KR','Gowun Dodum',sans-serif",title:"'Jua','Noto Sans KR',sans-serif"},
+  gowun:{body:"'Gowun Dodum','Noto Sans KR',sans-serif",title:"'Gowun Dodum','Noto Sans KR',sans-serif"}
+};
+
 function cloneCats(a){return a.map(function(c){return c.slice()})}
 function validCats(a){return Array.isArray(a)&&a.length&&a.every(function(c){return Array.isArray(c)&&c.length>=3})}
-var S={
-  /* [기존] */ items:[],cats:cloneCats(DEF),sel:"news",filter:"all",query:"",confirmId:null,catManage:false,catConfirmId:null,catsDirty:false,catsVer:0,theme:"",
-  /* [신규] */ sort:"smart",compact:false,autoMeta:true,font:"noto",zoom:1,editingId:null,draft:null,pickedId:null,dupMatch:null,bulkUrls:[],suggest:null,manualCatPick:false,manualTitle:false,manualMemo:false
-};
 var CFG={user:"",repo:"",token:""};
-try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);
-  if(p&&Array.isArray(p.items))S.items=p.items;if(p&&validCats(p.cats))S.cats=p.cats;if(p&&p.sel)S.sel=p.sel;if(p&&p.theme)S.theme=p.theme;
-  if(p&&p.sort)S.sort=p.sort;if(p&&typeof p.compact==="boolean")S.compact=p.compact;if(p&&typeof p.autoMeta==="boolean")S.autoMeta=p.autoMeta;if(p&&p.font)S.font=p.font;if(p&&p.zoom)S.zoom=p.zoom}}catch(e){}
-try{var c0=localStorage.getItem(CKEY);if(c0){var q=JSON.parse(c0);if(q)CFG={user:q.user||"",repo:q.repo||"",token:q.token||""}}}catch(e){}
+var S={
+  /* --- 데이터 --- */
+  items:[],cats:cloneCats(DEF),
+  catsDirty:false,catsVer:0,      /* 이 기기에서 카테고리를 바꿨는지 (바꾼 기기만 GitHub 카테고리를 덮어씀) */
+  /* --- 이 기기에 저장하는 설정 (PERSIST) --- */
+  sel:"news",theme:"",sort:"smart",compact:false,autoMeta:true,font:"noto",zoom:1,
+  /* --- 화면 상태 (새로고침하면 초기화) --- */
+  filter:"all",query:"",confirmId:null,catManage:false,catConfirmId:null,
+  editingId:null,draft:null,pickedId:null,dupMatch:null,bulkUrls:[],suggest:null,
+  manualCatPick:false,manualTitle:false,manualMemo:false   /* 사용자가 직접 고른/쓴 값은 자동으로 덮지 않음 */
+};
+var PERSIST=["sel","theme","sort","compact","autoMeta","font","zoom"];
+
+/* ==========================================================================
+   1. 기본 도구
+   ========================================================================== */
+function $(id){return document.getElementById(id)}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function btn(cls,txt,fn){var b=document.createElement("button");b.type="button";b.className=cls;b.textContent=txt;b.onclick=fn;return b}
+/* 글자 없이 아이콘만 있는 버튼: 마우스 설명 + 화면낭독 이름 */
+function iconBtn(cls,txt,label,fn){var b=btn(cls,txt,fn);b.title=label;b.setAttribute("aria-label",label);return b}
+function append(parent){for(var i=1;i<arguments.length;i++)if(arguments[i])parent.appendChild(arguments[i]);return parent}
+function scrollToEl(node,block){if(node&&node.scrollIntoView)node.scrollIntoView({behavior:"smooth",block:block})}
+function isDark(){return document.documentElement.getAttribute("data-theme")==="dark"||(!S.theme&&window.matchMedia("(prefers-color-scheme: dark)").matches)}
 function cleanTok(t){t=String(t||"");var m=t.match(/(github_pat_|ghp_|gho_|ghu_|ghs_|ghr_)[A-Za-z0-9_]+/);return m?m[0]:t.replace(/[^\x21-\x7e]/g,"")}
 function cleanName(t){return String(t||"").replace(/[^A-Za-z0-9._-]/g,"")}
-CFG.token=cleanTok(CFG.token);CFG.user=cleanName(CFG.user);CFG.repo=cleanName(CFG.repo);
-if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);
-if(!S.cats.some(function(c){return c[0]===S.sel}))S.sel=S.cats[0][0];
-function save(){try{localStorage.setItem(KEY,JSON.stringify({items:S.items,cats:S.cats,sel:S.sel,theme:S.theme,sort:S.sort,compact:S.compact,autoMeta:S.autoMeta,font:S.font,zoom:S.zoom}))}catch(e){}}
-function saveCfg(){try{localStorage.setItem(CKEY,JSON.stringify(CFG))}catch(e){}}
 
-/* =====================================================================
-   [기존] 공통 도우미 (+[수정] 주소 해석·중복 판정 통일)
-   ===================================================================== */
-function $(id){return document.getElementById(id)}
-function catInfo(id){for(var i=0;i<S.cats.length;i++)if(S.cats[i][0]===id)return S.cats[i];return["other","🔗","기타"]}
+/* --- 카테고리 --- */
+function catInfo(id){for(var i=0;i<S.cats.length;i++)if(S.cats[i][0]===id)return S.cats[i];return OTHER_CAT}
 function knownCat(id){return S.cats.some(function(c){return c[0]===id})}
+function catKey(it){return knownCat(it.cat)?it.cat:"other"}
+
+/* --- 주소 --- */
+/* http(s) 주소로 해석 (앞에 https:// 가 없으면 붙여 봄, 도메인에 점이 있어야 함) */
 function parseHttpUrl(raw){var u=String(raw||"").trim();if(!u||/\s/.test(u))return null;if(!/^https?:\/\//i.test(u))u="https://"+u;try{var p=new URL(u);return /\./.test(p.hostname)?p:null}catch(e){return null}}
 function host(u){var p=parseHttpUrl(u);return p?p.hostname.replace(/^www\./,""):String(u||"")}
-/* [수정] v5.3은 주소 전체를 소문자로 바꿔 경로가 다른 링크도 같은 것으로 판단했어요. 도메인만 소문자, 끝의 / 와 # 은 무시합니다. */
+function isYoutubeHost(h){return /(^|\.)youtube\.com$|^youtu\.be$/.test(h)}
+/* 중복 판정용: 도메인만 소문자(URL 이 알아서), 끝의 / 와 # 은 무시, 경로 대소문자는 구분 */
 function normalizeUrl(raw){var p=parseHttpUrl(raw);if(!p)return String(raw||"").trim();p.hash="";return p.href.replace(/\/+$/,"")}
 function findDup(u,exceptId){var n=normalizeUrl(u);for(var i=0;i<S.items.length;i++)if(S.items[i].id!==exceptId&&normalizeUrl(S.items[i].url)===n)return S.items[i];return null}
+/* a 에 b 를 합침 (같은 주소는 한 번만) */
+function union(a,b){var have={};a.forEach(function(i){have[normalizeUrl(i.url)]=1});b.forEach(function(i){var k=normalizeUrl(i.url);if(!have[k]){a.push(i);have[k]=1}});return a}
 function faviconUrl(u){var p=parseHttpUrl(u);return p?"https://www.google.com/s2/favicons?domain="+encodeURIComponent(p.hostname)+"&sz=64":""}
+
+/* --- 시간 --- */
 function itemTs(it){return Number(it.createdAt||Number(String(it.id).slice(0,13))||0)}
 function fmtDate(ts){if(!ts)return "";var d=new Date(ts);if(isNaN(d.getTime()))return "";return (d.getMonth()+1)+"월 "+d.getDate()+"일"}
+
+/* --- 알림 · 복사 --- */
 var msgT=null;
 function say(m){$("msg").textContent=m;clearTimeout(msgT);msgT=setTimeout(function(){$("msg").textContent=""},4500)}
-function btn(cls,txt,fn){var b=document.createElement("button");b.type="button";b.className=cls;b.textContent=txt;b.onclick=fn;return b}
+/* 클립보드 복사 (안 되면 숨은 입력칸으로 한 번 더) → Promise<성공 여부> */
 function copyText(s){
   function fb(){try{var ta=document.createElement("textarea");ta.value=s;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();var ok=document.execCommand("copy");document.body.removeChild(ta);return ok}catch(e){return false}}
   if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(s).then(function(){return true},function(){return fb()});
   return Promise.resolve(fb());
 }
-function union(a,b){var have={};a.forEach(function(i){have[normalizeUrl(i.url)]=1});b.forEach(function(i){var k=normalizeUrl(i.url);if(!have[k]){a.push(i);have[k]=1}});return a}
+function copyAndSay(text,okMsg,failMsg){copyText(text).then(function(ok){say(ok?okMsg:failMsg)})}
 
-/* =====================================================================
-   [기존] GitHub 동기화 (+[신규] 방문 기록 묶음 전송과 연결)
-   ===================================================================== */
+/* ==========================================================================
+   2. 이 기기 저장
+   ========================================================================== */
+function loadState(){
+  try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);
+    if(p&&Array.isArray(p.items))S.items=p.items;
+    if(p&&validCats(p.cats))S.cats=p.cats;
+    if(p&&p.sel)S.sel=p.sel;
+    if(p&&p.theme)S.theme=p.theme;
+    if(p&&p.sort)S.sort=p.sort;
+    if(p&&typeof p.compact==="boolean")S.compact=p.compact;
+    if(p&&typeof p.autoMeta==="boolean")S.autoMeta=p.autoMeta;
+    if(p&&p.font)S.font=p.font;
+    if(p&&p.zoom)S.zoom=p.zoom}}catch(e){}
+  if(!S.cats.some(function(c){return c[0]===S.sel}))S.sel=S.cats[0][0];
+}
+function loadCfg(){
+  try{var c0=localStorage.getItem(CKEY);if(c0){var q=JSON.parse(c0);if(q)CFG={user:q.user||"",repo:q.repo||"",token:q.token||""}}}catch(e){}
+  CFG.token=cleanTok(CFG.token);CFG.user=cleanName(CFG.user);CFG.repo=cleanName(CFG.repo);
+}
+function save(){
+  var o={items:S.items,cats:S.cats};
+  PERSIST.forEach(function(k){o[k]=S[k]});
+  try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}
+}
+function saveCfg(){try{localStorage.setItem(CKEY,JSON.stringify(CFG))}catch(e){}}
+
+/* ==========================================================================
+   3. GitHub 동기화 · op
+   --------------------------------------------------------------------------
+   op(fn) — 링크 목록을 바꾸는 유일한 길
+     ① fn 을 이 기기 목록에 적용 → 저장 → 화면
+     ② GitHub 최신 목록을 받아 같은 fn 을 한 번 더 적용해서 올림 (병합)
+   카테고리는 catsDirty 인 기기(=바꾼 기기)만 GitHub 쪽을 덮어씀
+   ========================================================================== */
 function synced(){return !!(CFG.user&&CFG.repo&&CFG.token)}
 function setDot(k){$("dot").className=k}
 function enc(t){return btoa(unescape(encodeURIComponent(t)))}
@@ -377,6 +468,7 @@ function errText(e){var m=e&&e.message||"";
   if(m==="403")return "권한 없음: 토큰의 Contents를 Read and write로 해주세요";
   if(m==="404")return "아이디 또는 저장소 이름을 확인해 주세요";
   return "동기화 실패 ("+(m||"network")+")"}
+/* links.json 은 예전 형식(배열)과 지금 형식({items, cats}) 둘 다 읽음 */
 async function remoteGet(){
   var r=await fetch(apiUrl(true),{headers:hdr(),cache:"no-store"});
   if(r.status===404)return{items:[],cats:null,sha:null};
@@ -393,84 +485,73 @@ async function remoteApply(fn,tries){
   var r=await fetch(apiUrl(false),{method:"PUT",headers:hdr(),body:JSON.stringify(body)});
   if((r.status===409||r.status===422)&&tries<2)return remoteApply(fn,tries+1);
   if(!r.ok)throw new Error(String(r.status));
-  if(S.catsVer===ver){S.cats=cats;S.catsDirty=false}
+  if(S.catsVer===ver){S.cats=cats;S.catsDirty=false}   /* 그 사이 또 바꿨으면 dirty 유지 */
   return items;
 }
 var chain=Promise.resolve();
 function fail(e){setDot("err");say(errText(e))}
-/* [수정] 서버 결과를 받을 때, 아직 전송 전인 방문 기록을 다시 얹어서 숫자가 되돌아가지 않게 해요 */
+/* 서버 결과를 받을 때, 아직 전송 전인 방문 기록을 다시 얹어서 숫자가 되돌아가지 않게 */
 function afterRemote(items){S.items=applyVisitQ(items);save();render();setDot("")}
+function queueRemote(fn,onErr){
+  setDot("busy");
+  chain=chain.then(function(){return remoteApply(fn,0)}).then(afterRemote).catch(onErr||fail);
+}
 function op(fn){
   S.items=fn(S.items.slice());save();render();
   if(!synced())return;
-  setDot("busy");
-  chain=chain.then(function(){return remoteApply(fn,0)}).then(afterRemote).catch(fail);
+  queueRemote(fn);
 }
+/* 항목 하나 고치기: 고칠 값을 객체로 넘겨서 서버에 다시 적용해도 결과가 같음 */
+function updateItem(id,patch){op(function(arr){return arr.map(function(x){return x.id===id?Object.assign({},x,patch):x})})}
+function removeItem(id){op(function(arr){return arr.filter(function(i){return i.id!==id})})}
 function markCatsDirty(){S.catsVer++;S.catsDirty=true;save()}
 function syncCats(){
   markCatsDirty();
   if(!synced())return;
-  setDot("busy");
-  chain=chain.then(function(){return remoteApply(function(a){return a},0)}).then(afterRemote).catch(fail);
+  queueRemote(function(a){return a});
 }
 function pull(){
   if(!synced()){setDot("off");return}
   setDot("busy");
   chain=chain.then(remoteGet).then(function(g){
-    /* [수정] GitHub에 아직 파일이 없으면(처음 연결) 이 기기 목록을 지우지 않고 그대로 올려요 */
+    /* GitHub 에 아직 파일이 없으면(처음 연결) 이 기기 목록을 지우지 않고 그대로 올림 */
     if(!g.sha&&S.items.length){var snap=S.items.slice();setDot("");op(function(a){return union(a,snap)});return}
     S.items=applyVisitQ(g.items);
     if(g.cats&&!S.catsDirty){S.cats=g.cats;if(!knownCat(S.sel))S.sel=S.cats[0][0]}
     save();render();setDot("");
   }).catch(fail);
 }
-/* [신규] 항목 하나 고치기: 고칠 값을 객체로 넘겨서 서버에 다시 적용해도 결과가 같아요 */
-function updateItem(id,patch){op(function(arr){return arr.map(function(x){return x.id===id?Object.assign({},x,patch):x})})}
 
-/* =====================================================================
-   [신규] 방문 기록 — 여는 즉시 화면에 반영하고, GitHub에는 묶어서 보내요
-   ===================================================================== */
-var visitQ={},visitT=null;
-function applyVisitQ(arr){
-  if(!Object.keys(visitQ).length)return arr;
-  return arr.map(function(x){var v=visitQ[x.id];if(!v)return x;var c=Object.assign({},x);c.visits=Number(c.visits||0)+v.n;c.lastVisited=Math.max(Number(c.lastVisited||0),v.last);return c});
+/* ==========================================================================
+   4. 방문 기록 — 여는 즉시 화면에 반영하고, GitHub 에는 묶어서 보냄
+   ========================================================================== */
+var visitQ={},visitT=null;   /* { 링크id: {n: 연 횟수, last: 마지막 시각} } */
+function addVisits(arr,q){
+  return arr.map(function(x){var v=q[x.id];if(!v)return x;var c=Object.assign({},x);c.visits=Number(c.visits||0)+v.n;c.lastVisited=Math.max(Number(c.lastVisited||0),v.last);return c});
 }
+function applyVisitQ(arr){return Object.keys(visitQ).length?addVisits(arr,visitQ):arr}
 function recordVisit(id){
   var ts=Date.now();
   visitQ[id]=visitQ[id]||{n:0,last:0};visitQ[id].n++;visitQ[id].last=ts;
   S.items=S.items.map(function(x){if(x.id!==id)return x;var c=Object.assign({},x);c.visits=Number(c.visits||0)+1;c.lastVisited=ts;return c});
   save();render();
-  clearTimeout(visitT);visitT=setTimeout(flushVisits,10000);
+  clearTimeout(visitT);visitT=setTimeout(flushVisits,VISIT_FLUSH_MS);
 }
 function flushVisits(){
   clearTimeout(visitT);
   var q=visitQ;if(!Object.keys(q).length)return;
   if(!synced()){visitQ={};return}
   visitQ={};
-  var fn=function(arr){return arr.map(function(x){var v=q[x.id];if(!v)return x;var c=Object.assign({},x);c.visits=Number(c.visits||0)+v.n;c.lastVisited=Math.max(Number(c.lastVisited||0),v.last);return c})};
-  setDot("busy");
-  chain=chain.then(function(){return remoteApply(fn,0)}).then(afterRemote).catch(function(e){
+  queueRemote(function(arr){return addVisits(arr,q)},function(e){
+    /* 실패하면 다음에 다시 보내도록 되돌려 둠 */
     Object.keys(q).forEach(function(k){visitQ[k]=visitQ[k]||{n:0,last:0};visitQ[k].n+=q[k].n;visitQ[k].last=Math.max(visitQ[k].last,q[k].last)});
     fail(e);
   });
 }
 
-/* =====================================================================
-   [신규] 카테고리 자동 추천
-   [수정] v5.3은 주소를 '입력하는 도중'에 새 카테고리를 만들고 GitHub에 저장했어요.
-          이제 입력 중에는 추천만 보여주고, 실제로 '저장'할 때만 새 카테고리를 만들어요.
-   ===================================================================== */
-var RULES=[
-  {id:"video",e:"🎬",l:"영상",h:["youtube.com","youtu.be","netflix.com","tving.com","wavve.com","tv.naver.com","chzzk.naver.com"],k:["영상","동영상"]},
-  {id:"music",e:"🎵",l:"음악",h:["spotify.com","music.apple.com","melon.com","soundcloud.com","genie.co.kr","bugs.co.kr"],k:["음악","노래"]},
-  {id:"ticket",e:"🎟️",l:"티켓·예약",h:["interpark","ticketlink","yeogi","yanolja","booking.com","airbnb.","yeyak.seoul.go.kr"],k:["예약","티켓","공연","전시"]},
-  {id:"work",e:"💼",l:"업무",h:["notion.so","notion.site","slack.com","linear.app","atlassian.net","trello.com"],k:["업무","회의"]},
-  {id:"tools",e:"🛠️",l:"도구",h:["github.com","figma.com","codepen.io","chatgpt.com","claude.ai","gemini.google.com"],k:["도구","툴"]},
-  {id:"housing",e:"🏠",l:"주거·부동산",h:["myhome.go.kr","applyhome.co.kr","lh.or.kr","i-sh.co.kr"],k:["임대주택","청약","부동산","아파트","전세","월세"]},
-  {id:"recipe",e:"🍳",l:"레시피",h:["10000recipe.com"],k:["레시피","recipe"]},
-  {id:"shop",e:"🛍️",l:"쇼핑",h:["coupang.com","smartstore.naver.com","brand.naver.com","musinsa.com","29cm.co.kr","amazon."],k:["쇼핑"]},
-  {id:"news",e:"📰",l:"아티클",h:["brunch.co.kr","medium.com","velog.io","substack.com","blog.naver.com","tistory.com","news."],k:["뉴스","아티클"]}
-];
+/* ==========================================================================
+   5. 카테고리 자동 추천 — 입력 중에는 추천만, 실제 '저장'할 때만 새로 만듦
+   ========================================================================== */
 function guessRule(u,extra){
   var p=parseHttpUrl(u);if(!p)return null;
   var h=p.hostname.toLowerCase(),txt=p.pathname+" "+p.search+" "+(extra||"");
@@ -480,8 +561,15 @@ function guessRule(u,extra){
   for(var j=0;j<RULES.length;j++)if(RULES[j].k.some(function(x){return txt.indexOf(x)>=0}))return RULES[j];
   return null;
 }
+/* 규칙에 맞는 카테고리가 이미 있으면 그 id (id 또는 이름이 같으면) */
 function existingFor(rule){for(var i=0;i<S.cats.length;i++)if(S.cats[i][0]===rule.id||S.cats[i][2]===rule.l)return S.cats[i][0];return null}
 function ensureCat(rule){var ex=existingFor(rule);if(ex)return{id:ex,created:false};S.cats.push([rule.id,rule.e,rule.l]);markCatsDirty();return{id:rule.id,created:true}}
+/* 저장할 때 쓸 카테고리 (직접 골랐으면 그대로) → {cat, made: 새로 만든 규칙} */
+function catForSave(u,extra){
+  var cat=S.sel,made=null;
+  if(!S.manualCatPick){var r=guessRule(u,extra);if(r){var res=ensureCat(r);cat=res.id;if(res.created)made=r}}
+  return{cat:cat,made:made};
+}
 function suggestFor(u,extra){
   if(S.manualCatPick){S.suggest=null;renderSuggest();return}
   var r=guessRule(u,extra);
@@ -492,50 +580,50 @@ function suggestFor(u,extra){
 }
 function renderSuggest(){var t=$("autoTag");if(S.suggest&&!S.manualCatPick){t.textContent=S.suggest.text;t.hidden=false}else{t.textContent="";t.hidden=true}}
 
-/* =====================================================================
-   [신규] 제목·메모 자동 채우기
-   ===================================================================== */
+/* ==========================================================================
+   6. 제목 · 메모 자동 채우기
+   ========================================================================== */
 function queryOf(p){var q=(p.searchParams.get("query")||p.searchParams.get("q")||p.searchParams.get("search_query")||"").trim();return q}
-/* [v3.1] 'farp9jt635s' 같은 무작위 ID는 제목으로 쓰지 않아요 */
+/* 'farp9jt635s' 같은 무작위 ID 는 제목으로 쓰지 않음 */
 function looksLikeId(x){return /^[A-Za-z0-9_-]{6,}$/.test(x)&&/\d/.test(x)&&/[A-Za-z]/.test(x)&&!/[-_ ]/.test(x)}
+/* 인터넷 없이 주소만 보고 만드는 제목 */
 function buildFallbackTitle(u){
   var p=parseHttpUrl(u);if(!p)return String(u||"");
   var h=p.hostname.replace(/^www\./,""),q=queryOf(p);
   if(/search\.naver\.com$/.test(h))return q?q+" - 네이버 검색":"네이버 검색";
   if(/(^|\.)google\./.test(h)&&p.pathname.indexOf("/search")===0)return q?q+" - Google 검색":"Google 검색";
   if(q)return q+" ("+h+")";
-  /* [v3.1] 유튜브 주소는 영상 ID 대신 알아보기 쉬운 이름으로 */
-  if(/(^|\.)youtube\.com$|^youtu\.be$/.test(h))return p.pathname.indexOf("/shorts/")===0?"유튜브 쇼츠":"유튜브 영상";
+  if(isYoutubeHost(h))return p.pathname.indexOf("/shorts/")===0?"유튜브 쇼츠":"유튜브 영상";
   var segs=p.pathname.split("/").filter(Boolean);
   if(segs.length){var last=segs[segs.length-1];try{last=decodeURIComponent(last)}catch(e){}last=last.replace(/\.[a-z0-9]{2,5}$/i,"").replace(/[-_+]+/g," ").trim();
     if(last&&last.length<=45&&!/^[0-9a-f-]{8,}$/i.test(last)&&!/^\d+$/.test(last)&&!looksLikeId(last))return last+" · "+h}
   return h;
 }
-/* [수정] v5.3은 '아티클 · 주소에서 저장한 링크' 같은 의미 없는 메모를 모든 링크에 넣었어요. 검색어가 있을 때만 자동 메모를 만들어요. */
+/* 검색어가 있을 때만 자동 메모 */
 function buildFallbackMemo(u){var p=parseHttpUrl(u);if(!p)return "";var q=queryOf(p);return q?"'"+q+"' 검색 결과":""}
-var metaAbort=null,assistSeq=0;
-/* [v3.3] 제목 불러오기: 실패 이유(외부 연결 차단 / 서비스 응답 없음)를 구분해서 알려줘요 */
-var metaNet={blocked:0,tried:0};
-/* [v3.4] own=true 이면 입력칸과 별개로(저장 뒤 백그라운드에서) 불러와요 */
+
+/* 인터넷에서 진짜 제목 불러오기: 유튜브는 oEmbed(→noembed), 나머지는 microlink
+   own=true 면 입력칸과 별개(저장 뒤 백그라운드). metaNet 은 실패 이유(차단/응답없음) 구분용 */
+var metaAbort=null,assistSeq=0,metaNet={blocked:0,tried:0};
+function abortMeta(){if(metaAbort){try{metaAbort.abort()}catch(e){}}}
 function fetchMeta(u,own){
   var ab=typeof AbortController!=="undefined"?new AbortController():null;
-  if(!own){if(metaAbort){try{metaAbort.abort()}catch(e){}}metaAbort=ab}
+  if(!own){abortMeta();metaAbort=ab}
   var opt=ab?{signal:ab.signal}:{},timer=setTimeout(function(){if(ab)try{ab.abort()}catch(e){}},own?8000:5000);
   var st={tried:0,blocked:0};
   function get(url){st.tried++;return fetch(url,opt).then(function(r){return r.ok?r.json():null},function(e){if(!(ab&&ab.signal.aborted))st.blocked++;return null}).catch(function(){return null})}
-  var h=host(u),yt=/(^|\.)youtube\.com$|^youtu\.be$/.test(h);
-  function oe(endpoint){return get(endpoint+encodeURIComponent(u)).then(function(o){return o&&o.title?{title:String(o.title).trim(),desc:o.author_name?"유튜브 · "+String(o.author_name).trim():""}:null})}
-  var first=yt?oe("https://www.youtube.com/oembed?format=json&url=").then(function(d){return d||oe("https://noembed.com/embed?url=")}):Promise.resolve(null);
-  return first.then(function(d){
-    if(d)return d;
+  function oembed(endpoint){return get(endpoint+encodeURIComponent(u)).then(function(o){return o&&o.title?{title:String(o.title).trim(),desc:o.author_name?"유튜브 · "+String(o.author_name).trim():""}:null})}
+  function microlink(){
     return get("https://api.microlink.io?url="+encodeURIComponent(u)).then(function(j){
       var x=j&&j.status==="success"&&j.data;if(!x)return null;
       var desc=x.description?String(x.description).replace(/\s+/g," ").trim():"";if(desc.length>110)desc=desc.slice(0,107)+"...";
       return{title:x.title?String(x.title).trim():"",desc:desc};
     });
-  }).then(function(d){clearTimeout(timer);if(!own)metaNet=st;return d});
+  }
+  var first=isYoutubeHost(host(u))?oembed("https://www.youtube.com/oembed?format=json&url=").then(function(d){return d||oembed("https://noembed.com/embed?url=")}):Promise.resolve(null);
+  return first.then(function(d){return d||microlink()}).then(function(d){clearTimeout(timer);if(!own)metaNet=st;return d});
 }
-/* [신규] 여러 링크 감지 — [수정] 입력칸은 한 줄이라 줄바꿈이 사라져요. 붙여넣는 순간의 원문과 공백 기준으로 찾아요. */
+/* 붙여넣은 글에서 주소들 찾기 (공백·줄바꿈 기준, 같은 주소는 한 번) */
 function extractUrls(text){
   var out=[],seen={};
   String(text||"").split(/\s+/).forEach(function(tok){
@@ -545,12 +633,19 @@ function extractUrls(text){
   });
   return out;
 }
+
+/* ==========================================================================
+   7. 입력칸
+   ========================================================================== */
+var META_MSG={
+  loading:["mstat","⏳ 제목 불러오는 중… 바로 저장해도 제목은 저장 뒤에 채워져요"],
+  blocked:["mstat bad","⚠ 지금 화면은 외부 연결이 막혀서 제목을 못 불러와요 (Claude 앱 파일 미리보기 등). GitHub 주소나 노션에서 열면 불러와요."],
+  fail:["mstat bad","⚠ 이 링크는 제목을 자동으로 못 불러왔어요. 직접 적어도 돼요."]
+};
 function metaStatus(state){
-  var el=$("metaStatus");
-  if(state==="loading"){el.className="mstat";el.textContent="⏳ 제목 불러오는 중… 바로 저장해도 제목은 저장 뒤에 채워져요";el.hidden=false}
-  else if(state==="blocked"){el.className="mstat bad";el.textContent="⚠ 지금 화면은 외부 연결이 막혀서 제목을 못 불러와요 (Claude 앱 파일 미리보기 등). GitHub 주소나 노션에서 열면 불러와요.";el.hidden=false}
-  else if(state==="fail"){el.className="mstat bad";el.textContent="⚠ 이 링크는 제목을 자동으로 못 불러왔어요. 직접 적어도 돼요.";el.hidden=false}
-  else{el.hidden=true;el.textContent=""}
+  var e=$("metaStatus"),m=META_MSG[state];
+  if(m){e.className=m[0];e.textContent=m[1];e.hidden=false}
+  else{e.hidden=true;e.textContent=""}
 }
 function showBulk(urls){S.bulkUrls=urls;var dupN=urls.filter(function(u){return findDup(u)}).length;
   $("bulkText").textContent="링크 "+urls.length+"개를 찾았어요"+(dupN?" (이미 저장된 "+dupN+"개는 건너뛰어요)":"")+". 한 번에 저장할까요?";
@@ -558,6 +653,7 @@ function showBulk(urls){S.bulkUrls=urls;var dupN=urls.filter(function(u){return 
 function hideBulk(){S.bulkUrls=[];$("bulkBar").hidden=true}
 function showDup(dup){S.dupMatch=dup;$("dupText").textContent="이미 '"+dup.title+"'(으)로 저장된 링크예요.";$("dupNotice").hidden=false}
 function hideDup(){S.dupMatch=null;$("dupNotice").hidden=true}
+/* 주소를 넣으면: 여러 개면 일괄 저장 안내 / 하나면 중복 확인 → 카테고리 추천 → 제목·메모 채우기 */
 function assist(raw){
   var many=extractUrls(raw);
   if(many.length>1){showBulk(many);return}
@@ -572,7 +668,7 @@ function assist(raw){
   if(!S.autoMeta||dup){metaStatus("");return}
   metaStatus("loading");
   fetchMeta(u).then(function(d){
-    if(seq!==assistSeq)return;
+    if(seq!==assistSeq)return;   /* 그 사이 다른 주소를 넣었으면 무시 */
     if(!d||!d.title){metaStatus(metaNet.tried&&metaNet.blocked===metaNet.tried?"blocked":"fail");if(!d)return}
     else metaStatus("");
     if(d.title&&!S.manualTitle)$("title").value=d.title;
@@ -580,102 +676,196 @@ function assist(raw){
     suggestFor(u,(d.title||"")+" "+(d.desc||""));
   });
 }
-/* [v3.5] 주소칸이 비어 있지 않을 때만 ✕ 버튼을 보여요 */
+/* 주소칸이 비어 있지 않을 때만 ✕ 버튼 */
 function syncClear(){var b=$("uClear");if(b)b.hidden=!$("url").value}
 function resetComposer(){
-  if(metaAbort){try{metaAbort.abort()}catch(e){}}
+  abortMeta();
   assistSeq++;$("url").value="";$("title").value="";$("memo").value="";
   S.manualCatPick=false;S.manualTitle=false;S.manualMemo=false;S.suggest=null;hideDup();hideBulk();renderSuggest();metaStatus("");syncClear();
 }
+var urlT=null;
+function onUrlInput(){
+  syncClear();
+  var v=$("url").value;
+  if(!v.trim()){resetComposer();return}
+  clearTimeout(urlT);urlT=setTimeout(function(){assist(v)},300);
+}
+/* 붙여넣는 순간의 원문(줄바꿈 포함)으로 여러 링크 감지 — 한 줄 입력칸은 줄바꿈을 지워 버리기 때문 */
+function onUrlPaste(e){
+  var txt=e.clipboardData&&e.clipboardData.getData("text");
+  S.manualCatPick=false;
+  var many=extractUrls(txt);
+  if(many.length>1){e.preventDefault();$("url").value=many.length+"개 링크";syncClear();showBulk(many);return}
+  setTimeout(function(){syncClear();assist($("url").value)},20);
+}
+/* 잠깐 강조해서 보여주기 (중복 항목 보기 · 랜덤 뽑기) */
+function highlight(id,ms){
+  S.pickedId=id;render();
+  scrollToEl($("link-"+id),"center");
+  setTimeout(function(){if(S.pickedId===id){S.pickedId=null;render()}},ms);
+}
+function jumpToDup(){
+  if(!S.dupMatch)return;var id=S.dupMatch.id;
+  S.filter="all";S.query="";$("search").value="";
+  highlight(id,2500);
+}
 
-/* =====================================================================
-   [기존] 카테고리 관리 패널
-   ===================================================================== */
+/* ==========================================================================
+   8. 카테고리 관리 패널
+   ========================================================================== */
 function renderCatPanel(){
   $("catBtn").classList.toggle("on",S.catManage);$("catBtn").textContent=S.catManage?"완료":"✎ 편집";
   $("catPanel").classList.toggle("show",S.catManage);
   if(!S.catManage)return;
   var L=$("catEdit");L.textContent="";
-  S.cats.forEach(function(c,idx){
-    var row=document.createElement("div");row.className="cerow";
-    var em=document.createElement("input");em.className="cemoji";em.value=c[1];em.maxLength=4;em.setAttribute("aria-label",c[2]+" 아이콘");
-    em.onchange=function(){S.cats[idx][1]=Array.from(em.value.trim()).slice(0,2).join("")||"🏷️";syncCats();render()};
-    var nm=document.createElement("input");nm.className="clabel";nm.value=c[2];nm.maxLength=16;nm.setAttribute("aria-label",c[2]+" 이름");
-    nm.onchange=function(){var v=nm.value.trim();if(!v){nm.value=c[2];return}S.cats[idx][2]=v;syncCats();render()};
-    var conf=S.catConfirmId===c[0];
-    var del=btn("cdel"+(conf?" confirm":""),conf?"삭제 확인":"✕",function(){
-      if(S.cats.length<=1){say("카테고리는 최소 1개가 필요해요");return}
-      if(S.catConfirmId!==c[0]){S.catConfirmId=c[0];renderCatPanel();setTimeout(function(){if(S.catConfirmId===c[0]){S.catConfirmId=null;renderCatPanel()}},3000);return}
-      var rid=c[0];S.catConfirmId=null;S.cats=S.cats.filter(function(x){return x[0]!==rid});
-      if(S.sel===rid)S.sel=S.cats[0][0];if(S.filter===rid)S.filter="all";
-      syncCats();render();say("카테고리를 삭제했어요 (그 카테고리의 링크는 '기타'로 보여요)");
-    });
-    del.title="카테고리 삭제";
-    row.appendChild(em);row.appendChild(nm);row.appendChild(del);L.appendChild(row);
-  });
+  S.cats.forEach(function(c,idx){L.appendChild(catEditRow(c,idx))});
 }
+function catEditRow(c,idx){
+  var em=el("input","cemoji");em.value=c[1];em.maxLength=4;em.setAttribute("aria-label",c[2]+" 아이콘");
+  em.onchange=function(){S.cats[idx][1]=Array.from(em.value.trim()).slice(0,2).join("")||"🏷️";syncCats();render()};
+  var nm=el("input","clabel");nm.value=c[2];nm.maxLength=16;nm.setAttribute("aria-label",c[2]+" 이름");
+  nm.onchange=function(){var v=nm.value.trim();if(!v){nm.value=c[2];return}S.cats[idx][2]=v;syncCats();render()};
+  var conf=S.catConfirmId===c[0];
+  var del=btn("cdel"+(conf?" confirm":""),conf?"삭제 확인":"✕",function(){deleteCat(c[0])});
+  del.title="카테고리 삭제";
+  return append(el("div","cerow"),em,nm,del);
+}
+/* 두 번 눌러야 삭제 (3초 지나면 취소) */
+function deleteCat(rid){
+  if(S.cats.length<=1){say("카테고리는 최소 1개가 필요해요");return}
+  if(S.catConfirmId!==rid){S.catConfirmId=rid;renderCatPanel();setTimeout(function(){if(S.catConfirmId===rid){S.catConfirmId=null;renderCatPanel()}},3000);return}
+  S.catConfirmId=null;S.cats=S.cats.filter(function(x){return x[0]!==rid});
+  if(S.sel===rid)S.sel=S.cats[0][0];if(S.filter===rid)S.filter="all";
+  syncCats();render();say("카테고리를 삭제했어요 (그 카테고리의 링크는 '기타'로 보여요)");
+}
+function addCat(){
+  var name=$("ncName").value.trim();if(!name){say("카테고리 이름을 입력해 주세요");$("ncName").focus();return}
+  var em=Array.from($("ncEmoji").value.trim()).slice(0,2).join("")||"🏷️",id="cat_"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+  S.cats.push([id,em,name]);S.sel=id;S.manualCatPick=true;S.suggest=null;$("ncEmoji").value="";$("ncName").value="";syncCats();render();say("'"+name+"' 카테고리를 추가했어요");
+}
+function resetCats(){S.cats=cloneCats(DEF);if(!knownCat(S.sel))S.sel=S.cats[0][0];S.filter="all";S.catConfirmId=null;syncCats();render();say("기본 카테고리로 되돌렸어요")}
+function toggleCatManage(){S.catManage=!S.catManage;S.catConfirmId=null;renderCatPanel();if(S.catManage)$("ncName").focus()}
 
-/* =====================================================================
-   [신규] 필터·정렬 · 오래 안 본 링크
-   ===================================================================== */
+/* ==========================================================================
+   9. 목록
+   ========================================================================== */
+/* --- 오래 안 본 링크 --- */
 function lastTouch(it){return Number(it.lastVisited||0)||itemTs(it)}
 function isStale(it){var t=lastTouch(it);return !!t&&(Date.now()-t)>=STALE_DAYS*864e5}
 function staleDays(it){return Math.max(1,Math.floor((Date.now()-lastTouch(it))/864e5))}
-function catKey(it){return knownCat(it.cat)?it.cat:"other"}
+
+/* --- 필터 · 검색 · 정렬 --- */
+function matchFilter(i,f){
+  if(f==="all")return true;
+  if(f==="pinned")return !!i.pinned;
+  if(f==="stale")return isStale(i);
+  return f===catKey(i);
+}
+var SORTERS={
+  smart:function(a,b){var d=(b.pinned?1:0)-(a.pinned?1:0);return d||itemTs(b)-itemTs(a)},   /* 고정 먼저, 그다음 최신 */
+  newest:function(a,b){return itemTs(b)-itemTs(a)},
+  oldest:function(a,b){return itemTs(a)-itemTs(b)},
+  title:function(a,b){return String(a.title||"").localeCompare(String(b.title||""),"ko")},
+  visits:function(a,b){return Number(b.visits||0)-Number(a.visits||0)||itemTs(b)-itemTs(a)}
+};
 function getShown(){
   var q=S.query.trim().toLowerCase();
   var arr=S.items.filter(function(i){
-    if(S.filter==="pinned"&&!i.pinned)return false;
-    if(S.filter==="stale"&&!isStale(i))return false;
-    if(S.filter!=="all"&&S.filter!=="pinned"&&S.filter!=="stale"&&S.filter!==catKey(i))return false;
+    if(!matchFilter(i,S.filter))return false;
     if(q&&(String(i.title||"")+" "+String(i.url||"")+" "+String(i.memo||"")).toLowerCase().indexOf(q)<0)return false;
     return true;
   });
-  arr.sort(function(a,b){
-    if(S.sort==="smart"){var d=(b.pinned?1:0)-(a.pinned?1:0);return d||itemTs(b)-itemTs(a)}
-    if(S.sort==="newest")return itemTs(b)-itemTs(a);
-    if(S.sort==="oldest")return itemTs(a)-itemTs(b);
-    if(S.sort==="title")return String(a.title||"").localeCompare(String(b.title||""),"ko");
-    if(S.sort==="visits")return Number(b.visits||0)-Number(a.visits||0)||itemTs(b)-itemTs(a);
-    return 0;
-  });
+  arr.sort(SORTERS[S.sort]||function(){return 0});
   return arr;
 }
 
-/* =====================================================================
-   [기존+신규] 화면 그리기
-   ===================================================================== */
-var lastShown=[];
+/* --- 전체 그리기 --- */
+var lastShown=[];   /* 지금 화면에 보이는 링크 (🎲 · M↓ · 🔗 버튼이 씀) */
 function render(){
+  renderTopState();
+  renderCatPicker();
+  renderSuggest();renderCatPanel();
+  $("searchBox").hidden=!S.items.length;$("sClear").hidden=!S.query;
+  renderChips();
+  renderList();
+}
+function renderTopState(){
   $("mainCard").classList.toggle("compact",!!S.compact);$("bCompact").classList.toggle("on",!!S.compact);
   $("sortSel").value=S.sort;$("count").textContent=S.items.length;
   $("metaToggle").textContent=S.autoMeta?"켜짐 · 외부 서비스로 제목을 가져와요":"꺼짐 · 주소로만 제목을 만들어요";
   $("metaToggle").className="chip"+(S.autoMeta?" on":"");
+}
+/* 저장할 카테고리 고르기 */
+function renderCatPicker(){
   var cats=$("cats");cats.textContent="";
   S.cats.forEach(function(c){cats.appendChild(btn("cat"+(S.sel===c[0]?" on":""),c[1]+" "+c[2],function(){S.sel=c[0];S.manualCatPick=true;S.suggest=null;save();render()}))});
-  renderSuggest();renderCatPanel();
-  $("searchBox").hidden=!S.items.length;$("sClear").hidden=!S.query;
-
+}
+/* 필터 칩: 전체 · ★고정 · ⏳오래 안 본 · 카테고리별 · 기타 (개수가 있는 것만) */
+function renderChips(){
   var pinned=0,stale=0,counts={};
   S.items.forEach(function(i){if(i.pinned)pinned++;if(isStale(i))stale++;var k=catKey(i);counts[k]=(counts[k]||0)+1});
-  if(S.filter==="pinned"&&!pinned||S.filter==="stale"&&!stale||(S.filter!=="all"&&S.filter!=="pinned"&&S.filter!=="stale"&&!counts[S.filter]))S.filter="all";
+  var opts=[["all","전체 "+S.items.length,1],["pinned","★ 고정 "+pinned,pinned],["stale","⏳ 오래 안 본 "+stale,stale]];
+  S.cats.forEach(function(c){opts.push([c[0],c[1]+" "+c[2]+" "+counts[c[0]],counts[c[0]]])});
+  opts.push(["other","🔗 기타 "+counts.other,counts.other]);
+  var cur=S.filter==="pinned"?pinned:S.filter==="stale"?stale:counts[S.filter];
+  if(S.filter!=="all"&&!cur)S.filter="all";   /* 보던 필터가 비면 전체로 */
   var chips=$("chips");chips.textContent="";
-  chips.appendChild(btn("chip"+(S.filter==="all"?" on":""),"전체 "+S.items.length,function(){S.filter="all";render()}));
-  if(pinned)chips.appendChild(btn("chip"+(S.filter==="pinned"?" on":""),"★ 고정 "+pinned,function(){S.filter="pinned";render()}));
-  if(stale)chips.appendChild(btn("chip"+(S.filter==="stale"?" on":""),"⏳ 오래 안 본 "+stale,function(){S.filter="stale";render()}));
-  S.cats.forEach(function(c){if(counts[c[0]])chips.appendChild(btn("chip"+(S.filter===c[0]?" on":""),c[1]+" "+c[2]+" "+counts[c[0]],function(){S.filter=c[0];render()}))});
-  if(counts.other)chips.appendChild(btn("chip"+(S.filter==="other"?" on":""),"🔗 기타 "+counts.other,function(){S.filter="other";render()}));
-
+  opts.forEach(function(o){if(o[2])chips.appendChild(btn("chip"+(S.filter===o[0]?" on":""),o[1],function(){S.filter=o[0];render()}))});
+}
+function renderList(){
   var shown=getShown();lastShown=shown.slice();
   var list=$("list");list.textContent="";
-  if(!shown.length){var e=document.createElement("div");e.className="empty";e.textContent=S.items.length?"검색어나 필터에 맞는 링크가 없어요.":"아직 저장된 링크가 없어요. 위 입력창에 주소를 붙여넣어 첫 링크를 저장해 보세요.";list.appendChild(e);return}
+  if(!shown.length){list.appendChild(el("div","empty",S.items.length?"검색어나 필터에 맞는 링크가 없어요.":"아직 저장된 링크가 없어요. 위 입력창에 주소를 붙여넣어 첫 링크를 저장해 보세요."));return}
   shown.forEach(function(it){list.appendChild(S.editingId===it.id?editRow(it):itemRow(it))});
 }
-/* [신규] 수정 폼 — [수정] 입력 중인 내용을 S.draft에 담아, 동기화로 화면이 다시 그려져도 사라지지 않게 해요 */
+
+/* --- 링크 한 줄 --- */
+function itemRow(it){
+  var info=catInfo(it.cat),row=el("div","item"+(it.pinned?" pinned":"")+(S.pickedId===it.id?" pick":""));
+  row.id="link-"+it.id;
+  return append(row,itemIcon(it,info),itemText(it,info),itemActions(it));
+}
+/* 사이트 아이콘 (못 불러오면 카테고리 이모지) */
+function itemIcon(it,info){
+  var ic=el("div","ico"),fav=faviconUrl(it.url);
+  if(fav){var img=document.createElement("img");img.src=fav;img.alt="";img.loading="lazy";img.referrerPolicy="no-referrer";img.onerror=function(){ic.textContent=info[1]};ic.appendChild(img)}else ic.textContent=info[1];
+  return ic;
+}
+/* 제목 · 메모 · (카테고리 이름표, 오래 안 봄, 도메인·날짜, 방문 수) */
+function itemText(it,info){
+  var tx=el("div","txt");
+  tx.appendChild(el("div","t",(it.pinned?"★ ":"")+it.title));
+  if(it.memo)tx.appendChild(el("div","memo",it.memo));
+  var meta=el("div","meta");
+  /* 이름표를 누르면 그 카테고리만 모아 보기 (바꾸기는 ✎ 수정에서) */
+  var tag=btn("mtag",info[1]+" "+info[2],function(){S.filter=catKey(it);render();scrollToEl($("chips"),"nearest")});
+  tag.title="이 카테고리만 보기";meta.appendChild(tag);
+  if(isStale(it))meta.appendChild(el("span","stale-tag",staleDays(it)+"일째 안 봄"));
+  var d=fmtDate(itemTs(it));meta.appendChild(el("span","mhost",host(it.url)+(d?" · "+d:"")));
+  if(Number(it.visits||0)>0)meta.appendChild(el("span","vstat","· "+it.visits+"번 열어봄"));
+  tx.appendChild(meta);
+  return tx;
+}
+/* ★ 고정 · ✎ 수정 · ⧉ 복사 · ↗ 열기 · ✕ 삭제(두 번) */
+function itemActions(it){
+  var pin=iconBtn("rb"+(it.pinned?" on":""),"★",it.pinned?"고정 해제":"맨 위에 고정",function(){var nv=!it.pinned;updateItem(it.id,{pinned:nv});say(nv?"맨 위에 고정했어요":"고정을 풀었어요")});
+  var ed=iconBtn("rb","✎","수정",function(){S.editingId=it.id;S.draft=null;render()});
+  var cp=iconBtn("rb","⧉","링크 복사",function(){copyAndSay(it.url,"링크 주소를 복사했어요","복사에 실패했어요")});
+  var a=el("a","rb","↗");a.title="새 탭에서 열기";a.setAttribute("aria-label","새 탭에서 열기");a.href=it.url;a.target="_blank";a.rel="noopener noreferrer";
+  a.addEventListener("click",function(){recordVisit(it.id)});   /* 방문만 조용히 기록 */
+  var conf=S.confirmId===it.id;
+  var x=iconBtn("rb del"+(conf?" confirm":""),conf?"삭제 확인":"✕","삭제",function(){
+    if(S.confirmId!==it.id){S.confirmId=it.id;render();setTimeout(function(){if(S.confirmId===it.id){S.confirmId=null;render()}},3000);return}
+    S.confirmId=null;removeItem(it.id);say("링크를 삭제했어요");
+  });
+  return append(el("div","acts"),pin,ed,cp,a,x);
+}
+
+/* --- 수정 폼: 입력 중인 내용은 S.draft 에 담아서, 동기화로 다시 그려져도 안 사라지게 --- */
 function editRow(it){
-  var row=document.createElement("div");row.className="item";row.id="link-"+it.id;
+  var row=el("div","item");row.id="link-"+it.id;
   if(!S.draft)S.draft={title:it.title||"",url:it.url||"",memo:it.memo||"",cat:it.cat};
-  var D=S.draft,f=document.createElement("div");f.className="edit-form";
+  var D=S.draft,f=el("div","edit-form");
   function inp(key,ph){var x=document.createElement("input");x.value=D[key];x.placeholder=ph;x.oninput=function(){D[key]=x.value};x.onkeydown=function(e){if(e.key==="Enter")saveEdit()};f.appendChild(x);return x}
   inp("title","제목");inp("url","주소");inp("memo","한 줄 메모");
   var sel=document.createElement("select");
@@ -687,48 +877,18 @@ function editRow(it){
     var patch={title:D.title.trim()||buildFallbackTitle(p.href),url:p.href,memo:D.memo.trim(),cat:D.cat};
     S.editingId=null;S.draft=null;updateItem(it.id,patch);say("링크 정보를 수정했어요");
   }
-  var acts=document.createElement("div");acts.className="edit-actions";
-  acts.appendChild(btn("mini-btn acc","저장",saveEdit));acts.appendChild(btn("mini-btn","취소",function(){S.editingId=null;S.draft=null;render()}));
-  f.appendChild(acts);row.appendChild(f);return row;
+  f.appendChild(append(el("div","edit-actions"),btn("mini-btn acc","저장",saveEdit),btn("mini-btn","취소",cancelEdit)));
+  row.appendChild(f);return row;
 }
-function itemRow(it){
-  var info=catInfo(it.cat),old=isStale(it),row=document.createElement("div");
-  row.className="item"+(it.pinned?" pinned":"")+(S.pickedId===it.id?" pick":"");row.id="link-"+it.id;
-  var ic=document.createElement("div");ic.className="ico";
-  var fav=faviconUrl(it.url);
-  if(fav){var img=document.createElement("img");img.src=fav;img.alt="";img.loading="lazy";img.referrerPolicy="no-referrer";img.onerror=function(){ic.textContent=info[1]};ic.appendChild(img)}else ic.textContent=info[1];
-  var tx=document.createElement("div");tx.className="txt";
-  var t=document.createElement("div");t.className="t";t.textContent=(it.pinned?"★ ":"")+it.title;tx.appendChild(t);
-  if(it.memo){var m=document.createElement("div");m.className="memo";m.textContent=it.memo;tx.appendChild(m)}
-  var meta=document.createElement("div");meta.className="meta";
-  /* [수정] v5.3은 이름표를 누르면 카테고리가 바로 바뀌어서 실수하기 쉬웠어요. 누르면 그 카테고리만 모아 보여요. 변경은 ✎ 수정에서 해요. */
-  var tag=btn("mtag",info[1]+" "+info[2],function(){S.filter=catKey(it);render();$("chips").scrollIntoView&&$("chips").scrollIntoView({behavior:"smooth",block:"nearest"})});
-  tag.title="이 카테고리만 보기";meta.appendChild(tag);
-  if(old){var st=document.createElement("span");st.className="stale-tag";st.textContent=staleDays(it)+"일째 안 봄";meta.appendChild(st)}
-  var hs=document.createElement("span");hs.className="mhost";var ds=fmtDate(itemTs(it));hs.textContent=host(it.url)+(ds?" · "+ds:"");meta.appendChild(hs);
-  if(Number(it.visits||0)>0){var vs=document.createElement("span");vs.className="vstat";vs.textContent="· "+it.visits+"번 열어봄";meta.appendChild(vs)}
-  tx.appendChild(meta);
-  var act=document.createElement("div");act.className="acts";
-  var pin=btn("rb"+(it.pinned?" on":""),"★",function(){var nv=!it.pinned;updateItem(it.id,{pinned:nv});say(nv?"맨 위에 고정했어요":"고정을 풀었어요")});
-  pin.title=it.pinned?"고정 해제":"맨 위에 고정";pin.setAttribute("aria-label",pin.title);
-  var ed=btn("rb","✎",function(){S.editingId=it.id;S.draft=null;render()});ed.title="수정";ed.setAttribute("aria-label","수정");
-  var cp=btn("rb","⧉",function(){copyText(it.url).then(function(ok){say(ok?"링크 주소를 복사했어요":"복사에 실패했어요")})});cp.title="링크 복사";cp.setAttribute("aria-label","링크 복사");
-  var a=document.createElement("a");a.className="rb";a.textContent="↗";a.title="새 탭에서 열기";a.setAttribute("aria-label","새 탭에서 열기");a.href=it.url;a.target="_blank";a.rel="noopener noreferrer";
-  /* [수정] v5.3은 링크를 열 때마다 GitHub에 바로 저장하고, 주소를 클립보드에 몰래 복사했어요. 이제 방문만 조용히 기록하고 묶어서 보내요. */
-  a.addEventListener("click",function(){recordVisit(it.id)});
-  var conf=S.confirmId===it.id;
-  var x=btn("rb del"+(conf?" confirm":""),conf?"삭제 확인":"✕",function(){
-    if(S.confirmId!==it.id){S.confirmId=it.id;render();setTimeout(function(){if(S.confirmId===it.id){S.confirmId=null;render()}},3000);return}
-    S.confirmId=null;op(function(arr){return arr.filter(function(i){return i.id!==it.id})});say("링크를 삭제했어요");
-  });x.title="삭제";x.setAttribute("aria-label","삭제");
-  [pin,ed,cp,a,x].forEach(function(b){act.appendChild(b)});
-  row.appendChild(ic);row.appendChild(tx);row.appendChild(act);return row;
-}
+function cancelEdit(){S.editingId=null;S.draft=null;render()}
 
-/* =====================================================================
-   [기존+신규] 저장 (단건 · 일괄)
-   ===================================================================== */
-/* [v3.4] 자동 제목인 채로 저장했으면, 저장 뒤에도 진짜 제목을 불러와 채워요 (불러오기 전에 저장 버튼을 눌러도 제목이 들어가요) */
+/* ==========================================================================
+   10. 저장하기
+   ========================================================================== */
+function newItem(u,title,memo,cat,ts){return{id:ts+""+Math.floor(Math.random()*1000),url:u,title:title,memo:memo,cat:cat,pinned:false,visits:0,lastVisited:0,createdAt:ts}}
+/* 새 항목을 맨 앞에 (같은 주소가 이미 있으면 건너뜀) */
+function prepend(batch){op(function(a){return union(a.slice().reverse(),batch.slice().reverse()).reverse()})}
+/* 자동 제목인 채로 저장했으면, 저장 뒤에도 진짜 제목을 불러와 채움 (사용자가 그 사이 고쳤으면 안 건드림) */
 var enrichChain=Promise.resolve();
 function enrichLater(id,u,autoTitle,fillMemo){
   if(!S.autoMeta)return;
@@ -741,24 +901,22 @@ function enrichLater(id,u,autoTitle,fillMemo){
     updateItem(id,patch);
   }).catch(function(){});
 }
-function newItem(u,title,memo,cat,ts){return{id:ts+""+Math.floor(Math.random()*1000),url:u,title:title,memo:memo,cat:cat,pinned:false,visits:0,lastVisited:0,createdAt:ts}}
-function add(){
+function saveLink(){
   if(S.bulkUrls.length){bulkSave();return}
   var raw=$("url").value,many=extractUrls(raw);
   if(many.length>1){showBulk(many);return}
   var p=parseHttpUrl(raw);
   if(!p){say(raw.trim()?"올바른 주소가 아니에요":"주소를 입력해 주세요");$("url").focus();return}
   var u=p.href,dup=findDup(u);
-  /* [수정] v5.3은 중복 주소를 '저장했어요'라고 안내하고 실제로는 저장하지 않았어요. 이제 이미 있다고 알려줘요. */
   if(dup){showDup(dup);say("이미 저장된 링크예요");return}
-  var t=$("title").value.trim(),m=$("memo").value.trim(),cat=S.sel,made=null;
-  if(!S.manualCatPick){var r=guessRule(u,t+" "+m);if(r){var res=ensureCat(r);cat=res.id;S.sel=cat;if(res.created)made=r}}
+  var t=$("title").value.trim(),m=$("memo").value.trim(),c=catForSave(u,t+" "+m);
+  S.sel=c.cat;
   var fb=buildFallbackTitle(u),autoT=!t||(!S.manualTitle&&t===fb),fillMemo=!S.manualMemo;
-  var it=newItem(u,t||fb,m,cat,Date.now());
+  var it=newItem(u,t||fb,m,c.cat,Date.now());
   resetComposer();S.confirmId=null;
-  op(function(a){return union(a.slice().reverse(),[it]).reverse()});
+  prepend([it]);
   if(autoT)enrichLater(it.id,u,it.title,fillMemo);
-  say(made?"저장했어요 · '"+made.e+" "+made.l+"' 카테고리를 새로 만들었어요":"링크를 저장했어요");
+  say(c.made?"저장했어요 · '"+c.made.e+" "+c.made.l+"' 카테고리를 새로 만들었어요":"링크를 저장했어요");
 }
 function bulkSave(){
   var urls=S.bulkUrls.filter(function(u){return !findDup(u)});
@@ -766,126 +924,148 @@ function bulkSave(){
   if(!urls.length){hideBulk();$("url").value="";say("모두 이미 저장된 링크예요");return}
   var now=Date.now(),made=[];
   var batch=urls.map(function(u,i){
-    var cat=S.sel;
-    if(!S.manualCatPick){var r=guessRule(u,"");if(r){var res=ensureCat(r);cat=res.id;if(res.created)made.push(r.l)}}
-    return newItem(u,buildFallbackTitle(u),buildFallbackMemo(u),cat,now+i);
+    var c=catForSave(u,"");if(c.made)made.push(c.made.l);
+    return newItem(u,buildFallbackTitle(u),buildFallbackMemo(u),c.cat,now+i);
   });
   resetComposer();
-  op(function(a){return union(a.slice().reverse(),batch.slice().reverse()).reverse()});
+  prepend(batch);
   batch.forEach(function(x){enrichLater(x.id,x.url,x.title,true)});
   say(batch.length+"개를 저장했어요"+(skipped?" · 중복 "+skipped+"개 건너뜀":"")+(made.length?" · 새 카테고리: "+made.join(", "):""));
 }
 
-/* =====================================================================
-   이벤트 연결
-   ===================================================================== */
-$("add").onclick=add;
-$("url").onkeydown=$("title").onkeydown=$("memo").onkeydown=function(e){if(e.key==="Enter")add()};
-$("title").addEventListener("input",function(){S.manualTitle=!!$("title").value.trim()});
-$("memo").addEventListener("input",function(){S.manualMemo=!!$("memo").value.trim()});
-var urlT=null;
-$("url").addEventListener("input",function(){
-  syncClear();
-  var v=$("url").value;
-  if(!v.trim()){resetComposer();return}
-  clearTimeout(urlT);urlT=setTimeout(function(){assist(v)},300);
-});
-/* [신규] 붙여넣는 순간의 원문(줄바꿈 포함)으로 여러 링크를 감지 */
-$("url").addEventListener("paste",function(e){
-  var txt=e.clipboardData&&e.clipboardData.getData("text");
-  S.manualCatPick=false;
-  var many=extractUrls(txt);
-  if(many.length>1){e.preventDefault();$("url").value=many.length+"개 링크";syncClear();showBulk(many);return}
-  setTimeout(function(){syncClear();assist($("url").value)},20);
-});
-/* [v3.2] 붙여넣기 버튼 제거: 폰·노션 안에서는 클립보드 읽기가 막혀 동작하지 않아요. 입력칸에 직접 붙여넣으면 돼요. */
-$("uClear").onclick=function(){resetComposer();say("입력한 내용을 모두 지웠어요");$("url").focus()};
-$("dupJump").onclick=function(){
-  if(!S.dupMatch)return;var id=S.dupMatch.id;
-  S.filter="all";S.query="";$("search").value="";S.pickedId=id;render();
-  var el=$("link-"+id);if(el&&el.scrollIntoView)el.scrollIntoView({behavior:"smooth",block:"center"});
-  setTimeout(function(){if(S.pickedId===id){S.pickedId=null;render()}},2500);
-};
-$("dupReset").onclick=function(){resetComposer();$("url").focus()};
-$("bulkSave").onclick=bulkSave;
-$("bulkCancel").onclick=function(){resetComposer()};
-$("catBtn").onclick=function(){S.catManage=!S.catManage;S.catConfirmId=null;renderCatPanel();if(S.catManage)$("ncName").focus()};
-function addCat(){
-  var name=$("ncName").value.trim();if(!name){say("카테고리 이름을 입력해 주세요");$("ncName").focus();return}
-  var em=Array.from($("ncEmoji").value.trim()).slice(0,2).join("")||"🏷️",id="cat_"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
-  S.cats.push([id,em,name]);S.sel=id;S.manualCatPick=true;S.suggest=null;$("ncEmoji").value="";$("ncName").value="";syncCats();render();say("'"+name+"' 카테고리를 추가했어요");
+/* --- 백업 --- */
+function backupJson(){
+  return JSON.stringify({items:S.items.map(function(i){return{title:i.title,url:i.url,memo:i.memo||"",cat:i.cat,pinned:!!i.pinned,visits:Number(i.visits||0),lastVisited:Number(i.lastVisited||0),createdAt:itemTs(i)}}),cats:S.cats},null,1);
 }
-$("ncAdd").onclick=addCat;$("ncName").onkeydown=$("ncEmoji").onkeydown=function(e){if(e.key==="Enter")addCat()};
-$("catReset").onclick=function(){S.cats=cloneCats(DEF);if(!knownCat(S.sel))S.sel=S.cats[0][0];S.filter="all";S.catConfirmId=null;syncCats();render();say("기본 카테고리로 되돌렸어요")};
-$("search").oninput=function(){S.query=$("search").value;render()};
-$("sClear").onclick=function(){S.query="";$("search").value="";render();$("search").focus()};
-$("sortSel").onchange=function(){S.sort=$("sortSel").value;save();render()};
-/* [기존] 백업 — [신규] 메모·고정·방문 정보도 함께 */
-$("export").onclick=function(){
-  var s=JSON.stringify({items:S.items.map(function(i){return{title:i.title,url:i.url,memo:i.memo||"",cat:i.cat,pinned:!!i.pinned,visits:Number(i.visits||0),lastVisited:Number(i.lastVisited||0),createdAt:itemTs(i)}}),cats:S.cats},null,1);
+function exportBackup(){
+  var s=backupJson();
   $("box").value=s;$("cfg").classList.remove("show");$("panel").classList.add("show");
-  copyText(s).then(function(ok){say(ok?"백업 내용을 복사했어요":"위 글자를 전체 선택해서 복사해 주세요")});
-};
-$("copy").onclick=function(){copyText($("box").value).then(function(ok){say(ok?"복사했어요":"전체 선택해서 직접 복사해 주세요")})};
-$("imp").onclick=function(){
+  copyAndSay(s,"백업 내용을 복사했어요","위 글자를 전체 선택해서 복사해 주세요");
+}
+/* 예전 형식(배열)도 받음. 없는 카테고리는 추가, 같은 주소는 건너뜀 */
+function importBackup(){
   try{
     var d=JSON.parse($("box").value),arr=Array.isArray(d)?d:d.items,cs=(!Array.isArray(d)&&validCats(d.cats))?d.cats:null;
     if(!Array.isArray(arr))throw 0;
     var catAdded=false;
     if(cs)cs.forEach(function(c){if(!knownCat(c[0])){S.cats.push(c.slice(0,3));catAdded=true}});
     if(catAdded)markCatsDirty();
-    var now=Date.now(),add2=arr.filter(function(r){return r&&parseHttpUrl(r.url)}).map(function(r,n){var x=newItem(parseHttpUrl(r.url).href,r.title||buildFallbackTitle(r.url),r.memo||"",r.cat||S.cats[0][0],r.createdAt||now+n);x.id=(now+n)+""+Math.floor(Math.random()*1000);x.pinned=!!r.pinned;x.visits=Number(r.visits||0);x.lastVisited=Number(r.lastVisited||0);return x});
+    var now=Date.now(),incoming=arr.filter(function(r){return r&&parseHttpUrl(r.url)}).map(function(r,n){
+      var x=newItem(parseHttpUrl(r.url).href,r.title||buildFallbackTitle(r.url),r.memo||"",r.cat||S.cats[0][0],r.createdAt||now+n);
+      x.id=(now+n)+""+Math.floor(Math.random()*1000);x.pinned=!!r.pinned;x.visits=Number(r.visits||0);x.lastVisited=Number(r.lastVisited||0);return x});
     var before=S.items.length;
-    op(function(a){return union(a,add2)});
+    op(function(a){return union(a,incoming)});
     say((S.items.length-before)+"개를 가져왔어요");
   }catch(e){say("먼저 내보낸 JSON을 붙여넣어 주세요")}
-};
-/* [신규] 컴팩트 · 랜덤 · 마크다운 */
-$("bCompact").onclick=function(){S.compact=!S.compact;save();render();say(S.compact?"컴팩트 보기를 켰어요":"기본 보기로 돌아왔어요")};
-$("bDice").onclick=function(){
+}
+
+/* ==========================================================================
+   11. 하단 버튼 · 설정
+   ========================================================================== */
+function toggleCompact(){S.compact=!S.compact;save();render();say(S.compact?"컴팩트 보기를 켰어요":"기본 보기로 돌아왔어요")}
+function pickRandom(){
   if(!lastShown.length){say("뽑을 링크가 없어요");return}
-  var pick=lastShown[Math.floor(Math.random()*lastShown.length)];S.pickedId=pick.id;render();
-  var el=$("link-"+pick.id);if(el&&el.scrollIntoView)el.scrollIntoView({behavior:"smooth",block:"center"});
+  var pick=lastShown[Math.floor(Math.random()*lastShown.length)];
+  highlight(pick.id,4000);
   say("오늘의 추천 링크: "+pick.title);
-  setTimeout(function(){if(S.pickedId===pick.id){S.pickedId=null;render()}},4000);
-};
-$("bMd").onclick=function(){
+}
+/* 노션에 붙이면 링크 목록이 되는 마크다운 */
+function copyMarkdown(){
   if(!lastShown.length){say("복사할 링크가 없어요");return}
   var md=lastShown.map(function(i){return "- ["+String(i.title).replace(/[\[\]]/g,"")+"]("+i.url+")"+(i.memo?" — "+i.memo:"")}).join("\n");
-  copyText(md).then(function(ok){say(ok?"노션에 붙여넣을 수 있는 목록을 복사했어요 ("+lastShown.length+"개)":"복사에 실패했어요")});
-};
-$("bImp").onclick=function(){$("box").value="";$("cfg").classList.remove("show");$("panel").classList.toggle("show");if($("panel").classList.contains("show"))$("box").focus()};
-$("bLinks").onclick=function(){if(!lastShown.length){say("복사할 링크가 없어요");return}copyText(lastShown.map(function(i){return i.title+" - "+i.url}).join("\n")).then(function(ok){say(ok?"보이는 링크 "+lastShown.length+"개를 복사했어요":"복사에 실패했어요")})};
-$("bCfg").onclick=function(){$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;$("panel").classList.remove("show");$("cfg").classList.toggle("show")};
-$("metaToggle").onclick=function(){S.autoMeta=!S.autoMeta;save();render()};
-$("gtheme").onclick=function(){var dark=document.documentElement.getAttribute("data-theme")==="dark"||(!S.theme&&window.matchMedia("(prefers-color-scheme: dark)").matches);S.theme=dark?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save()};
-$("gshow").onclick=function(){var i=$("gt");i.type=i.type==="password"?"text":"password"};
-$("gsave").onclick=function(){
+  copyAndSay(md,"노션에 붙여넣을 수 있는 목록을 복사했어요 ("+lastShown.length+"개)","복사에 실패했어요");
+}
+function copyVisible(){
+  if(!lastShown.length){say("복사할 링크가 없어요");return}
+  copyAndSay(lastShown.map(function(i){return i.title+" - "+i.url}).join("\n"),"보이는 링크 "+lastShown.length+"개를 복사했어요","복사에 실패했어요");
+}
+/* 백업 패널과 설정 패널은 하나만 열림 */
+function toggleBackupPanel(){$("box").value="";$("cfg").classList.remove("show");$("panel").classList.toggle("show");if($("panel").classList.contains("show"))$("box").focus()}
+function toggleSettings(){$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;$("panel").classList.remove("show");$("cfg").classList.toggle("show")}
+function closePanels(){$("panel").classList.remove("show");$("cfg").classList.remove("show")}
+
+function toggleTheme(){S.theme=isDark()?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save()}
+function markChips(attr,isOn){document.querySelectorAll("["+attr+"]").forEach(function(b){b.className="chip"+(isOn(b)?" on":"")})}
+function applyFont(){
+  var f=FONTS[S.font]||FONTS.noto,r=document.documentElement.style;
+  r.setProperty("--body",f.body);r.setProperty("--title",f.title);
+  markChips("data-f",function(b){return b.dataset.f===S.font});
+}
+function applyZoom(){$("mainCard").style.zoom=S.zoom;markChips("data-z",function(b){return +b.dataset.z===S.zoom})}
+
+function saveGithub(){
   CFG={user:cleanName($("gu").value),repo:cleanName($("gr").value),token:cleanTok($("gt").value)};$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;saveCfg();
   if(!synced()){setDot("off");say("세 칸을 모두 채워 주세요");return}
-  var snap=S.items.slice();op(function(a){return union(a,snap)});$("cfg").classList.remove("show");
-};
-$("gout").onclick=function(){CFG={user:"",repo:"",token:""};saveCfg();$("gu").value=$("gr").value=$("gt").value="";setDot("off");say("이 기기에서 연결을 해제했어요")};
-/* [v4] 글꼴·화면 크기 (Clean Quest와 같은 선택지) */
-function applyFont(){
-  var r=document.documentElement.style;
-  r.setProperty("--body",S.font==="gowun"?"'Gowun Dodum','Noto Sans KR',sans-serif":S.font==="jua"?"'Noto Sans KR','Gowun Dodum',sans-serif":"'Inter','Noto Sans KR','Gowun Dodum',sans-serif");
-  r.setProperty("--title",S.font==="jua"?"'Jua','Noto Sans KR',sans-serif":S.font==="gowun"?"'Gowun Dodum','Noto Sans KR',sans-serif":"'Inter','Noto Sans KR','Gowun Dodum',sans-serif");
-  document.querySelectorAll("[data-f]").forEach(function(b){b.className="chip"+(b.dataset.f===S.font?" on":"")});
+  var snap=S.items.slice();op(function(a){return union(a,snap)});   /* 이 기기 목록 + GitHub 목록 합치기 */
+  $("cfg").classList.remove("show");
 }
-function applyZoom(){$("mainCard").style.zoom=S.zoom;document.querySelectorAll("[data-z]").forEach(function(b){b.className="chip"+(+b.dataset.z===S.zoom?" on":"")})}
-document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();applyFont()}});
-document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();applyZoom()}});
-applyFont();applyZoom();
-/* [신규] 단축키: / 검색, Esc 닫기 */
-document.addEventListener("keydown",function(e){
+function logoutGithub(){CFG={user:"",repo:"",token:""};saveCfg();$("gu").value=$("gr").value=$("gt").value="";setDot("off");say("이 기기에서 연결을 해제했어요")}
+
+/* 단축키: / 검색, Esc 닫기 */
+function onKey(e){
   var tag=e.target&&e.target.tagName,typing=tag==="INPUT"||tag==="TEXTAREA"||tag==="SELECT";
   if(e.key==="/"&&!typing&&S.items.length){e.preventDefault();$("search").focus()}
-  else if(e.key==="Escape"){if(S.editingId){S.editingId=null;S.draft=null;render()}if(S.catManage){S.catManage=false;renderCatPanel()}$("panel").classList.remove("show");$("cfg").classList.remove("show")}
-});
-/* [기존] 다시 보일 때 동기화 — [신규] 숨겨질 때 방문 기록 전송 */
-document.addEventListener("visibilitychange",function(){if(document.hidden)flushVisits();else pull()});
-render();pull();
+  else if(e.key==="Escape"){if(S.editingId)cancelEdit();if(S.catManage){S.catManage=false;renderCatPanel()}closePanels()}
+}
+
+/* ==========================================================================
+   12. 시작
+   ========================================================================== */
+function bindUI(){
+  /* 입력칸 */
+  $("add").onclick=saveLink;
+  $("url").onkeydown=$("title").onkeydown=$("memo").onkeydown=function(e){if(e.key==="Enter")saveLink()};
+  $("title").addEventListener("input",function(){S.manualTitle=!!$("title").value.trim()});
+  $("memo").addEventListener("input",function(){S.manualMemo=!!$("memo").value.trim()});
+  $("url").addEventListener("input",onUrlInput);
+  $("url").addEventListener("paste",onUrlPaste);
+  $("uClear").onclick=function(){resetComposer();say("입력한 내용을 모두 지웠어요");$("url").focus()};
+  $("dupJump").onclick=jumpToDup;
+  $("dupReset").onclick=function(){resetComposer();$("url").focus()};
+  $("bulkSave").onclick=bulkSave;
+  $("bulkCancel").onclick=function(){resetComposer()};
+  /* 카테고리 */
+  $("catBtn").onclick=toggleCatManage;
+  $("ncAdd").onclick=addCat;
+  $("ncName").onkeydown=$("ncEmoji").onkeydown=function(e){if(e.key==="Enter")addCat()};
+  $("catReset").onclick=resetCats;
+  /* 목록 도구 */
+  $("search").oninput=function(){S.query=$("search").value;render()};
+  $("sClear").onclick=function(){S.query="";$("search").value="";render();$("search").focus()};
+  $("sortSel").onchange=function(){S.sort=$("sortSel").value;save();render()};
+  /* 백업 패널 */
+  $("export").onclick=exportBackup;
+  $("copy").onclick=function(){copyAndSay($("box").value,"복사했어요","전체 선택해서 직접 복사해 주세요")};
+  $("imp").onclick=importBackup;
+  /* 하단 버튼 */
+  $("bCompact").onclick=toggleCompact;
+  $("bDice").onclick=pickRandom;
+  $("bMd").onclick=copyMarkdown;
+  $("bImp").onclick=toggleBackupPanel;
+  $("bLinks").onclick=copyVisible;
+  $("bCfg").onclick=toggleSettings;
+  /* 설정 */
+  $("metaToggle").onclick=function(){S.autoMeta=!S.autoMeta;save();render()};
+  $("gtheme").onclick=toggleTheme;
+  $("gshow").onclick=function(){var i=$("gt");i.type=i.type==="password"?"text":"password"};
+  $("gsave").onclick=saveGithub;
+  $("gout").onclick=logoutGithub;
+  document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();applyFont()}});
+  document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();applyZoom()}});
+  /* 전역 */
+  document.addEventListener("keydown",onKey);
+  /* 다시 보이면 동기화, 숨겨지면 방문 기록 전송 */
+  document.addEventListener("visibilitychange",function(){if(document.hidden)flushVisits();else pull()});
+}
+function init(){
+  loadState();
+  loadCfg();
+  if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);
+  bindUI();
+  applyFont();applyZoom();
+  render();pull();
+}
+init();
 </script>
 </body>
 </html>
