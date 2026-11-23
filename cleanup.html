@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Clean Quest</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- [신규] 홈 화면에 앱처럼 추가 -->
+<!-- 홈 화면에 앱처럼 추가 -->
 <link rel="manifest" href="cleanup-manifest.json">
 <meta name="theme-color" content="#0f766e">
 <meta name="mobile-web-app-capable" content="yes">
@@ -29,7 +29,7 @@
   --line:rgba(24,24,27,0.06);
   --accent:#0f766e;
   --accent-soft:rgba(15,118,110,0.09);
-  --accent-border:rgba(15,118,110,0.22);
+  --accent-border:rgba(15,118,110,0.22);--warn:#b45309;--warn-soft:rgba(217,119,6,.12);
   --item:#fafafa;
   --chip:#f4f4f5;
   --shadow-sm:0 1px 2px rgba(24,24,27,0.03),0 4px 16px -4px rgba(24,24,27,0.05);
@@ -53,7 +53,7 @@
     --line:rgba(255,255,255,0.07);
     --accent:#2dd4bf;
     --accent-soft:rgba(45,212,191,0.11);
-    --accent-border:rgba(45,212,191,0.24);
+    --accent-border:rgba(45,212,191,0.24);--warn:#fbbf24;--warn-soft:rgba(251,191,36,.14);
     --item:#171a1e;
     --chip:#1d2127;
     --shadow-sm:0 1px 2px rgba(0,0,0,0.35),0 8px 24px -8px rgba(0,0,0,0.45);
@@ -75,7 +75,7 @@
   --line:rgba(255,255,255,0.07);
   --accent:#2dd4bf;
   --accent-soft:rgba(45,212,191,0.11);
-  --accent-border:rgba(45,212,191,0.24);
+  --accent-border:rgba(45,212,191,0.24);--warn:#fbbf24;--warn-soft:rgba(251,191,36,.14);
   --item:#171a1e;
   --chip:#1d2127;
   --shadow-sm:0 1px 2px rgba(0,0,0,0.35),0 8px 24px -8px rgba(0,0,0,0.45);
@@ -1264,13 +1264,15 @@ body.calm-embed .next-step-hint,body.calm-embed .empty-state,body.calm-embed .da
 body.calm-embed .msg{box-shadow:0 4px 16px rgba(0,0,0,.18)}
 @media (max-width:540px){.status-pill,.revisit-btn{font-size:12px}.save-stamp{font-size:11px}}
 /* =====================================================================
-   [신규] v16 — 앱 전환 바 · Home Vault 집 정리 카드
+   앱 전환 바 (네 앱 공통) · Home Vault 집 정리 카드
    ===================================================================== */
 .appnav{display:flex;justify-content:center;gap:6px;max-width:640px;margin:0 auto 14px}
 .appnav a{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 13px;border-radius:999px;background:var(--card);box-shadow:var(--shadow-sm);white-space:nowrap}
 .appnav a:hover{color:var(--ink)}
 .appnav a.on{background:var(--accent);color:var(--card)}
 .appnav .s{display:none}
+.appnav a{position:relative}
+.appnav .nb{position:absolute;top:-7px;right:-5px;display:grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#f59e0b;color:#fff;font-size:11px;font-weight:700;line-height:1;box-shadow:0 0 0 2px var(--page)}
 @media (max-width:420px){.appnav a{padding:7px 11px}.appnav .l{display:none}.appnav .s{display:inline}}
 @media (min-width:860px){.appnav{max-width:1160px;justify-content:flex-start}}
 @media (min-width:1280px){.appnav{max-width:1280px}}
@@ -1285,14 +1287,28 @@ body.calm-embed .msg{box-shadow:0 4px 16px rgba(0,0,0,.18)}
 .homeq .hlink{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13.5px;font-weight:600;text-decoration:none}
 .homeq .hempty{font-size:14px;color:var(--sub);line-height:1.6;margin-top:6px}
 body.compact .homeq{padding:14px 16px;margin-bottom:12px}
+.homeq .hwarn{background:var(--warn-soft);color:var(--warn);border-radius:14px;padding:11px 14px;margin-top:12px;font-size:14px;font-weight:600;line-height:1.5;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.homeq .hwarn a{color:inherit;font-size:13px;white-space:nowrap}
+/* 📊 주간 리포트 */
+.weekrep .hrow{align-items:flex-start;flex-wrap:nowrap}
+.weekrep .wrline{font-size:17px;font-weight:700;color:var(--ink);line-height:1.5;margin:10px 0 6px;letter-spacing:-.01em}
+.weekrep .wrline span{white-space:nowrap}
+.weekrep .wrrow{align-items:flex-start}
+.weekrep .wrrow b{flex:none;width:72px;font-size:13px;font-weight:600;color:var(--muted);padding-top:1px}
+.weekrep .hsum{margin-top:10px}
+.weekrep .wrcmp{margin-top:6px;color:var(--accent);font-size:14px;font-weight:700}
+.weekrep .wrx{flex:none;width:34px;height:34px;border:0;border-radius:999px;background:var(--chip);color:var(--muted);font-size:14px;cursor:pointer}
+.weekrep .hlink{margin-top:12px;border:0;cursor:pointer;display:flex;width:max-content}
+#logv .weekrep{margin:14px 0 16px}
 </style>
 </head>
 <body>
-<!-- [신규] 세 앱 오가기 -->
+<!-- 네 앱 오가기 -->
 <nav class="appnav" aria-label="앱 이동">
   <a href="cleanup.html" class="on" aria-current="page">🫙 <span class="l">Clean Quest</span><span class="s">정리</span></a>
   <a href="index.html">🗂️ <span class="l">Link Vault</span><span class="s">링크</span></a>
   <a href="home.html">🏠 <span class="l">Home Vault</span><span class="s">우리집</span></a>
+  <a href="cosmetic.html">🧴 <span class="l">Cosmetic Vault</span><span class="s">화장품</span></a>
 </nav>
 <div class="card">
   <div class="head">
@@ -1308,9 +1324,11 @@ body.compact .homeq{padding:14px 16px;margin-bottom:12px}
     <button class="tab on" id="tC">정리</button>
     <button class="tab" id="tL">기록</button>
   </div>
+  <div class="homeq weekrep" id="weekrep" hidden></div><!-- 일요일마다 지난주 리포트 -->
   <div class="top2" id="top2"><div class="mission" id="mission"></div>
   <div class="upto" id="upto"></div></div>
-  <div class="homeq" id="homeq"></div><!-- [신규] Home Vault 집 정리 -->
+  <div class="homeq" id="homeq"></div><!-- Home Vault 집 정리 -->
+  <div class="homeq" id="cosq" hidden></div><!-- Cosmetic Vault 화장품 정리 -->
   <div id="src"></div>
   <div id="logv" hidden></div>
   <div id="garden" hidden></div>
@@ -1360,7 +1378,7 @@ body.compact .homeq{padding:14px 16px;margin-bottom:12px}
     <textarea id="jsonBox" placeholder="복원할 JSON을 여기에 붙여넣으세요"></textarea>
   </div>
   <div class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Clean Quest v16</span>
+    <span class="lab"><i id="dot" class="off"></i>Clean Quest v18</span>
     <span class="save-stamp" id="saveStamp"></span><!-- 저장·동기화 시각 -->
     <button class="fb" id="bCfg" title="설정" aria-label="설정">⚙</button>
   </div>
@@ -1370,18 +1388,18 @@ body.compact .homeq{padding:14px 16px;margin-bottom:12px}
 
 <script>
 /* ==========================================================================
-   Clean Quest v15 — 코드 지도
+   Clean Quest v18 — 코드 지도
    --------------------------------------------------------------------------
     0. 설정값 · 상태 ........ 키 이름, 칸 상태 뜻, 레벨/정원 표, S(앱 상태)
     1. 기본 도구 ............ $, el, btn, 날짜 글자 만들기, 연타 방지
     2. 데이터 저장 .......... 기본 대상, 정규화, 이 기기 저장/불러오기
     3. GitHub 동기화 · op ... 모든 데이터 변경은 op() 한 곳을 지나감
     4. 실행 취소 ............ 바뀐 칸만 기억했다가 그 칸만 되돌림
-    5. 계산 ................ 진행률, XP, 연속 기록, 추천 한 칸
+    5. 계산 ................ 진행률, XP, 연속 기록, 추천 한 칸 · Home Vault 집 정리 · 화장품 · 냉장고 기록 (읽기만)
     6. 동작 ................ 칸 누르기, 체크, 카운터, 대상 추가/삭제
     7. 공통 화면 ............ 알림, 전체 그리기, Lv 카드, 상태 바
-    8. 정리 탭 ............. 미션, 어디까지 했지, 대상 카드
-    9. 기록 탭 ............. 잔디, 월간, 주간
+    8. 정리 탭 ............. 📊 지난주 리포트, 미션, 어디까지 했지, 집 정리 · 화장품 카드, 대상 카드
+    9. 기록 탭 ............. 잔디, 월간, 주간 (+ 그 주 리포트)
    10. 정원 탭 ............. 테라리움 그림, 서울 시간대 빛
    11. 설정 패널 ........... GitHub, 화면 크기/글꼴/여백, JSON 백업
    12. 시작 ................ 날짜 감시, 첫 화면
@@ -1441,9 +1459,10 @@ var S={
   /* --- 이 기기에만 저장 (PERSIST 목록) --- */
   theme:"",zoom:1,font:"noto",shown:null,tstyle:"bottle",uptoOpen:false,
   focusSrc:"all",collapsed:{},recent:null,session:null,
-  density:"comfortable",calmEmbed:false,lastSavedAt:"",lastSyncedAt:""
+  density:"comfortable",calmEmbed:false,lastSavedAt:"",lastSyncedAt:"",
+  reportSeen:""           /* 닫은 주간 리포트의 주 (그 주 일요일 날짜) */
 };
-var PERSIST=["theme","zoom","font","shown","tstyle","uptoOpen","focusSrc","collapsed","recent","session","density","calmEmbed","lastSavedAt","lastSyncedAt"];
+var PERSIST=["theme","zoom","font","shown","tstyle","uptoOpen","focusSrc","collapsed","recent","session","density","calmEmbed","lastSavedAt","lastSyncedAt","reportSeen"];
 
 /* ==========================================================================
    1. 기본 도구
@@ -1519,6 +1538,7 @@ function loadState(){
     if(p.calmEmbed!=null)S.calmEmbed=!!p.calmEmbed;
     if(typeof p.lastSavedAt==="string")S.lastSavedAt=p.lastSavedAt;
     if(typeof p.lastSyncedAt==="string")S.lastSyncedAt=p.lastSyncedAt;
+    if(typeof p.reportSeen==="string")S.reportSeen=p.reportSeen;
   }catch(e){}
 }
 function loadCfg(){
@@ -1546,7 +1566,8 @@ function synced(){return !!(CFG.user&&CFG.repo&&CFG.token)}
 function setDot(k){$("dot").className=k}
 function enc(t){return btoa(unescape(encodeURIComponent(t)))}
 function dec(b){return decodeURIComponent(escape(atob(b.replace(/\n/g,""))))}
-function url(get){return "https://api.github.com/repos/"+encodeURIComponent(CFG.user)+"/"+encodeURIComponent(CFG.repo)+"/contents/"+PATH+(get?"?t="+Date.now():"")}
+/* file 을 주면 같은 저장소의 다른 파일 (home.json 읽기용) */
+function url(get,file){return "https://api.github.com/repos/"+encodeURIComponent(CFG.user)+"/"+encodeURIComponent(CFG.repo)+"/contents/"+(file||PATH)+(get?"?t="+Date.now():"")}
 function hdr(){return{"Authorization":"Bearer "+CFG.token,"Accept":"application/vnd.github+json"}}
 function errText(e){
   var m=e&&e.message||"";
@@ -1596,12 +1617,14 @@ function op(fn,o){
     .catch(onSyncFail);
 }
 function pull(){
-  loadHomeLocal();   /* [신규] */
+  loadHomeLocal();loadCosLocal();   /* 같은 기기의 Home Vault 정리 · 화장품 기록 */
   if(!synced()){setDot("off");render();return}
   setDot("busy");
   chain=chain.then(remoteGet)
     .then(function(g){if(g.d){S.d=g.d;S.lastSyncedAt=clock();save();render()}setDot("")})
-    .then(function(){return fetchHome().catch(function(){})})   /* [신규] 집 정리 기록 (실패해도 조용히) */
+    .then(function(){return fetchHome().catch(function(){})})   /* 집 정리 기록 (실패해도 조용히) */
+    .then(function(){return fetchCos().catch(function(){})})    /* 화장품 기록 (실패해도 조용히) */
+    .then(function(){return fetchFood().catch(function(){})})   /* 냉장고 기록 (주간 리포트용) */
     .catch(onSyncFail);
 }
 
@@ -1731,7 +1754,7 @@ function xp(){
       var dm=(S.d.days||{})[s.id]||{};Object.keys(dm).forEach(function(k){if(dm[k]===2)x+=1});
     }
   });
-  return x+homeEvents().length*HOME_XP;   /* [수정] 집 정리 경험치 */
+  return x+homeEvents().length*HOME_XP+cosEvents().length*COS_XP;   /* 집 정리 · 화장품 경험치 */
 }
 function lvOf(x){return Math.floor(x/100)+1}
 function lvl(){return lvOf(xp())}
@@ -1766,39 +1789,57 @@ function gstats(){
   return o;
 }
 
-/* --- [신규] Home Vault 집 정리 (읽기만 함 · cleanup.json 에는 저장 안 함) ---
+/* --- Home Vault 집 정리 (읽기만 함 · cleanup.json 에는 저장 안 함) ---
    Home Vault 서랍의 '🧹 정리 완료' 기록(box.tidy 날짜들)을 home.json 에서 읽어
    1번 = +15 XP, 잔디·연속 기록에도 하루 활동으로 셈. GitHub 연결 전이면 같은 주소의 이 기기 저장소에서 읽음 */
-var HOME_XP=15,HOME={zones:null};
-var HOME_CACHE={src:null,ev:[],by:{}};
-function homeEvents(){
-  if(HOME_CACHE.src===HOME.zones)return HOME_CACHE.ev;   /* 잔디(371칸)에서 자주 불려서 한 번만 계산 */
-  var ev=[];
-  (HOME.zones||[]).forEach(function(z){(z.boxes||[]).forEach(function(b){(Array.isArray(b.tidy)?b.tidy:[]).forEach(function(d){if(typeof d==="string")ev.push({date:d,box:b.name,zone:z.name})})})});
-  ev.sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0});
+/* 다른 앱 파일을 GitHub 에서 읽기만 (없거나 못 읽으면 null → Clean Quest 는 그대로) */
+async function fetchOther(file){
+  var r=await fetch(url(true,file),{headers:hdr(),cache:"no-store"});
+  if(!r.ok)return null;
+  return JSON.parse(dec((await r.json()).content));
+}
+/* 기록 목록(날짜 있는 것)을 최근 순으로 + 날짜별 개수 — 잔디(371칸)에서 자주 불려서 데이터가 바뀔 때만 다시 계산 */
+function datedCache(cache,src,build){
+  if(cache.src===src&&cache.ev)return cache;
+  var ev=build();ev.sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0});
   var by={};ev.forEach(function(e){by[e.date]=(by[e.date]||0)+1});
-  HOME_CACHE={src:HOME.zones,ev:ev,by:by};
-  return ev;
+  cache.src=src;cache.ev=ev;cache.by=by;return cache;
 }
-function homeCount(date){homeEvents();return HOME_CACHE.by[date]||0}
-function loadHomeLocal(){try{var p=JSON.parse(localStorage.getItem("homevault:v1")||"null");if(p&&p.data&&Array.isArray(p.data.zones))HOME.zones=p.data.zones}catch(e){}}
-async function fetchHome(){
-  var r=await fetch("https://api.github.com/repos/"+encodeURIComponent(CFG.user)+"/"+encodeURIComponent(CFG.repo)+"/contents/home.json?t="+Date.now(),{headers:hdr(),cache:"no-store"});
-  if(!r.ok)return;   /* home.json 이 없거나 못 읽어도 Clean Quest 는 그대로 */
-  var j=await r.json(),d=JSON.parse(dec(j.content));
-  if(d&&Array.isArray(d.zones)){HOME.zones=d.zones;render()}
-}
+var HOME_XP=15,HOME={zones:null},HOME_CACHE={};
+function homeEvents(){return datedCache(HOME_CACHE,HOME.zones,function(){var ev=[];
+  (HOME.zones||[]).forEach(function(z){(z.boxes||[]).forEach(function(b){(Array.isArray(b.tidy)?b.tidy:[]).forEach(function(d){if(typeof d==="string")ev.push({date:d,box:b.name,zone:z.name})})})});
+  return ev}).ev}
+function homeCount(date){return homeEvents()&&HOME_CACHE.by[date]||0}
+function loadHomeLocal(){var d=nbRead("homevault:v1");if(!d)return;if(Array.isArray(d.zones))HOME.zones=d.zones;if(Array.isArray(d.foodlog))FOOD.log=d.foodlog}
+async function fetchHome(){var d=await fetchOther("home.json");if(d&&Array.isArray(d.zones)){HOME.zones=d.zones;render()}}
+
+/* --- Cosmetic Vault 화장품 (읽기만 함 · cleanup.json 에는 저장 안 함) ---
+   다 쓰거나 기한 지나 버린 화장품(status used + done 날짜) 1개 = +10 XP, 잔디 · 연속 기록에도 셈 */
+var COS_XP=10,COSM={items:null},COS_CACHE={};
+function cosEvents(){return datedCache(COS_CACHE,COSM.items,function(){
+  return (COSM.items||[]).filter(function(x){return x&&x.status==="used"&&nbDays(x.done)!==null}).map(function(x){return{date:x.done,name:x.name,tossed:!!x.tossed}})}).ev}
+function cosCount(date){return cosEvents()&&COS_CACHE.by[date]||0}
+/* 기한이 지났는데 아직 안 버린 화장품 (쓰는 중 · 쟁여둠) */
+function cosExpired(){return (COSM.items||[]).filter(function(x){if(!x||x.status==="used")return false;var d=nbCosDays(x);return d!==null&&d<0})}
+function loadCosLocal(){var d=nbRead("cosmeticvault:v1");if(d&&Array.isArray(d.items))COSM.items=d.items}
+async function fetchCos(){var d=await fetchOther("cosmetic.json");if(d&&Array.isArray(d.items)){COSM.items=d.items;render()}}   /* 화장품 앱을 안 썼으면 파일 없음 */
+/* --- Home Vault 냉장고 기록 (log.json · 읽기만 · 주간 리포트에만 보여주고 XP · 잔디에는 안 셈) ---
+   foodlog:[{n 이름, k eat 다 먹음 | toss 버림, d 날짜}] */
+var FOOD={log:null};
+async function fetchFood(){var d=await fetchOther("log.json");if(d&&Array.isArray(d.foodlog)){FOOD.log=d.foodlog;render()}}
+/* 다른 앱에서 한 정리 (집 정리 + 화장품) — 그날 몇 번 */
+function outCount(date){return homeCount(date)+cosCount(date)}
 
 /* --- 날짜별 기록 (잔디 · 연속) --- */
 function actN(id,date){return ((S.d.act[id]||{})[date])||0}
 function mark(id,date){return ((S.d.marks[id]||{})[date])||0}
 function dstate(id,date){if(actN(id,date)>0||mark(id,date)===1)return 1;if(mark(id,date)===2)return 2;return 0}
-/* [수정] 집 정리한 날도 활동한 날로 */
-function dayAny(date){if((S.d.log[date]||0)>0||homeCount(date)>0)return true;return S.d.sources.some(function(s){return dstate(s.id,date)===1})}
+/* 집 정리한 날도 활동한 날로 */
+function dayAny(date){if((S.d.log[date]||0)>0||outCount(date)>0)return true;return S.d.sources.some(function(s){return dstate(s.id,date)===1})}
 function dayCount(date){
   var n=0;
   S.d.sources.forEach(function(s){n+=actN(s.id,date)+(mark(s.id,date)===1?1:0)});
-  return Math.max(n,S.d.log[date]||0)+homeCount(date);
+  return Math.max(n,S.d.log[date]||0)+outCount(date);
 }
 function streak(){
   var n=0,t=new Date();
@@ -1811,7 +1852,7 @@ function bestStreak(){
   Object.keys(S.d.log).forEach(function(k){keys[k]=1});
   Object.keys(S.d.act).forEach(function(i){Object.keys(S.d.act[i]).forEach(function(k){keys[k]=1})});
   Object.keys(S.d.marks).forEach(function(i){Object.keys(S.d.marks[i]).forEach(function(k){keys[k]=1})});
-  homeEvents().forEach(function(e){keys[e.date]=1});   /* [수정] */
+  homeEvents().concat(cosEvents()).forEach(function(e){keys[e.date]=1});   /* 집 정리 · 화장품 정리한 날 */
   var ks=Object.keys(keys).sort();
   if(!ks.length)return 0;
   var t=pdate(ks[0]),end=new Date(),best=0,run=0;
@@ -1824,7 +1865,7 @@ function yearContributionsCount(){
   var ago=new Date();ago.setFullYear(ago.getFullYear()-1);
   var minKey=ds(ago),td=today(),total=0;
   Object.keys(S.d.log).forEach(function(k){if(k>=minKey&&k<=td&&(S.d.log[k]||0)>0)total+=S.d.log[k]});
-  homeEvents().forEach(function(e){if(e.date>=minKey&&e.date<=td)total++});   /* [수정] */
+  homeEvents().concat(cosEvents()).forEach(function(e){if(e.date>=minKey&&e.date<=td)total++});   /* 집 정리 · 화장품 */
   return total;
 }
 
@@ -2089,13 +2130,13 @@ function renderAll(){
     renderHero();
     renderStatus();
     var t=S.tab;
-    ["top2","mission","upto","src","homeq"].forEach(function(id){$(id).hidden=t!=="clean"});   /* [수정] */
+    ["weekrep","top2","mission","upto","src","homeq","cosq"].forEach(function(id){$(id).hidden=t!=="clean"});
     $("logv").hidden=t!=="log";
     $("garden").hidden=t!=="garden";
     $("hero").hidden=t==="garden";
     $("statusBar").hidden=t==="garden";
     Object.keys(TABS).forEach(function(k){$(TABS[k]).className="tab"+(t===k?" on":"")});
-    if(t==="clean"){renderMission();renderUpto();renderHomeQ();renderSrc()}
+    if(t==="clean"){renderWeekRep();renderMission();renderUpto();renderHomeQ();renderCosQ();renderSrc()}
     else if(t==="log")renderLog();
     else renderGarden();
     checkLevelUp();
@@ -2208,7 +2249,101 @@ function autoHint(s){
   if(s.type==="list"){var L=S.d.lists[s.id]||[];return L.length?"체크리스트 "+L.filter(function(i){return i.done}).length+"/"+L.length+"개 완료":""}
   var c=S.d.counts[s.id];return c&&c.total?"남은 "+c.left+"개":"";
 }
-/* [신규] Home Vault 집 정리 카드 */
+/* =====================================================================
+   📊 주간 리포트 — 한 주(일~토) 동안 네 앱에서 한 일을 한 장으로
+   일요일이 되면 정리 탭 맨 위에 '지난주 리포트' (✕로 닫으면 다음 주까지 안 보임)
+   기록 탭 → 주간에서는 고른 주의 리포트를 언제든 볼 수 있음
+   ===================================================================== */
+function weekDates(ws){var a=[],d=pdate(ws);for(var i=0;i<7;i++){a.push(ds(d));d.setDate(d.getDate()+1)}return a}
+function shiftWeek(ws,n){var d=pdate(ws);d.setDate(d.getDate()+7*n);return ds(d)}
+function shortDay(k){return (+k.slice(5,7))+"/"+(+k.slice(8))}
+function weekReport(ws){
+  var days=weekDates(ws),first=days[0],last=days[6],td=today();
+  function inw(k){return k>=first&&k<=last}
+  var r={ws:ws,days:days,own:0,active:0,best:null,src:[]};
+  days.forEach(function(k){
+    if(k>td)return;
+    var n=dayCount(k);r.own+=n-outCount(k);
+    if(dayAny(k))r.active++;
+    if(n>0&&(!r.best||n>r.best.n))r.best={k:k,n:n};
+  });
+  /* Clean Quest 정리 — 많이 한 곳 순서 */
+  S.d.sources.forEach(function(s){var n=0;days.forEach(function(k){n+=actN(s.id,k)+(mark(s.id,k)===1?1:0)});if(n)r.src.push({s:s,n:n})});
+  r.src.sort(function(a,b){return b.n-a.n});
+  r.tidy=homeEvents().filter(function(e){return inw(e.date)});
+  var place={};r.tidy.forEach(function(e){place[e.zone+"|"+e.box]=e.box});r.places=Object.keys(place).map(function(k){return place[k]});
+  var cv=cosEvents().filter(function(e){return inw(e.date)});
+  r.cosUsed=cv.filter(function(e){return !e.tossed});r.cosToss=cv.filter(function(e){return e.tossed});
+  var fl=(FOOD.log||[]).filter(function(e){return e&&typeof e.d==="string"&&inw(e.d)});
+  r.eat=fl.filter(function(e){return e.k==="eat"});r.toss=fl.filter(function(e){return e.k==="toss"});
+  r.total=r.own+r.tidy.length+cv.length;   /* 정리한 횟수 (먹은 · 버린 식품은 빼고) */
+  r.any=r.total>0||fl.length>0;
+  return r;
+}
+/* 한 줄 요약 조각: 정리 5건 · 서랍 3곳 정리 · 화장품 2개 다 씀 · 식품 버린 것 1개 */
+function reportParts(r){
+  var p=[];
+  if(r.own)p.push("정리 "+r.own+"건");
+  if(r.places.length)p.push("서랍 "+r.places.length+"곳 정리");
+  if(r.cosUsed.length)p.push("화장품 "+r.cosUsed.length+"개 다 씀");
+  if(r.cosToss.length)p.push("화장품 "+r.cosToss.length+"개 버림");
+  if(r.eat.length)p.push("식품 "+r.eat.length+"개 다 먹음");
+  if(r.toss.length)p.push("식품 버린 것 "+r.toss.length+"개");
+  return p;
+}
+/* 이름 목록: 앞 3개 + 외 N */
+function nameList(a){return a.slice(0,3).join(", ")+(a.length>3?" 외 "+(a.length-3):"")}
+function pluck(L,k){return L.map(function(e){return e[k]})}
+/* 앱별 자세히 [이름표, 내용] */
+function reportRows(r){
+  function cnt(word,L,k){return L.length?word+" "+L.length+" ("+nameList(pluck(L,k))+")":""}
+  var R=[];
+  if(r.src.length)R.push(["🫙 정리",r.src.slice(0,3).map(function(o){return o.s.emoji+" "+o.s.name+" "+o.n}).join(" · ")+(r.src.length>3?" 외 "+(r.src.length-3)+"곳":"")]);
+  if(r.places.length)R.push(["🏠 서랍",nameList(r.places)]);
+  if(r.cosUsed.length||r.cosToss.length)R.push(["🧴 화장품",[cnt("다 씀",r.cosUsed,"name"),cnt("버림",r.cosToss,"name")].filter(Boolean).join(" · ")]);
+  if(r.eat.length||r.toss.length)R.push(["🍱 식품","다 먹음 "+r.eat.length+" · "+(r.toss.length?cnt("버림",r.toss,"n"):"버린 것 0 👍")]);
+  return R;
+}
+/* 앞 주와 비교 한 마디 (둘 다 0이면 없음) */
+function reportCompare(r,cur){
+  var pv=weekReport(shiftWeek(r.ws,-1)),diff=r.total-pv.total;
+  if(!r.total&&!pv.total)return "";
+  if(diff>0)return "앞 주보다 "+diff+"건 더 했어요 👏";
+  if(diff<0)return "앞 주보다 "+(-diff)+(cur?"건 적어요 · 한 칸만 열어도 충분해요":"건 적었어요 · 이번 주는 한 칸만 열어도 충분해요");
+  return "앞 주와 같은 속도예요";
+}
+/* 리포트 카드 · last: 정리 탭의 '지난주' 카드 (✕ 닫기 · 주간 기록 보기 버튼) */
+function reportCard(r,last){
+  var C=el("div","wr"),td=today(),cur=r.ws===ds(sundayOf(new Date()));
+  /* 머리: 날짜 범위 + 제목 (+ ✕) */
+  var top=el("div","hrow");
+  top.appendChild(add(el("div"),
+    el("div","mission-kicker","WEEKLY REPORT · "+shortDay(r.days[0])+" – "+shortDay(r.days[6])),
+    el("div","mission-title",last?"📊 지난주 리포트":cur?"📊 이번 주 리포트":"📊 이 주의 리포트")));
+  if(last){var x=btn("wrx","✕",function(){S.reportSeen=r.ws;save();render()});x.setAttribute("aria-label","지난주 리포트 닫기");top.appendChild(x)}
+  C.appendChild(top);
+  /* 한 줄 요약 — 조각마다 한 덩어리로 (좁은 화면에서 '다 / 씀'처럼 끊기지 않게) */
+  var ln=el("div","wrline"),parts=reportParts(r);
+  if(!parts.length)ln.textContent="기록된 활동이 없어요 · 쉬어간 주예요";
+  parts.forEach(function(t,i){if(i)ln.appendChild(document.createTextNode(" · "));ln.appendChild(el("span",null,t))});
+  C.appendChild(ln);
+  reportRows(r).forEach(function(a){C.appendChild(add(el("div","hev wrrow"),el("b",null,a[0]),el("span",null,a[1])))});
+  /* 활동한 날 · 가장 많이 한 날 · 앞 주와 비교 */
+  var past=r.days.filter(function(k){return k<=td}).length,m=["활동한 날 <b>"+r.active+"</b>/"+past+"일"];
+  if(r.best)m.push("가장 많이 한 날 <b>"+"일월화수목금토".charAt(pdate(r.best.k).getDay())+"요일</b>");
+  var meta=el("div","hsum");meta.innerHTML=m.join(" · ");C.appendChild(meta);
+  var cmp=reportCompare(r,cur);if(cmp)C.appendChild(el("div","wrcmp",cmp));
+  if(last)C.appendChild(btn("hlink","주간 기록 보기 →",function(){S.tab="log";S.lv="week";S.cat="all";S.ws=pdate(r.ws);render();window.scrollTo(0,0)}));
+  return C;
+}
+/* 정리 탭 맨 위: 일요일부터 지난주 리포트 (지난주에 뭔가 했고 아직 안 닫았을 때만) */
+function renderWeekRep(){
+  var W=$("weekrep");W.textContent="";
+  var ws=shiftWeek(ds(sundayOf(new Date())),-1),r=weekReport(ws);
+  if(S.reportSeen===ws||!r.any){W.hidden=true;return}
+  W.appendChild(reportCard(r,true));
+}
+/* Home Vault 집 정리 카드 */
 function renderHomeQ(){
   var H=$("homeq");H.textContent="";
   var ev=homeEvents(),wk=sundayOf(new Date()),wks=ds(wk),week=ev.filter(function(e){return e.date>=wks}).length;
@@ -2221,6 +2356,26 @@ function renderHomeQ(){
   if(!ev.length){H.appendChild(el("div","hempty","Home Vault에서 서랍을 펼치고 '🧹 정리 완료'를 누르면 여기에 쌓여요. 한 번에 +"+HOME_XP+" XP, 잔디에도 칸이 채워져요."));return}
   var sm=el("div","hsum");sm.innerHTML="정리한 서랍 <b>"+ev.length+"</b>번 · 이번 주 <b>"+week+"</b>번 · <b>+"+(ev.length*HOME_XP)+" XP</b>";H.appendChild(sm);
   ev.slice(0,3).forEach(function(e){var r=el("div","hev");r.appendChild(el("span",null,"🧹 "+e.box+" · "+e.zone.replace(/^\S+\s/,"")));r.appendChild(el("small",null,e.date===today()?"오늘":(+e.date.slice(5,7))+"/"+(+e.date.slice(8))));H.appendChild(r)});
+}
+/* Cosmetic Vault 화장품 카드: 기한 지난 것 버리기 미션 + 다 쓴 · 버린 기록 (화장품을 안 쓰면 안 보임) */
+function renderCosQ(){
+  var C=$("cosq");C.textContent="";
+  if(!COSM.items||!COSM.items.length){C.hidden=true;return}
+  var ev=cosEvents(),bad=cosExpired(),wks=ds(sundayOf(new Date())),week=ev.filter(function(e){return e.date>=wks}).length;
+  var top=el("div","hrow"),left=el("div");
+  left.appendChild(el("div","mission-kicker","COSMETIC VAULT"));
+  left.appendChild(el("div","mission-title","🧴 화장품 정리"));
+  top.appendChild(left);
+  var a=el("a","hlink","Cosmetic Vault 열기 →");a.href="cosmetic.html";top.appendChild(a);
+  C.appendChild(top);
+  if(bad.length){
+    var w=el("div","hwarn");
+    w.appendChild(el("span",null,"⚠ 기한 지난 화장품 "+bad.length+"개 · "+bad.slice(0,3).map(function(x){return x.name}).join(", ")+(bad.length>3?" 외 "+(bad.length-3):"")+" — 버리고 '🗑 버렸어요'를 누르면 +"+COS_XP+" XP"));
+    var go=el("a",null,"버리러 가기 →");go.href="cosmetic.html?cond=past";w.appendChild(go);C.appendChild(w);
+  }
+  if(!ev.length){C.appendChild(el("div","hempty","Cosmetic Vault에서 '다 썼어요'나 '🗑 버렸어요'를 누르면 여기에 쌓여요. 한 개에 +"+COS_XP+" XP, 잔디에도 칸이 채워져요."));return}
+  var sm=el("div","hsum");sm.innerHTML="다 쓰거나 버린 화장품 <b>"+ev.length+"</b>개 · 이번 주 <b>"+week+"</b>개 · <b>+"+(ev.length*COS_XP)+" XP</b>";C.appendChild(sm);
+  ev.slice(0,3).forEach(function(e){var r=el("div","hev");r.appendChild(el("span",null,(e.tossed?"🗑 ":"✓ ")+e.name+(e.tossed?" 버림":" 다 씀")));r.appendChild(el("small",null,e.date===today()?"오늘":(+e.date.slice(5,7))+"/"+(+e.date.slice(8))));C.appendChild(r)});
 }
 function renderUpto(){
   var U=$("upto");U.textContent="";
@@ -2587,6 +2742,8 @@ function weekView(L){
   var td=today(),days=[],i;
   for(i=0;i<7;i++){var d=new Date(S.ws);d.setDate(d.getDate()+i);days.push(ds(d))}
   var past=days.filter(function(x){return x<=td}),tot=past.filter(function(x){return selState(x)===1}).length;
+  /* 📊 이 주의 리포트 (전체 보기일 때 · 지나지 않은 주는 빼고) */
+  if(S.cat==="all"&&days[0]<=td){var rc=el("div","homeq weekrep");rc.appendChild(reportCard(weekReport(days[0]),false));L.appendChild(rc)}
   L.appendChild(barCard("주간 활동 비율 ("+tot+"일)",past.length?Math.round(tot/past.length*100):0));
 
   var w=el("div","wk");w.appendChild(el("div"));
@@ -2616,8 +2773,10 @@ function daySummary(k){
   });
   var n=S.d.log[k]||0;
   if(!parts.length&&n>0)parts.push("기록 "+n+"건");
-  var hv=homeEvents().filter(function(e){return e.date===k});   /* [신규] */
+  var hv=homeEvents().filter(function(e){return e.date===k});   /* 그날 집 정리 */
   if(hv.length)parts.push("🏠 집 정리 "+hv.length+"곳 ("+hv.map(function(e){return e.box}).join(", ")+")");
+  var cv=cosEvents().filter(function(e){return e.date===k});   /* 그날 화장품 */
+  if(cv.length)parts.push("🧴 화장품 "+cv.length+"개 ("+cv.map(function(e){return e.name+(e.tossed?" 버림":" 다 씀")}).join(", ")+")");
   var head=fmtUp(k)+(k===today()?" (오늘)":"");
   var line=parts.length?parts.join(" · "):"기록된 활동이 없어요.";
   var c=!parts.length?"쉬어간 날이에요. 부담 없이 한 칸만 열어도 충분해요.":(parts.length>=2||n>=3)?"여러 곳을 고르게 정돈한 날이에요.":"작은 한 걸음으로 정원을 살린 날이에요.";
@@ -2945,7 +3104,7 @@ function applyCalm(){
 function toggleTheme(){
   S.theme=isDark()?"light":"dark";
   document.documentElement.setAttribute("data-theme",S.theme);
-  save();
+  save();uiSave();
 }
 
 /* --- JSON 백업 · 복원 --- */
@@ -3017,14 +3176,51 @@ function bindUI(){
   $("gout").onclick=logoutGithub;
   $("gtheme").onclick=toggleTheme;
   $("qTheme").onclick=toggleTheme;
-  document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();applyZoom()}});
-  document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();applyFont()}});
+  document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();uiSave();applyZoom()}});
+  document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();uiSave();applyFont()}});
   document.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){S.density=b.dataset.d;save();applyDensity()}});
   $("bCalm").onclick=function(){S.calmEmbed=!S.calmEmbed;save();applyCalm()};
   $("bJsonCopy").onclick=copyBackup;
   $("bJsonDown").onclick=downloadBackup;
   $("bJsonRestore").onclick=restoreBackup;
 }
+
+/* =====================================================================
+   네 앱 공통 — 화면 설정 함께 쓰기 · 앱 바 숫자
+   Clean Quest · Link Vault · Home Vault · Cosmetic Vault 네 파일에 똑같은 코드 (고칠 땐 네 곳 같이)
+   네 앱이 같은 주소(yunsaera.github.io/link-vault)라서 서로의 '이 기기 저장소'를 바로 읽을 수 있음
+   ===================================================================== */
+/* 테마 · 글꼴 · 화면 크기: 한 앱에서 바꾸면 네 앱 모두 (vault:ui) */
+function uiLoad(){try{var u=JSON.parse(localStorage.getItem("vault:ui")||"null");if(u){if(typeof u.theme==="string")S.theme=u.theme;if(u.font)S.font=u.font;if(u.zoom)S.zoom=+u.zoom}}catch(e){}}
+function uiSave(){try{localStorage.setItem("vault:ui",JSON.stringify({theme:S.theme,font:S.font,zoom:S.zoom}))}catch(e){}}
+function uiApply(){var r=document.documentElement;if(S.theme)r.setAttribute("data-theme",S.theme);else r.removeAttribute("data-theme");applyFont();applyZoom()}
+/* 앱 바 숫자: 🏠 식품 3일 안 · 지남 / 🧴 화장품 30일 안 · 지남 (각 앱의 ⚠ 숫자와 같은 기준, 지금 앱은 빼고) */
+function nbDays(x){if(typeof x!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(x))return null;var p=x.split("-"),t=new Date();t=new Date(t.getFullYear(),t.getMonth(),t.getDate());return Math.round((new Date(+p[0],+p[1]-1,+p[2])-t)/864e5)}
+function nbRead(k){try{var p=JSON.parse(localStorage.getItem(k)||"null");return p&&p.data?p.data:null}catch(e){return null}}
+function nbIso(t){return t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2)}
+/* 화장품 실제 기한: 유통기한 vs 개봉한 날 + 개봉 후 개월 (쟁여둔 건 유통기한만) 중 빠른 날 */
+function nbCosDays(x){
+  var e=x.expiry||"",p="";
+  if(x.status!=="stock"&&nbDays(x.opened)!==null&&+x.pao>0){var q=x.opened.split("-"),t=new Date(+q[0],+q[1]-1+(+x.pao),1),last=new Date(t.getFullYear(),t.getMonth()+1,0).getDate();t.setDate(Math.min(+q[2],last));p=nbIso(t)}
+  return nbDays(p&&(!e||p<e)?p:e);
+}
+function navCounts(){
+  var c={},h=nbRead("homevault:v1"),m=nbRead("cosmeticvault:v1");
+  if(h&&Array.isArray(h.fridge))c["home.html"]=h.fridge.filter(function(f){var d=f?nbDays(f.exp):null;return d!==null&&d<=3}).length;
+  if(m&&Array.isArray(m.items))c["cosmetic.html"]=m.items.filter(function(x){if(!x||x.status==="used")return false;var d=nbCosDays(x);return d!==null&&d<=30}).length;
+  return c;
+}
+function navBadges(){
+  var c=navCounts();
+  document.querySelectorAll(".appnav a").forEach(function(a){
+    var old=a.querySelector(".nb");if(old)a.removeChild(old);
+    var n=c[a.getAttribute("href")];if(!n||a.classList.contains("on"))return;
+    var b=document.createElement("span");b.className="nb";b.textContent=n>9?"9+":String(n);a.setAttribute("title","기한 챙길 것 "+n+"개");a.appendChild(b);
+  });
+}
+/* 다른 탭 · 같은 노션 페이지의 다른 블록에서 바꾸면 바로 따라감 */
+window.addEventListener("storage",function(e){if(e.key==="vault:ui"){uiLoad();uiApply()}navBadges()});
+document.addEventListener("visibilitychange",function(){if(!document.hidden)navBadges()});
 
 /* ==========================================================================
    12. 시작
@@ -3037,6 +3233,7 @@ function tickDate(){var t=today(),h=seoulHour();if(t!==lastDay){lastDay=t;refres
 function init(){
   loadState();
   loadCfg();
+  uiLoad();   /* 네 앱 공통 화면 설정이 있으면 그걸로 */
   if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);
   S.ws=sundayOf(new Date());
   bindUI();
@@ -3048,6 +3245,7 @@ function init(){
   document.addEventListener("visibilitychange",function(){if(!document.hidden){tickDate();pull()}});
   render();
   renderStamp();
+  navBadges();
   pull();
 }
 init();

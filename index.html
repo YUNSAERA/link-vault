@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Link Vault</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- [신규] 홈 화면에 앱처럼 추가 -->
+<!-- 홈 화면에 앱처럼 추가 -->
 <link rel="manifest" href="index-manifest.json">
 <meta name="theme-color" content="#0f766e">
 <meta name="mobile-web-app-capable" content="yes">
@@ -16,24 +16,25 @@
 <style>
 /* ===== 디자인 토큰 (라이트/다크) ===== */
 :root{
-  --font:'Inter','Noto Sans KR',-apple-system,sans-serif;
-  --page:#f5f6f8;--card:#fff;--ink:#18181b;--sub:#5c5c66;--muted:#767680;
-  --field:#f4f4f5;--line:rgba(24,24,27,.07);--accent:#0f766e;--accent2:#115e59;
-  --soft:rgba(15,118,110,.09);--ring:rgba(15,118,110,.22);--item:#fafafa;--hover:#ececee;
-  --warn:#b45309;--warn-soft:rgba(217,119,6,.12);--danger:#dc2626;--danger-soft:rgba(220,38,38,.1);
-  --shadow:0 12px 32px -12px rgba(24,24,27,.10),0 2px 6px -1px rgba(24,24,27,.04);
-  --sm:0 1px 2px rgba(24,24,27,.03),0 4px 14px -4px rgba(24,24,27,.06);
-  --onacc:#fff;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  --font:var(--body);--page:#f5f6f8;--card:#ffffff;--ink:#18181b;--sub:#5c5c66;--muted:#767680;--field:#f4f4f5;
+  --line:rgba(24,24,27,.06);--accent:#0f766e;--accent2:#115e59;--soft:rgba(15,118,110,.09);--ring:rgba(15,118,110,.22);
+  --item:#fafafa;--hover:#ececee;--warn:#b45309;--warn-soft:rgba(217,119,6,.12);--danger:#dc2626;
+  --danger-soft:rgba(220,38,38,.1);--shadow:0 12px 32px -12px rgba(24,24,27,.08),0 2px 6px -1px rgba(24,24,27,.04);
+  --sm:0 1px 2px rgba(24,24,27,.03),0 4px 16px -4px rgba(24,24,27,.05);--onacc:#ffffff;
+  --body:'Inter','Noto Sans KR','Gowun Dodum',sans-serif;--title:'Inter','Noto Sans KR','Gowun Dodum',sans-serif;
+  --chip:#f4f4f5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --page:#0b0c0e;--card:#121417;--ink:#f4f4f5;--sub:#b6b6c0;--muted:#9a9aa4;--field:#1b1e23;--line:rgba(255,255,255,.08);
-  --accent:#2dd4bf;--accent2:#5eead4;--soft:rgba(45,212,191,.12);--ring:rgba(45,212,191,.26);--item:#171a1e;--hover:#242932;
-  --warn:#fbbf24;--warn-soft:rgba(251,191,36,.14);--danger:#f87171;--danger-soft:rgba(248,113,113,.14);
-  --shadow:0 16px 40px -14px rgba(0,0,0,.6);--sm:0 6px 20px -8px rgba(0,0,0,.5);--onacc:#08110f}}
+  --page:#0b0c0e;--card:#121417;--ink:#f4f4f5;--sub:#b6b6c0;--muted:#9a9aa4;--field:#1b1e23;--line:rgba(255,255,255,.07);
+  --accent:#2dd4bf;--accent2:#5eead4;--soft:rgba(45,212,191,.11);--ring:rgba(45,212,191,.24);--item:#171a1e;
+  --hover:#242932;--warn:#fbbf24;--warn-soft:rgba(251,191,36,.14);--danger:#f87171;--danger-soft:rgba(248,113,113,.14);
+  --shadow:0 16px 40px -14px rgba(0,0,0,.6),0 4px 12px -2px rgba(0,0,0,.35);
+  --sm:0 1px 2px rgba(0,0,0,.35),0 8px 24px -8px rgba(0,0,0,.45);--onacc:#0b1110;--chip:#1d2127}}
 :root[data-theme="dark"]{
-  --page:#0b0c0e;--card:#121417;--ink:#f4f4f5;--sub:#b6b6c0;--muted:#9a9aa4;--field:#1b1e23;--line:rgba(255,255,255,.08);
-  --accent:#2dd4bf;--accent2:#5eead4;--soft:rgba(45,212,191,.12);--ring:rgba(45,212,191,.26);--item:#171a1e;--hover:#242932;
-  --warn:#fbbf24;--warn-soft:rgba(251,191,36,.14);--danger:#f87171;--danger-soft:rgba(248,113,113,.14);
-  --shadow:0 16px 40px -14px rgba(0,0,0,.6);--sm:0 6px 20px -8px rgba(0,0,0,.5);--onacc:#08110f}
+  --page:#0b0c0e;--card:#121417;--ink:#f4f4f5;--sub:#b6b6c0;--muted:#9a9aa4;--field:#1b1e23;--line:rgba(255,255,255,.07);
+  --accent:#2dd4bf;--accent2:#5eead4;--soft:rgba(45,212,191,.11);--ring:rgba(45,212,191,.24);--item:#171a1e;
+  --hover:#242932;--warn:#fbbf24;--warn-soft:rgba(251,191,36,.14);--danger:#f87171;--danger-soft:rgba(248,113,113,.14);
+  --shadow:0 16px 40px -14px rgba(0,0,0,.6),0 4px 12px -2px rgba(0,0,0,.35);
+  --sm:0 1px 2px rgba(0,0,0,.35),0 8px 24px -8px rgba(0,0,0,.45);--onacc:#0b1110;--chip:#1d2127}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
@@ -172,22 +173,11 @@ button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(
 @media (max-width:520px){body{padding:12px 10px 36px}.card{padding:20px 15px;border-radius:22px}.composer .row{flex-direction:column}.search-row{flex-direction:column;align-items:stretch}.sort-sel{width:100%}.panel .row{flex-direction:column}.item{padding:12px;gap:10px}.acts{max-width:104px;gap:4px}}
 
 /* =====================================================================
-   Clean Quest 디자인과 통일 (같은 색·그림자·글꼴·모서리·크기)
+   네 앱 공통 디자인으로 맞춤 (모서리 · 크기 · 그림자) — 색은 위 디자인 토큰 하나로
    ===================================================================== */
-:root{
-  --body:'Inter','Noto Sans KR','Gowun Dodum',sans-serif;--title:'Inter','Noto Sans KR','Gowun Dodum',sans-serif;--font:var(--body);
-  --page:#f5f6f8;--card:#ffffff;--ink:#18181b;--sub:#5c5c66;--muted:#767680;--field:#f4f4f5;--line:rgba(24,24,27,.06);
-  --accent:#0f766e;--accent2:#115e59;--soft:rgba(15,118,110,.09);--ring:rgba(15,118,110,.22);--item:#fafafa;--chip:#f4f4f5;--hover:#ececee;
-  --sm:0 1px 2px rgba(24,24,27,.03),0 4px 16px -4px rgba(24,24,27,.05);
-  --shadow:0 12px 32px -12px rgba(24,24,27,.08),0 2px 6px -1px rgba(24,24,27,.04);--onacc:#ffffff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --page:#0b0c0e;--card:#121417;--ink:#f4f4f5;--sub:#b6b6c0;--muted:#9a9aa4;--field:#1b1e23;--line:rgba(255,255,255,.07);
-  --accent:#2dd4bf;--accent2:#5eead4;--soft:rgba(45,212,191,.11);--ring:rgba(45,212,191,.24);--item:#171a1e;--chip:#1d2127;--hover:#242932;
-  --sm:0 1px 2px rgba(0,0,0,.35),0 8px 24px -8px rgba(0,0,0,.45);--shadow:0 16px 40px -14px rgba(0,0,0,.6),0 4px 12px -2px rgba(0,0,0,.35);--onacc:#0b1110}}
-:root[data-theme="dark"]{
-  --page:#0b0c0e;--card:#121417;--ink:#f4f4f5;--sub:#b6b6c0;--muted:#9a9aa4;--field:#1b1e23;--line:rgba(255,255,255,.07);
-  --accent:#2dd4bf;--accent2:#5eead4;--soft:rgba(45,212,191,.11);--ring:rgba(45,212,191,.24);--item:#171a1e;--chip:#1d2127;--hover:#242932;
-  --sm:0 1px 2px rgba(0,0,0,.35),0 8px 24px -8px rgba(0,0,0,.45);--shadow:0 16px 40px -14px rgba(0,0,0,.6),0 4px 12px -2px rgba(0,0,0,.35);--onacc:#0b1110}
+
+
+
 html,body{font-family:var(--body);line-height:1.65;font-size:16px}
 input,textarea,select,button{font-family:var(--body)}
 body{padding:28px 16px 48px}
@@ -234,23 +224,26 @@ body{padding:28px 16px 48px}
 @media (min-width:860px){body{padding:28px 24px 56px}.card{max-width:1160px;padding:36px 40px}}
 @media (min-width:1280px){.card{max-width:1280px}.list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:540px){body{padding:16px 12px 36px}.card{padding:20px 16px;border-radius:24px}.sect,.panel{padding:18px 16px;border-radius:20px}}
-/* [신규] v6 — 앱 전환 바 */
+/* 앱 전환 바 (네 앱 공통) */
 .appnav{display:flex;justify-content:center;gap:6px;max-width:640px;margin:0 auto 14px}
 .appnav a{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 13px;border-radius:999px;background:var(--card);box-shadow:var(--sm);white-space:nowrap}
 .appnav a:hover{color:var(--ink)}
 .appnav a.on{background:var(--accent);color:var(--onacc)}
 .appnav .s{display:none}
+.appnav a{position:relative}
+.appnav .nb{position:absolute;top:-7px;right:-5px;display:grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#f59e0b;color:#fff;font-size:11px;font-weight:700;line-height:1;box-shadow:0 0 0 2px var(--page)}
 @media (max-width:420px){.appnav a{padding:7px 11px}.appnav .l{display:none}.appnav .s{display:inline}}
 @media (min-width:860px){.appnav{max-width:1160px;justify-content:flex-start}}
 @media (min-width:1280px){.appnav{max-width:1280px}}
 </style>
 </head>
 <body>
-<!-- [신규] 세 앱 오가기 -->
+<!-- 네 앱 오가기 -->
 <nav class="appnav" aria-label="앱 이동">
   <a href="cleanup.html">🫙 <span class="l">Clean Quest</span><span class="s">정리</span></a>
   <a href="index.html" class="on" aria-current="page">🗂️ <span class="l">Link Vault</span><span class="s">링크</span></a>
   <a href="home.html">🏠 <span class="l">Home Vault</span><span class="s">우리집</span></a>
+  <a href="cosmetic.html">🧴 <span class="l">Cosmetic Vault</span><span class="s">화장품</span></a>
 </nav>
 <div class="card" id="mainCard">
   <header class="head">
@@ -324,7 +317,7 @@ body{padding:28px 16px 48px}
   <div class="msg" id="msg" role="status" aria-live="polite"></div>
 
   <footer class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Link Vault v6</span>
+    <span class="lab"><i id="dot" class="off"></i>Link Vault v6.3</span>
     <button class="fb" id="bCompact" title="컴팩트 보기" aria-label="컴팩트 보기">▤</button>
     <button class="fb" id="bDice" title="랜덤 링크 뽑기" aria-label="랜덤 링크 뽑기">🎲</button>
     <button class="fb" id="bMd" title="노션용 마크다운 복사" aria-label="노션용 마크다운 복사">M↓</button>
@@ -336,7 +329,7 @@ body{padding:28px 16px 48px}
 
 <script>
 /* ==========================================================================
-   Link Vault v5 — 코드 지도
+   Link Vault v6.3 — 코드 지도
    --------------------------------------------------------------------------
     0. 설정값 · 상태 ........ 기본 카테고리, 저장 키, 자동 분류 규칙, S(앱 상태)
     1. 기본 도구 ............ $, el, btn, 주소 해석·중복 판정, 복사
@@ -1007,7 +1000,7 @@ function toggleBackupPanel(){$("box").value="";$("cfg").classList.remove("show")
 function toggleSettings(){$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;$("panel").classList.remove("show");$("cfg").classList.toggle("show")}
 function closePanels(){$("panel").classList.remove("show");$("cfg").classList.remove("show")}
 
-function toggleTheme(){S.theme=isDark()?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save()}
+function toggleTheme(){S.theme=isDark()?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save();uiSave()}
 function markChips(attr,isOn){document.querySelectorAll("["+attr+"]").forEach(function(b){b.className="chip"+(isOn(b)?" on":"")})}
 function applyFont(){
   var f=FONTS[S.font]||FONTS.noto,r=document.documentElement.style;
@@ -1073,20 +1066,58 @@ function bindUI(){
   $("gshow").onclick=function(){var i=$("gt");i.type=i.type==="password"?"text":"password"};
   $("gsave").onclick=saveGithub;
   $("gout").onclick=logoutGithub;
-  document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();applyFont()}});
-  document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();applyZoom()}});
+  document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();uiSave();applyFont()}});
+  document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();uiSave();applyZoom()}});
   /* 전역 */
   document.addEventListener("keydown",onKey);
   /* 다시 보이면 동기화, 숨겨지면 방문 기록 전송 */
   document.addEventListener("visibilitychange",function(){if(document.hidden)flushVisits();else pull()});
 }
+/* =====================================================================
+   네 앱 공통 — 화면 설정 함께 쓰기 · 앱 바 숫자
+   Clean Quest · Link Vault · Home Vault · Cosmetic Vault 네 파일에 똑같은 코드 (고칠 땐 네 곳 같이)
+   네 앱이 같은 주소(yunsaera.github.io/link-vault)라서 서로의 '이 기기 저장소'를 바로 읽을 수 있음
+   ===================================================================== */
+/* 테마 · 글꼴 · 화면 크기: 한 앱에서 바꾸면 네 앱 모두 (vault:ui) */
+function uiLoad(){try{var u=JSON.parse(localStorage.getItem("vault:ui")||"null");if(u){if(typeof u.theme==="string")S.theme=u.theme;if(u.font)S.font=u.font;if(u.zoom)S.zoom=+u.zoom}}catch(e){}}
+function uiSave(){try{localStorage.setItem("vault:ui",JSON.stringify({theme:S.theme,font:S.font,zoom:S.zoom}))}catch(e){}}
+function uiApply(){var r=document.documentElement;if(S.theme)r.setAttribute("data-theme",S.theme);else r.removeAttribute("data-theme");applyFont();applyZoom()}
+/* 앱 바 숫자: 🏠 식품 3일 안 · 지남 / 🧴 화장품 30일 안 · 지남 (각 앱의 ⚠ 숫자와 같은 기준, 지금 앱은 빼고) */
+function nbDays(x){if(typeof x!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(x))return null;var p=x.split("-"),t=new Date();t=new Date(t.getFullYear(),t.getMonth(),t.getDate());return Math.round((new Date(+p[0],+p[1]-1,+p[2])-t)/864e5)}
+function nbRead(k){try{var p=JSON.parse(localStorage.getItem(k)||"null");return p&&p.data?p.data:null}catch(e){return null}}
+function nbIso(t){return t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2)}
+/* 화장품 실제 기한: 유통기한 vs 개봉한 날 + 개봉 후 개월 (쟁여둔 건 유통기한만) 중 빠른 날 */
+function nbCosDays(x){
+  var e=x.expiry||"",p="";
+  if(x.status!=="stock"&&nbDays(x.opened)!==null&&+x.pao>0){var q=x.opened.split("-"),t=new Date(+q[0],+q[1]-1+(+x.pao),1),last=new Date(t.getFullYear(),t.getMonth()+1,0).getDate();t.setDate(Math.min(+q[2],last));p=nbIso(t)}
+  return nbDays(p&&(!e||p<e)?p:e);
+}
+function navCounts(){
+  var c={},h=nbRead("homevault:v1"),m=nbRead("cosmeticvault:v1");
+  if(h&&Array.isArray(h.fridge))c["home.html"]=h.fridge.filter(function(f){var d=f?nbDays(f.exp):null;return d!==null&&d<=3}).length;
+  if(m&&Array.isArray(m.items))c["cosmetic.html"]=m.items.filter(function(x){if(!x||x.status==="used")return false;var d=nbCosDays(x);return d!==null&&d<=30}).length;
+  return c;
+}
+function navBadges(){
+  var c=navCounts();
+  document.querySelectorAll(".appnav a").forEach(function(a){
+    var old=a.querySelector(".nb");if(old)a.removeChild(old);
+    var n=c[a.getAttribute("href")];if(!n||a.classList.contains("on"))return;
+    var b=document.createElement("span");b.className="nb";b.textContent=n>9?"9+":String(n);a.setAttribute("title","기한 챙길 것 "+n+"개");a.appendChild(b);
+  });
+}
+/* 다른 탭 · 같은 노션 페이지의 다른 블록에서 바꾸면 바로 따라감 */
+window.addEventListener("storage",function(e){if(e.key==="vault:ui"){uiLoad();uiApply()}navBadges()});
+document.addEventListener("visibilitychange",function(){if(!document.hidden)navBadges()});
+
 function init(){
   loadState();
   loadCfg();
+  uiLoad();   /* 네 앱 공통 화면 설정이 있으면 그걸로 */
   if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);
   bindUI();
   applyFont();applyZoom();
-  render();pull();
+  render();navBadges();pull();
 }
 init();
 </script>

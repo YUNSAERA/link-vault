@@ -57,6 +57,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .appnav a:hover{color:var(--ink)}
 .appnav a.on{background:var(--accent);color:var(--onacc)}
 .appnav .s{display:none}
+.appnav a{position:relative}
+.appnav .nb{position:absolute;top:-7px;right:-5px;display:grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#f59e0b;color:#fff;font-size:11px;font-weight:700;line-height:1;box-shadow:0 0 0 2px var(--page)}
 @media (max-width:420px){.appnav a{padding:7px 11px;font-size:13px}.appnav .l{display:none}.appnav .s{display:inline}}
 
 /* ===== 머리글 ===== */
@@ -213,6 +215,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ocard .oa button{height:34px;padding:0 12px;border-radius:999px;border:0;background:var(--chip);color:var(--sub);font-weight:600;font-size:13px;white-space:nowrap}
 .ocard .oa button.pri{background:var(--accent);color:var(--onacc)}
 .ocard .osel{flex:1 1 100%;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--sub)}
+.coslist{display:flex;flex-direction:column;gap:2px;margin-top:8px;padding:8px 10px;border-radius:12px;background:var(--soft)}
+.coslist .clbl{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.02em}
+.cosrow{display:flex;justify-content:space-between;gap:8px;border:0;background:none;text-align:left;padding:4px 0;font-size:14px;color:var(--ink);cursor:pointer}
+.cosrow::after{content:"›";color:var(--muted);font-size:16px;line-height:1}
+.cosrow:hover{color:var(--accent)}
 .ocard .osel select{flex:1 1 200px;min-width:0;background:var(--item);padding:9px 12px;font-size:14px}
 
 /* ===== 통합 검색 ===== */
@@ -356,11 +363,12 @@ select.msel{width:auto;height:30px;padding:0 10px;border-radius:999px;border:0;b
 </style>
 </head>
 <body>
-<!-- 세 앱 오가기 -->
+<!-- 네 앱 오가기 -->
 <nav class="appnav" aria-label="앱 이동">
   <a href="cleanup.html">🫙 <span class="l">Clean Quest</span><span class="s">정리</span></a>
   <a href="index.html">🗂️ <span class="l">Link Vault</span><span class="s">링크</span></a>
   <a href="home.html" class="on" aria-current="page">🏠 <span class="l">Home Vault</span><span class="s">우리집</span></a>
+  <a href="cosmetic.html">🧴 <span class="l">Cosmetic Vault</span><span class="s">화장품</span></a>
 </nav>
 <div class="card" id="mainCard">
   <header class="head">
@@ -476,7 +484,7 @@ select.msel{width:auto;height:30px;padding:0 10px;border-radius:999px;border:0;b
   </div>
 
   <footer class="foot">
-    <span class="lab"><i id="dot" class="off"></i>Home Vault v10.1</span>
+    <span class="lab"><i id="dot" class="off"></i>Home Vault v11</span>
     <button class="fb" id="bCopy" title="목록 복사" aria-label="목록 복사">🔗</button>
     <button class="fb" id="bCfg" title="설정" aria-label="설정">⚙</button>
   </footer>
@@ -484,10 +492,12 @@ select.msel{width:auto;height:30px;padding:0 10px;border-radius:999px;border:0;b
 <div class="msg" id="msg" role="status" aria-live="polite"></div>
 <script>
 /* Home Vault — 우리집 물건 위치 · 냉장고 · 장보기 · 레시피
-   데이터는 GitHub 비공개 저장소의 파일 3개에 나눠 저장 (예전 버전과 함께 써도 안전하게)
+   데이터는 GitHub 비공개 저장소의 파일 4개에 나눠 저장 (예전 버전과 함께 써도 안전하게)
      home.json    : zones(수납) + fridge(식품)
      kitchen.json : shop(장보기) + recipes(레시피)
      extra.json   : lost(찾는 중 목록)
+     log.json     : foodlog(먹음 · 버림 기록, 최근 120일 — Clean Quest 주간 리포트가 읽음)
+   (Cosmetic Vault 의 cosmetic.json 은 통합 검색용으로 읽기만 함)
    모든 변경은 op(fn) 하나로: 이 기기에 바로 적용 → 저장 → 화면 → GitHub 최신본에 같은 fn 을 다시 적용(병합) */
 
 /* =====================================================================
@@ -598,8 +608,12 @@ function normKitchen(d){d=d||{};
   return{shop:sh,recipes:rc}}
 /* extra.json 부분 (찾는 중 목록) — lost:[{id,name,at}] */
 function normExtra(d){d=d||{};return{lost:(Array.isArray(d.lost)?d.lost:[]).filter(function(x){return x&&x.id&&x.name})}}
+/* log.json 부분 (식품 기록) — foodlog:[{id, n 이름, k eat(먹음)|toss(버림), d 날짜}] · 최근 FOODLOG_DAYS 일만 (Clean Quest 주간 리포트용) */
+var FOODLOG_DAYS=120;
+function normLog(d){d=d||{};var lim=dayStr(-FOODLOG_DAYS);
+  return{foodlog:(Array.isArray(d.foodlog)?d.foodlog:[]).filter(function(x){return x&&x.id&&x.n&&(x.k==="eat"||x.k==="toss")&&typeof x.d==="string"&&x.d>=lim})}}
 /* 앱 안에서는 다섯 가지를 한 덩어리로 다룸 */
-function normAll(d){var h=norm(d),k=normKitchen(d),x=normExtra(d);return{zones:h.zones,fridge:h.fridge,shop:k.shop,recipes:k.recipes,lost:x.lost}}
+function normAll(d){var h=norm(d),k=normKitchen(d),x=normExtra(d),l=normLog(d);return{zones:h.zones,fridge:h.fridge,shop:k.shop,recipes:k.recipes,lost:x.lost,foodlog:l.foodlog}}
 function eachBox(d,fn){d.zones.forEach(function(z){z.boxes.forEach(function(b){fn(b,z)})})}
 function itemCount(){var n=0;eachBox(S.data,function(b){n+=b.items.length});return n}
 function findBox(d,id){for(var i=0;i<d.zones.length;i++)for(var j=0;j<d.zones[i].boxes.length;j++)if(d.zones[i].boxes[j].id===id)return d.zones[i].boxes[j];return null}
@@ -609,6 +623,10 @@ function findItem(d,id){return findItemBy(d,function(i){return i.id===id})}
 function findItemByName(d,name){var n=normName(name);return findItemBy(d,function(i){return normName(i.name)===n})}
 function boxName(id){var b=findBox(S.data,id);return b?b.name:""}
 function zShort(z){return String(z.name).replace(/^\S+\s/,"")}
+/* 이 서랍에 둔 화장품: Cosmetic Vault 보관 위치가 '구역 · 서랍'(예: 마켓비 서랍장 1 · 칸 3)과 같은 것
+   띄어쓰기 · 대소문자 · 가운뎃점은 무시 → 직접 '화장대 1단'이라고 적어도 '🪞 화장대' 의 '1단' 에 보임 */
+function placeKey(s){return normName(s).replace(/[·•・]/g,"")}
+function cosAt(z,b){var k=placeKey(zShort(z)+b.name);return COS.filter(function(x){return placeKey(x.location)===k})}
 
 /* =====================================================================
    5. 이 기기에 저장 · 불러오기
@@ -619,6 +637,7 @@ S.data=normAll(seed());
 try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(p&&p.data)S.data=normAll(p.data);if(p&&p.theme)S.theme=p.theme;if(p&&p.font)S.font=p.font;if(p&&p.zoom)S.zoom=p.zoom}}catch(e){}
 try{var c=localStorage.getItem(CKEY);if(c){var q0=JSON.parse(c);if(q0)CFG={user:q0.user||"",repo:q0.repo||"",token:q0.token||""}}}catch(e){}
 CFG.token=cleanTok(CFG.token);CFG.user=cleanName(CFG.user);CFG.repo=cleanName(CFG.repo);
+uiLoad();   /* 네 앱 공통 화면 설정이 있으면 그걸로 */
 if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);
 function save(){try{localStorage.setItem(KEY,JSON.stringify({data:S.data,theme:S.theme,font:S.font,zoom:S.zoom}))}catch(e){}}
 function saveCfg(){try{localStorage.setItem(CKEY,JSON.stringify(CFG))}catch(e){}}
@@ -652,9 +671,10 @@ function errText(e){var m=e&&e.message||"";
 var FILES={
   home:{path:"home.json",keys:["zones","fridge"],norm:norm,msg:"Update home items"},             /* 예전 버전과 같은 모양 */
   kitchen:{path:"kitchen.json",keys:["shop","recipes"],norm:normKitchen,msg:"Update shopping & recipes"},
-  extra:{path:"extra.json",keys:["lost"],norm:normExtra,msg:"Update lost items"}
+  extra:{path:"extra.json",keys:["lost"],norm:normExtra,msg:"Update lost items"},
+  log:{path:"log.json",keys:["foodlog"],norm:normLog,msg:"Update food log"}   /* 새 파일 → 예전 버전이 지우지 않음 */
 };
-var FILE_IDS=Object.keys(FILES);   /* home → kitchen → extra 순서 */
+var FILE_IDS=Object.keys(FILES);   /* home → kitchen → extra → log 순서 */
 function pick(d,f){var o={};FILES[f].keys.forEach(function(k){o[k]=d[k]});return o}
 async function getFile(f){
   var r=await fetch(base()+FILES[f].path+"?t="+Date.now(),{headers:hdr(),cache:"no-store"});
@@ -682,23 +702,24 @@ async function syncFile(f,fn,tries){
   if(!r.ok)throw new Error(String(r.status));
   return out;
 }
-async function remoteApply(fn){   /* 파일 3개를 차례로 */
+async function remoteApply(fn){   /* 파일 4개를 차례로 */
   var d=clone(S.data);
   for(var i=0;i<FILE_IDS.length;i++){var r=await syncFile(FILE_IDS[i],fn,0);if(r)Object.assign(d,r)}
   return normAll(d);
 }
 /* 파일을 모두 받아옴 (없는 파일은 이 기기 것 유지) */
 function pull(){
+  loadCosLocal();   /* 같은 기기 화장품 */
   if(!synced()){setDot("off");return}
   setDot("busy");
-  chain=chain.then(function(){return Promise.all(FILE_IDS.map(getFile))}).then(function(g){   /* 파일 3개 */
+  chain=chain.then(function(){return Promise.all(FILE_IDS.map(getFile))}).then(function(g){   /* 파일 4개 */
     var ch=false;
     g.forEach(function(x){if(x.d){Object.assign(S.data,x.d);ch=true}});
     if(ch){S.data=normAll(S.data);save();render()}
     setDot("");
-  }).catch(function(e){setDot("err");say(errText(e))});
+  }).then(function(){return fetchCos().catch(function(){})})   /* 화장품 (실패해도 조용히) */
+    .catch(function(e){setDot("err");say(errText(e))});
 }
-
 /* =====================================================================
    8. 실행 취소
    바뀐 항목(id)만 기억했다가 그것만 되돌림 (다른 기기 변경은 그대로). 목록: 항목 단위 · 수납: 구역 이름 · 서랍 단위
@@ -713,7 +734,7 @@ function diffList(P,sec,a,b,extra){
 function diffPatch(a,b){
   var P=[];
   diffList(P,"fridge",a.fridge,b.fridge);diffList(P,"shop",a.shop,b.shop);diffList(P,"recipes",a.recipes,b.recipes);
-  diffList(P,"lost",a.lost,b.lost);
+  diffList(P,"lost",a.lost,b.lost);diffList(P,"foodlog",a.foodlog,b.foodlog);
   var za=idMap(a.zones),zb=idMap(b.zones);
   keysOf(za,zb).forEach(function(zid){
     var x=za[zid],y=zb[zid];
@@ -872,7 +893,8 @@ function renderSearch(){
   var foods=S.data.fridge.filter(function(f){return has(f.name)||has(f.cat)});
   var shops=S.data.shop.filter(function(x){return has(x.name)});
   var recs=S.data.recipes.filter(function(r){return has(r.name)||r.ings.some(function(g){return has(g.name)})});
-  var total=rooms.length+foods.length+shops.length+recs.length;
+  var cos=COS.filter(function(x){return has(x.name)||has(x.brand||"")||has(x.location||"")});   /* 🧴 화장품 */
+  var total=rooms.length+foods.length+shops.length+recs.length+cos.length;
   var hd=el("div","tabhead");hd.appendChild(el("div","kicker","SEARCH"));hd.appendChild(el("div","sect-title","'"+S.q+"' 찾은 곳 "+total+"건"));
   /* 어떻게 찾았는지 안내 */
   var how=[];if(QM.cho)how.push("초성으로도 찾았어요");if(QM.alts.length)how.push("비슷한 말도 함께: "+QM.alts.slice(0,5).join(", "));
@@ -891,6 +913,9 @@ function renderSearch(){
   if(shops.length){var L3=sGroup(V,"🛒 장보기",shops.length+"개");shops.forEach(function(x){L3.appendChild(sRow(x.done?"✓":"🛒",x.name+(x.qty?" · "+x.qty:""),x.done?"산 것":"살 것",function(){goTo("shop",x.id,function(){S.shf=x.done?"done":"todo"})}))})}
   if(recs.length){var L4=sGroup(V,"🍳 레시피",recs.length+"개");recs.forEach(function(r){var mi=r.ings.filter(function(g){return has(g.name)}).map(function(g){return g.name});
     L4.appendChild(sRow("🍳",r.name,mi.length?"재료: "+mi.join(", "):r.cat,function(){goTo("recipes",r.id,function(){S.rf="all";S.ropen[r.id]=true})}))})}
+  if(cos.length){var L6=sGroup(V,"🧴 화장품",cos.length+"개");cos.forEach(function(x){
+    var m=el("div","d");m.appendChild(el("span",null,(x.status==="active"?"사용 중":"쟁여둠")+(x.qty>1?" · "+x.qty+(x.category==="mask"?"장":"개"):"")+(x.location?" · 📍 "+x.location:"")));
+    L6.appendChild(sRow(COS_ICON[x.category]||"🧴",(x.brand?x.brand+" ":"")+x.name,m,function(){location.href="cosmetic.html?q="+encodeURIComponent(x.name)}))})}   /* 누르면 화장품 앱에서 그 제품 */
   lostGroup();lostCta("적어 둔 곳에 없었나요?");
 }
 function resultEl(z,b){
@@ -910,6 +935,27 @@ function resultEl(z,b){
   var go=el("button","chip","서랍 열어서 보기");go.style.marginTop="12px";
   go.onclick=function(){openBox(z,b)};
   bb.appendChild(go);card.appendChild(bb);return card;
+}
+
+/* =====================================================================
+   12-1. 🧴 Cosmetic Vault 화장품 — cosmetic.json 을 읽기만 함 (통합 검색에 '어디 있는지' 보여주려고)
+   여기서는 고치지 않음 · 다 쓴 것은 빼고 · 연결 전이면 같은 기기 저장소에서
+   ===================================================================== */
+var COS=[];
+var COS_ICON={toner:"💧",serum:"✨",cream:"🧴",mask:"🎭",sun:"☀️",clean:"🫧",etc:"💄"};
+function cosItems(d){return (d&&Array.isArray(d.items)?d.items:[]).filter(function(x){return x&&x.name&&x.status!=="used"})}   /* 다 쓴 것은 빼고 */
+function loadCosLocal(){var d=nbRead("cosmeticvault:v1");if(d)COS=cosItems(d)}
+/* 서랍 펼친 곳에 보이는 화장품 목록 — 누르면 Cosmetic Vault 에서 그 제품 검색 */
+function cosText(x){return x.name+" · "+(x.status==="active"?"사용 중":"쟁여둠")+(x.qty>1?" "+x.qty+(x.category==="mask"?"장":"개"):"")}
+function cosListEl(L){
+  var cl=el("div","coslist");cl.appendChild(el("div","clbl","🧴 Cosmetic Vault"));
+  L.forEach(function(x){var r=el("button","cosrow",cosText(x));r.onclick=function(){location.href="cosmetic.html?q="+encodeURIComponent(x.name)};cl.appendChild(r)});
+  return cl;
+}
+async function fetchCos(){
+  var r=await fetch(base()+"cosmetic.json?t="+Date.now(),{headers:hdr(),cache:"no-store"});
+  if(!r.ok)return;   /* 아직 화장품 앱을 안 썼으면 파일이 없음 */
+  var j=await r.json();COS=cosItems(JSON.parse(dec(j.content)));render();
 }
 
 /* =====================================================================
@@ -984,7 +1030,8 @@ function boxEl(z,b){
   m.appendChild(el("div","n",b.name));
   var tl0=lastTidy(b);  /* 머리 줄에 마지막 정리 */
   var pv=b.items.slice(0,4).map(function(i){return i.name}).join(", ")+(b.items.length>4?" 외 "+(b.items.length-4):"");
-  m.appendChild(el("div","p",(pv||"비어 있음")+(tl0?" · 🧹 "+agoDay(tl0):"")));
+  var cz=cosAt(z,b);   /* 이 서랍의 화장품 */
+  m.appendChild(el("div","p",(pv||"비어 있음")+(cz.length?" · 🧴 "+cz.length:"")+(tl0?" · 🧹 "+agoDay(tl0):"")));
   bh.appendChild(m);bh.appendChild(el("span","c"+(b.items.length?"":" zero"),b.items.length+"개"));
   bh.onclick=function(){S.ob[b.id]=!S.ob[b.id];S.last=b.id;render()};
   box.appendChild(bh);
@@ -1026,6 +1073,7 @@ function boxEl(z,b){
         bb.appendChild(mr);
       }
     });
+    if(cz.length)bb.appendChild(cosListEl(cz));   /* 🧴 이 서랍에 둔 화장품 */
     /* 쉼표로 여러 개 한 번에 (여권, 통장, 보조배터리) */
     bb.appendChild(inputRow("ai-"+b.id,"+ 물건 (쉼표로 여러 개)","추가",function(v){addItems(b.id,v)}));
     var ac=el("div","acts"),lb=el("label","pb","📷 사진"),fi=el("input");
@@ -1206,7 +1254,7 @@ function renderLostView(R){
 }
 
 /* =====================================================================
-   17. 식품 (냉장실 · 냉동실 · 실온)
+   17. 식품 (냉장실 · 냉동실 · 실온) — 다 먹음 · 버림은 log.json 에 남김 (Clean Quest 주간 리포트)
    ===================================================================== */
 function expSoon(f){var d=dleft(f.exp);return d!==null&&d<=3}   /* 3일 안 · 지난 것 포함 */
 function expPast(f){var d=dleft(f.exp);return d!==null&&d<0}
@@ -1247,7 +1295,7 @@ function renderFridge(){
     var urn=urgentRecipes().length;if(urn){var rb2=el("button","mchip","🍳 이걸로 만들 요리 "+urn);rb2.onclick=function(){S.rf="all";openTab("recipes")};btns.appendChild(rb2)}
     var bb=el("button","mchip","🛒 모두 장보기에 담기");bb.onclick=function(){urgentToShop(urgent)};btns.appendChild(bb);
     var past=urgent.filter(expPast);
-    if(past.length){var pb=el("button","mchip","🗑 지난 것 "+past.length+"개 비우기");pb.onclick=function(){var ids=past.map(function(f){return f.id});op(function(d){d.fridge=d.fridge.filter(function(f){return ids.indexOf(f.id)<0});return d},{msg:"기한 지난 "+past.length+"개를 비웠어요",canUndo:true})};btns.appendChild(pb)}
+    if(past.length){var pb=el("button","mchip","🗑 지난 것 "+past.length+"개 비우기");pb.onclick=function(){tossPast(past)};btns.appendChild(pb)}
     bar.appendChild(btns);al.appendChild(bar);
   }
   rows.sort(function(a,b){var x=dleft(a.exp),y=dleft(b.exp);if(x===null&&y===null)return 0;if(x===null)return 1;if(y===null)return -1;return x-y});
@@ -1267,7 +1315,7 @@ function renderFridge(){
       var mn=el("button","mchip","−"+stp);mn.onclick=function(){fridgeStep(f,-1)};ia.appendChild(mn);
       var pl=el("button","mchip","+"+stp);pl.onclick=function(){fridgeStep(f,1)};ia.appendChild(pl);
     }else{
-      var eat=el("button","mchip","다 먹음");eat.onclick=function(){fridgeRemove(f,"'"+f.name+"' 다 먹었어요")};ia.appendChild(eat);
+      var eat=el("button","mchip","다 먹음");eat.onclick=function(){fridgeRemove(f,"'"+f.name+"' 다 먹었어요","eat")};ia.appendChild(eat);
     }
     /* 보관 장소가 3곳 → 고르는 목록으로 */
     var sw=el("select","msel");sw.setAttribute("aria-label",f.name+" 보관 장소");
@@ -1279,7 +1327,7 @@ function renderFridge(){
     var ed=el("button","rb","✎");ed.setAttribute("aria-label",f.name+" 고치기");
     ed.onclick=function(){S.fedit=f.id;$("fn").value=f.name;$("fq").value=f.qty||"";$("fe").value=f.exp||"";S.fsel=f.area;S.fcat=f.cat||"";$("fadd").textContent="저장";render();$("fn").focus()};
     var x=el("button","rb del","✕");x.setAttribute("aria-label",f.name+" 빼기");
-    x.onclick=function(){fridgeRemove(f,"'"+f.name+"' 뺐어요")};  /* 실행 취소 가능 */
+    x.onclick=function(){fridgeDrop(f)};  /* 실행 취소 가능 */
     row.appendChild(ed);row.appendChild(x);
     row.className="item wrap"+(S.hl===f.id?" hl":"");row.dataset.hl=f.id;row.appendChild(ia);   /* 버튼 줄은 카드 아래 한 줄 전체 */
     list.appendChild(row);
@@ -1295,18 +1343,31 @@ function addFridge(){
 /* 수정 취소 (입력칸 비우기) */
 function cancelFridgeEdit(){S.fedit=null;S.fcat="";$("fn").value="";$("fq").value="";$("fe").value="";$("fadd").textContent="추가";render()}
 /* 냉장고 동작 — 모두 op() 를 지나서 GitHub 에도 병합 반영 */
-function fridgeRemove(f,msg){op(function(d){d.fridge=d.fridge.filter(function(i){return i.id!==f.id});return d},{msg:msg,canUndo:true})}
+/* 식품이 냉장고에서 빠질 때 기록: eat 다 먹음 · toss 버림 (log.json)
+   - 무엇을 기록할지는 누른 순간 이 기기 기준으로 정해서 fn 밖에서 넘김
+     (fn 은 파일마다 다시 적용되는데, log.json 차례에는 냉장고가 이미 비어 있어서 안에서 찾으면 놓침)
+   - 같은 식품은 한 번만 (id = "e"+식품 id) → 몇 번 다시 적용해도 같음 */
+function logFood(d,f,kind,day){var id="e"+f.id;if(kind&&!d.foodlog.some(function(x){return x.id===id}))d.foodlog.push({id:id,n:f.name,k:kind,d:day})}
+/* kind: 다 먹음 → eat · 기한 지난 걸 ✕ → toss · 그 밖의 ✕ (잘못 넣은 것) → 기록 안 함 */
+function fridgeRemove(f,msg,kind){var td=dayStr(0);op(function(d){logFood(d,f,kind,td);d.fridge=d.fridge.filter(function(i){return i.id!==f.id});return d},{msg:msg,canUndo:true})}
+function fridgeDrop(f){var ex=expPast(f);fridgeRemove(f,"'"+f.name+"' "+(ex?"버렸어요 (기한 지남)":"뺐어요"),ex?"toss":"")}   /* ✕ */
+/* 🗑 기한 지난 것 한 번에 비우기 (모두 버림으로 기록) */
+function tossPast(past){
+  var ids=past.map(function(f){return f.id}),td=dayStr(0);
+  op(function(d){past.forEach(function(f){logFood(d,f,"toss",td)});d.fridge=d.fridge.filter(function(f){return ids.indexOf(f.id)<0});return d},{msg:"기한 지난 "+past.length+"개를 비웠어요",canUndo:true});
+}
 function fridgeMove(f,area){op(function(d){d.fridge.forEach(function(i){if(i.id===f.id)i.area=area});return d},{msg:"'"+f.name+"' → "+area})}
 /* 수량 ± : 0 이 되면 목록에서 빠짐 (실행 취소 가능). 원격에서는 그 시점 수량에 같은 만큼 더하고 뺌 */
 function fridgeStep(f,sign){
   var st=stepOf(f.qty);if(!st)return;
-  var nq=addQty(f.qty,st,sign),gone=nq!==null&&qtyZero(nq);
+  var nq=addQty(f.qty,st,sign),gone=nq!==null&&qtyZero(nq),td=dayStr(0);
   op(function(d){
     d.fridge=d.fridge.filter(function(i){
       if(i.id!==f.id)return true;
       var q=addQty(i.qty,st,sign);if(q===null)return true;
       if(qtyZero(q))return false;i.qty=q;return true;
-    });return d;
+    });
+    if(gone)logFood(d,f,"eat",td);return d;
   },gone?{msg:"'"+f.name+"' 다 먹었어요",canUndo:true}:{});
 }
 function urgentToShop(list){
@@ -1430,8 +1491,9 @@ function urgentRecipes(){
 /* 요리 완료 계획: 재료마다 '유통기한이 가장 가까운' 냉장고 식품 하나에서 뺌
    - 단위 계열이 같을 때만 계산 (100ml 를 '1팩'에서 빼지 않음 → '양 확인'으로 남김)
    - 양을 안 적은 재료는 개수 단위일 때만 1 빼기 */
+/* 레시피대로 냉장고 재료 줄이기 → {d, notes 알림 글, used 다 쓴 식품} */
 function cookPlan(d,r){
-  var notes=[];
+  var notes=[],used=[];
   r.ings.forEach(function(g){
     var f=bestFood(d.fridge,g.name);
     if(!f)return;
@@ -1439,16 +1501,16 @@ function cookPlan(d,r){
     if(!need&&have&&qfam(have.unit).indexOf("cnt:")===0)need={val:1,unit:have.unit};
     if(!have||!need||qfam(have.unit)!==qfam(need.unit)){notes.push(f.name+" 양 확인");return}
     var left=(have.val*qmul(have.unit)-need.val*qmul(need.unit))/qmul(have.unit);
-    if(left<=0.0001){d.fridge=d.fridge.filter(function(x){return x.id!==f.id});notes.push(f.name+" 다 씀"+(left<-0.0001?" ("+fmtQty(-left,have.unit)+" 모자랐어요)":""))}
+    if(left<=0.0001){used.push(f);d.fridge=d.fridge.filter(function(x){return x.id!==f.id});notes.push(f.name+" 다 씀"+(left<-0.0001?" ("+fmtQty(-left,have.unit)+" 모자랐어요)":""))}
     else{f.qty=fmtQty(left,have.unit);notes.push(f.name+" 남음 "+f.qty)}
   });
-  return{d:d,notes:notes};
+  return{d:d,notes:notes,used:used};
 }
 function cookRecipe(r){
   if(S.cook!==r.id){S.cook=r.id;render();setTimeout(function(){if(S.cook===r.id){S.cook=null;render()}},4000);return}
   S.cook=null;
-  var preview=cookPlan(clone(S.data),r).notes;
-  op(function(d){return cookPlan(d,r).d},{msg:"🍳 '"+r.name+"' 완료"+(preview.length?" · "+preview.join(", "):" · 냉장고에서 뺄 재료가 없었어요"),canUndo:true});
+  var pre=cookPlan(clone(S.data),r),preview=pre.notes,td=dayStr(0);   /* 다 쓴 재료는 이 기기 기준으로 미리 (식품 기록용) */
+  op(function(d){d=cookPlan(d,r).d;pre.used.forEach(function(f){logFood(d,f,"eat",td)});return d},{msg:"🍳 '"+r.name+"' 완료"+(preview.length?" · "+preview.join(", "):" · 냉장고에서 뺄 재료가 없었어요"),canUndo:true});
 }
 function needToShop(list){
   var ids=list.map(function(){return uid()});
@@ -1574,6 +1636,10 @@ function renderToday(){
    21. 설정 · 글꼴 · 화면 크기 · 백업
    ===================================================================== */
 /* 글꼴 · 화면 크기 (Clean Quest · Link Vault 와 같은 선택지) */
+function toggleTheme(){
+  var dark=document.documentElement.getAttribute("data-theme")==="dark"||(!S.theme&&window.matchMedia("(prefers-color-scheme: dark)").matches);
+  S.theme=dark?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save();uiSave();
+}
 function markChips(attr,isOn){document.querySelectorAll("["+attr+"]").forEach(function(b){b.className="chip"+(isOn(b)?" on":"")})}
 function applyFont(){
   var f=FONTS[S.font]||FONTS.noto,r=document.documentElement.style;
@@ -1624,10 +1690,7 @@ $("bCopy").onclick=function(){
 };
 $("bCfg").onclick=function(){$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;$("cfg").classList.toggle("show")};
 $("gshow").onclick=function(){var i=$("gt");i.type=i.type==="password"?"text":"password"};
-$("gtheme").onclick=function(){
-  var dark=document.documentElement.getAttribute("data-theme")==="dark"||(!S.theme&&window.matchMedia("(prefers-color-scheme: dark)").matches);
-  S.theme=dark?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save();
-};
+$("gtheme").onclick=toggleTheme;
 $("gsave").onclick=function(){
   CFG={user:cleanName($("gu").value),repo:cleanName($("gr").value),token:cleanTok($("gt").value)};$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;saveCfg();
   if(!synced()){setDot("off");say("세 칸을 모두 채워 주세요");return}
@@ -1635,8 +1698,8 @@ $("gsave").onclick=function(){
 };
 $("gout").onclick=function(){CFG={user:"",repo:"",token:""};saveCfg();$("gu").value=$("gr").value=$("gt").value="";setDot("off");say("이 기기에서 연결을 해제했어요")};
 $("nzb").onclick=function(){var v=$("nz").value.trim();if(!v)return;$("nz").value="";op(function(d){d.zones.push({id:uid(),name:v,boxes:[]});return d})};
-document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();applyFont()}});
-document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();applyZoom()}});
+document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();uiSave();applyFont()}});
+document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();uiSave();applyZoom()}});
 /* 백업 · 복원 */
 $("bkDown").onclick=function(){
   try{var t=backupText(),u=URL.createObjectURL(new Blob([t],{type:"application/json"})),a=document.createElement("a");
@@ -1655,10 +1718,48 @@ $("bkFile").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileR
 document.addEventListener("visibilitychange",function(){if(!document.hidden)pull()});
 
 /* =====================================================================
+   네 앱 공통 — 화면 설정 함께 쓰기 · 앱 바 숫자
+   Clean Quest · Link Vault · Home Vault · Cosmetic Vault 네 파일에 똑같은 코드 (고칠 땐 네 곳 같이)
+   네 앱이 같은 주소(yunsaera.github.io/link-vault)라서 서로의 '이 기기 저장소'를 바로 읽을 수 있음
+   ===================================================================== */
+/* 테마 · 글꼴 · 화면 크기: 한 앱에서 바꾸면 네 앱 모두 (vault:ui) */
+function uiLoad(){try{var u=JSON.parse(localStorage.getItem("vault:ui")||"null");if(u){if(typeof u.theme==="string")S.theme=u.theme;if(u.font)S.font=u.font;if(u.zoom)S.zoom=+u.zoom}}catch(e){}}
+function uiSave(){try{localStorage.setItem("vault:ui",JSON.stringify({theme:S.theme,font:S.font,zoom:S.zoom}))}catch(e){}}
+function uiApply(){var r=document.documentElement;if(S.theme)r.setAttribute("data-theme",S.theme);else r.removeAttribute("data-theme");applyFont();applyZoom()}
+/* 앱 바 숫자: 🏠 식품 3일 안 · 지남 / 🧴 화장품 30일 안 · 지남 (각 앱의 ⚠ 숫자와 같은 기준, 지금 앱은 빼고) */
+function nbDays(x){if(typeof x!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(x))return null;var p=x.split("-"),t=new Date();t=new Date(t.getFullYear(),t.getMonth(),t.getDate());return Math.round((new Date(+p[0],+p[1]-1,+p[2])-t)/864e5)}
+function nbRead(k){try{var p=JSON.parse(localStorage.getItem(k)||"null");return p&&p.data?p.data:null}catch(e){return null}}
+function nbIso(t){return t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2)}
+/* 화장품 실제 기한: 유통기한 vs 개봉한 날 + 개봉 후 개월 (쟁여둔 건 유통기한만) 중 빠른 날 */
+function nbCosDays(x){
+  var e=x.expiry||"",p="";
+  if(x.status!=="stock"&&nbDays(x.opened)!==null&&+x.pao>0){var q=x.opened.split("-"),t=new Date(+q[0],+q[1]-1+(+x.pao),1),last=new Date(t.getFullYear(),t.getMonth()+1,0).getDate();t.setDate(Math.min(+q[2],last));p=nbIso(t)}
+  return nbDays(p&&(!e||p<e)?p:e);
+}
+function navCounts(){
+  var c={},h=nbRead("homevault:v1"),m=nbRead("cosmeticvault:v1");
+  if(h&&Array.isArray(h.fridge))c["home.html"]=h.fridge.filter(function(f){var d=f?nbDays(f.exp):null;return d!==null&&d<=3}).length;
+  if(m&&Array.isArray(m.items))c["cosmetic.html"]=m.items.filter(function(x){if(!x||x.status==="used")return false;var d=nbCosDays(x);return d!==null&&d<=30}).length;
+  return c;
+}
+function navBadges(){
+  var c=navCounts();
+  document.querySelectorAll(".appnav a").forEach(function(a){
+    var old=a.querySelector(".nb");if(old)a.removeChild(old);
+    var n=c[a.getAttribute("href")];if(!n||a.classList.contains("on"))return;
+    var b=document.createElement("span");b.className="nb";b.textContent=n>9?"9+":String(n);a.setAttribute("title","기한 챙길 것 "+n+"개");a.appendChild(b);
+  });
+}
+/* 다른 탭 · 같은 노션 페이지의 다른 블록에서 바꾸면 바로 따라감 */
+window.addEventListener("storage",function(e){if(e.key==="vault:ui"){uiLoad();uiApply()}navBadges()});
+document.addEventListener("visibilitychange",function(){if(!document.hidden)navBadges()});
+
+/* =====================================================================
    23. 시작
    ===================================================================== */
 applyFont();applyZoom();
-render();pull();
+loadCosLocal();   /* 같은 기기의 화장품 (GitHub 받기 전에도 검색되게) */
+render();navBadges();pull();
 </script>
 </body>
 </html>

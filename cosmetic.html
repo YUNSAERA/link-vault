@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Cosmetic Vault</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- 홈 화면에 앱처럼 추가 -->
+<link rel="manifest" href="cosmetic-manifest.json">
+<meta name="theme-color" content="#0f766e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cosmetic Vault">
+<link rel="apple-touch-icon" href="cosmetic-icon-192.png">
+<link rel="icon" href="cosmetic-icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&family=Noto+Sans+KR:wght@400;500;600;700&family=Gowun+Dodum&display=swap">
+<style>
+/* =====================================================================
+   디자인 토큰 — Clean Quest · Link Vault 와 같은 값 (라이트/다크)
+   ===================================================================== */
+:root{
+  --body:'Inter','Noto Sans KR','Gowun Dodum',sans-serif;--title:'Inter','Noto Sans KR','Gowun Dodum',sans-serif;
+  --page:#f5f6f8;--card:#ffffff;--ink:#18181b;--sub:#5c5c66;--muted:#767680;--field:#f4f4f5;--line:rgba(24,24,27,.06);
+  --accent:#0f766e;--accent2:#115e59;--soft:rgba(15,118,110,.09);--ring:rgba(15,118,110,.22);--item:#fafafa;--chip:#f4f4f5;--hover:#ececee;
+  --warn:#b45309;--warn-soft:rgba(217,119,6,.12);--danger:#dc2626;--danger-soft:rgba(220,38,38,.1);
+  --sm:0 1px 2px rgba(24,24,27,.03),0 4px 16px -4px rgba(24,24,27,.05);
+  --shadow:0 12px 32px -12px rgba(24,24,27,.08),0 2px 6px -1px rgba(24,24,27,.04);--onacc:#ffffff;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#0b0c0e;--card:#121417;--ink:#f4f4f5;--sub:#b6b6c0;--muted:#9a9aa4;--field:#1b1e23;--line:rgba(255,255,255,.07);
+  --accent:#2dd4bf;--accent2:#5eead4;--soft:rgba(45,212,191,.11);--ring:rgba(45,212,191,.24);--item:#171a1e;--chip:#1d2127;--hover:#242932;
+  --warn:#fbbf24;--warn-soft:rgba(251,191,36,.14);--danger:#f87171;--danger-soft:rgba(248,113,113,.14);
+  --sm:0 1px 2px rgba(0,0,0,.35),0 8px 24px -8px rgba(0,0,0,.45);--shadow:0 16px 40px -14px rgba(0,0,0,.6),0 4px 12px -2px rgba(0,0,0,.35);--onacc:#0b1110}}
+:root[data-theme="dark"]{
+  --page:#0b0c0e;--card:#121417;--ink:#f4f4f5;--sub:#b6b6c0;--muted:#9a9aa4;--field:#1b1e23;--line:rgba(255,255,255,.07);
+  --accent:#2dd4bf;--accent2:#5eead4;--soft:rgba(45,212,191,.11);--ring:rgba(45,212,191,.24);--item:#171a1e;--chip:#1d2127;--hover:#242932;
+  --warn:#fbbf24;--warn-soft:rgba(251,191,36,.14);--danger:#f87171;--danger-soft:rgba(248,113,113,.14);
+  --sm:0 1px 2px rgba(0,0,0,.35),0 8px 24px -8px rgba(0,0,0,.45);--shadow:0 16px 40px -14px rgba(0,0,0,.6),0 4px 12px -2px rgba(0,0,0,.35);--onacc:#0b1110}
+
+/* ===== 기본 ===== */
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+.card,.card *{word-break:keep-all;overflow-wrap:anywhere}
+input,textarea,select{word-break:normal;overflow-wrap:normal}
+body{min-height:100dvh;padding:28px 16px 48px}
+.card{max-width:640px;margin:0 auto;padding:32px;background:var(--card);border-radius:28px;box-shadow:var(--shadow)}
+input,textarea,select{width:100%;border:1px solid transparent;background:var(--field);color:var(--ink);border-radius:14px;padding:12px 15px;font:400 15px/1.5 var(--body);outline:none;transition:background-color .2s,box-shadow .2s,border-color .2s}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+input:focus,textarea:focus,select:focus{background:var(--card);border-color:var(--ring);box-shadow:0 0 0 4px var(--soft)}
+button{font-family:var(--body);cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .16s cubic-bezier(.22,1,.36,1),background-color .2s,color .2s,box-shadow .2s}
+button:not(:disabled):active{transform:scale(.96)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ===== 앱 전환 바 (Clean Quest · Link Vault · Home Vault) ===== */
+.appnav{display:flex;justify-content:center;gap:6px;max-width:640px;margin:0 auto 14px}
+.appnav a{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 13px;border-radius:999px;background:var(--card);box-shadow:var(--sm);white-space:nowrap}
+.appnav a:hover{color:var(--ink)}
+.appnav a.on{background:var(--accent);color:var(--onacc)}
+.appnav .s{display:none}
+@media (max-width:420px){.appnav a{padding:7px 11px;font-size:13px}.appnav .l{display:none}.appnav .s{display:inline}}
+
+/* ===== 머리글 ===== */
+.head{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.mark{width:40px;height:40px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:19px;flex:none}
+.head-text{flex:1;min-width:0}
+.head h1{font-family:var(--title);font-size:22px;font-weight:700;line-height:1.25;letter-spacing:-.025em;margin:0}
+.head-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.badge{background:var(--soft);color:var(--accent);font-weight:600;font-size:13px;min-width:38px;text-align:center;padding:6px 12px;border-radius:999px;flex:none}
+
+/* ===== 검색 · 탭 ===== */
+.search{position:relative;display:flex;align-items:center;margin-bottom:16px}
+.search .ico2{position:absolute;left:15px;color:var(--muted);font-size:16px;pointer-events:none}
+.search input{padding:13px 44px;font-size:15.5px}
+.sclear{position:absolute;right:10px;width:28px;height:28px;border:0;border-radius:999px;background:var(--hover);color:var(--sub);font-size:12px;display:grid;place-items:center;padding:0}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:5px;background:var(--field);border-radius:16px;margin:0 0 24px}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border:0;background:transparent;color:var(--sub);font-weight:600;font-size:14px;letter-spacing:-.01em;line-height:1.3;white-space:nowrap;padding:8px 4px;min-height:44px;border-radius:12px}
+.tab.on{background:var(--card);color:var(--ink);box-shadow:var(--sm)}
+.tab .tm{font-size:12px;font-weight:500;color:var(--muted)}
+.tab.on .tm{color:var(--accent)}
+.tab .tm.warn{color:var(--warn);font-weight:600}
+
+/* ===== 공통 요소 ===== */
+.kicker{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.sect-title{font-family:var(--title);font-size:18px;font-weight:600;letter-spacing:-.015em;line-height:1.45;margin-bottom:16px}
+.sect{background:var(--item);border-radius:22px;padding:22px 24px;margin-bottom:20px;box-shadow:var(--sm)}
+.sect input{background:var(--card)}
+.tabhead{margin-bottom:14px}
+.tabhead .sect-title{margin-bottom:0}
+.row{display:flex;gap:10px}
+.add{background:var(--accent);color:var(--onacc);border:0;border-radius:14px;font-weight:600;font-size:14px;padding:0 20px;min-height:46px;white-space:nowrap;flex:none;box-shadow:0 4px 14px -4px var(--ring)}
+.add:hover{background:var(--accent2)}
+.add.grow{flex:1}
+.soft{background:var(--chip);color:var(--sub);border:0;border-radius:14px;font-weight:600;font-size:14px;padding:10px 15px;min-height:42px}
+.soft:hover{color:var(--ink);background:var(--hover)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{height:38px;min-width:38px;padding:0 16px;border-radius:999px;border:0;background:var(--chip);color:var(--sub);font-weight:500;font-size:14px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:5px}
+.chip:hover{background:var(--hover);color:var(--ink)}
+.chip.on{background:var(--accent);color:var(--onacc);font-weight:600}
+.chip.warnc.on{background:var(--warn);color:#fff}
+.chip.sm{height:32px;padding:0 12px;font-size:13px}
+.mchip{height:30px;padding:0 11px;border-radius:999px;border:0;background:var(--item);color:var(--sub);font-size:12.5px;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center}
+.mchip:hover{background:var(--soft);color:var(--accent)}
+.mchip.acc{background:var(--soft);color:var(--accent)}
+.mchip:disabled{opacity:.4;cursor:default}
+.rb{width:32px;height:32px;border-radius:999px;border:0;background:var(--item);color:var(--sub);font-size:13px;text-decoration:none;display:grid;place-items:center;flex:none;padding:0}
+.rb:hover{color:var(--accent);background:var(--soft)}
+.rb.del:hover{color:var(--danger);background:var(--danger-soft)}
+.empty{text-align:center;color:var(--muted);font-size:15px;line-height:1.6;padding:30px 16px;background:var(--card);border-radius:18px}
+.hint{font-size:13px;color:var(--muted);line-height:1.5}
+.tag{font-size:12px;font-weight:500;padding:1px 8px;border-radius:6px;background:var(--item);color:var(--sub)}
+.iacts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+
+/* ===== 오늘 챙길 것 ===== */
+.today{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:-4px 0 16px}
+.today .lbl{font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--accent);margin-right:2px}
+.today .chip{height:34px;font-size:13.5px}
+.today .chip.warnc{background:var(--warn-soft);color:var(--warn);font-weight:600}
+
+/* ===== 목록 카드 · 입력 칸 ===== */
+.fform{display:flex;flex-direction:column;gap:12px}
+.fld{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+.fld>span,.flab{font-size:13px;font-weight:600;color:var(--sub)}
+.fform .add{width:100%}
+.fedit .add{background:var(--warn)}
+.list{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:18px;padding:13px 14px;box-shadow:0 1px 3px rgba(24,24,27,.05)}
+.item.wrap{flex-wrap:wrap}
+.item>.iacts{flex-basis:100%;margin-top:0;padding-left:52px}
+.ico{width:40px;height:40px;border-radius:12px;background:var(--item);display:grid;place-items:center;font-size:18px;flex:none}
+.txt{flex:1;min-width:0}
+.t{font-weight:600;font-size:15.5px;line-height:1.4}
+.d{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:3px}
+.dd{font-size:12px;font-weight:600;border-radius:999px;padding:1px 9px;background:var(--soft);color:var(--accent);flex:none;white-space:nowrap}
+.dd.warn{background:var(--warn-soft);color:var(--warn)}
+.dd.bad{background:var(--danger-soft);color:var(--danger)}
+
+/* ===== 설정 패널 ===== */
+.panel{display:none;background:var(--item);border-radius:22px;padding:22px 24px;margin-top:20px;box-shadow:var(--sm)}
+.panel.show{display:block}
+.cfg label{display:block;font-size:13px;font-weight:600;color:var(--sub);margin:14px 0 6px}
+.cfg label:first-child{margin-top:0}
+.cfg input{background:var(--card)}
+.cfg .row{margin-top:14px;flex-wrap:wrap}
+.cfg .gap{height:1px;background:var(--line);margin:20px 0 6px}
+.bkrow{display:flex;gap:8px;flex-wrap:wrap}
+.bkrow .soft,.bkrow label.soft{flex:1;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;white-space:nowrap}
+#bkBox{height:90px;resize:vertical;font-size:12.5px;margin-top:8px;background:var(--card)}
+
+/* ===== 알림 토스트 (화면 아래 · 실행 취소 버튼) ===== */
+.msg{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;width:max-content;max-width:calc(100vw - 32px);padding:11px 16px;border-radius:14px;background:var(--ink);color:var(--card);box-shadow:var(--shadow);font-size:14px;font-weight:500;line-height:1.45;display:flex;align-items:center;gap:12px}
+.msg:empty{display:none}
+.msg-undo{border:0;background:transparent;color:#5eead4;font-weight:700;font-size:14px;padding:4px 2px;min-height:32px;flex:none}
+:root[data-theme="dark"] .msg-undo{color:#0f766e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .msg-undo{color:#0f766e}}
+
+/* ===== 푸터 ===== */
+.foot{display:flex;align-items:center;gap:8px;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+.lab{flex:1;min-width:0;font-size:12px;letter-spacing:.08em;font-weight:600;color:var(--muted);text-transform:uppercase;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.lab i{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+.lab i.busy{background:#f59e0b}.lab i.err{background:#ef4444}.lab i.off{background:var(--muted);opacity:.5}
+.fb{width:38px;height:38px;border-radius:999px;border:0;background:var(--field);color:var(--sub);font-size:15px;display:grid;place-items:center;flex:none}
+.fb:hover{background:var(--hover);color:var(--ink)}
+
+
+/* ===== 앱 바 숫자 (네 앱 공통) ===== */
+.appnav a{position:relative}
+.appnav .nb{position:absolute;top:-7px;right:-5px;display:grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#f59e0b;color:#fff;font-size:11px;font-weight:700;line-height:1;box-shadow:0 0 0 2px var(--page)}
+
+/* ===== Cosmetic Vault 전용 ===== */
+.tabhead.withbtn{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.tabhead .add{min-height:40px;padding:0 16px}
+.filters{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+.filters .chips{gap:6px}
+.item .brand{font-size:12.5px;font-weight:500;color:var(--muted);margin-bottom:1px}
+.item .memo{font-size:13px;color:var(--sub);margin-top:4px;line-height:1.5}
+.item .memo.feel.bad,.hint.warnline{color:var(--warn);font-weight:600}
+.item .memo.again{color:var(--muted)}
+.item .memo.again.buy{color:var(--warn);font-weight:600}
+.sublabel{font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--muted);margin:10px 2px 0;grid-column:1/-1}
+.item.later{opacity:.85}
+.item.used .t{color:var(--sub)}
+.mchip.warn{background:var(--warn-soft);color:var(--warn)}
+.mchip.on{background:var(--accent);color:var(--onacc)}
+.stp{display:inline-flex;align-items:center;gap:2px;background:var(--soft);border-radius:999px;padding:2px;flex:none}
+.stp button{width:26px;height:26px;border:0;border-radius:999px;background:var(--card);color:var(--accent);font-size:15px;font-weight:700;line-height:1;display:grid;place-items:center;padding:0}
+.stp button:active{transform:scale(.9)}
+.stp .v{min-width:34px;text-align:center;font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap}
+/* 넣기 · 고치기 */
+#formSect{margin:0 0 16px}
+#formSect .row{flex-wrap:wrap}
+#formSect .row .fld{flex:1 1 140px}   /* 두 칸 나란히 줄에서만 (메모 칸이 길쭉해지지 않게) */
+#formSect textarea{resize:vertical;min-height:64px;background:var(--card)}
+#formSect .chips{gap:6px}
+#formSect .chip.lbl{background:transparent;color:var(--muted);padding:0 4px 0 0;cursor:default;font-weight:600}
+.pao-help{font-size:12.5px;color:var(--muted);line-height:1.5}
+@media (min-width:860px){
+  body{padding:28px 24px 56px}
+  .card{max-width:1160px;padding:36px 40px}
+  .search{max-width:560px}
+  .appnav{max-width:1160px;justify-content:flex-start}
+  .tabs{max-width:640px}
+  .list.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+  .list.two>.empty{grid-column:1/-1}
+}
+@media (min-width:1280px){.card{max-width:1280px}.appnav{max-width:1280px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:540px){
+  body{padding:16px 12px 36px}
+  .card{padding:20px 16px;border-radius:24px}
+  .sect,.panel{padding:18px 16px;border-radius:20px}
+  .item{padding:12px;gap:10px}
+  .tab{font-size:13.5px;padding:8px 2px}
+  .item>.iacts{padding-left:0}
+}
+
+/* 자세히 · 알림 버튼 · 더 보기 */
+.item .more{border:0;background:none;padding:4px 0 0;color:var(--accent);font-size:12.5px;font-weight:600;cursor:pointer;display:block}
+.item .txt{cursor:default}
+.morebtn{width:100%;grid-column:1/-1}
+.msg.wide{flex-wrap:wrap;max-width:min(560px,calc(100vw - 32px));width:calc(100vw - 32px)}
+.msg.wide .mt{flex:1 1 100%}
+.msg .macts{display:flex;gap:6px;flex-wrap:wrap;flex:1 1 auto}
+.msg .mact{border:0;border-radius:999px;background:rgba(255,255,255,.16);color:inherit;font-size:13px;font-weight:600;padding:6px 11px;min-height:32px}
+:root[data-theme="dark"] .msg .mact{background:rgba(0,0,0,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .msg .mact{background:rgba(0,0,0,.08)}}
+#fHv{background:var(--card);padding:10px 12px;font-size:14px}
+</style>
+</head>
+<body>
+<!-- 네 앱 오가기 -->
+<nav class="appnav" aria-label="앱 이동">
+  <a href="cleanup.html">🫙 <span class="l">Clean Quest</span><span class="s">정리</span></a>
+  <a href="index.html">🗂️ <span class="l">Link Vault</span><span class="s">링크</span></a>
+  <a href="home.html">🏠 <span class="l">Home Vault</span><span class="s">우리집</span></a>
+  <a href="cosmetic.html" class="on" aria-current="page">🧴 <span class="l">Cosmetic Vault</span><span class="s">화장품</span></a>
+</nav>
+<div class="card" id="mainCard">
+  <header class="head">
+    <div class="mark" aria-hidden="true">🧴</div>
+    <div class="head-text"><h1>Cosmetic Vault</h1><div class="head-sub">화장품 재고 · 개봉 후 기한 · 다시 살 것</div></div>
+    <span class="badge" id="count">0</span>
+  </header>
+
+  <div class="search"><span class="ico2" aria-hidden="true">⌕</span><input id="q" placeholder="제품 · 브랜드 · 위치 검색 (초성도 돼요)" autocomplete="off"><button type="button" class="sclear" id="qClear" hidden aria-label="검색어 지우기">✕</button></div>
+  <div class="today" id="today" hidden></div><!-- 오늘 챙길 것 -->
+  <div class="tabs">
+    <button class="tab on" id="tA"><span class="tl">🧴 사용 중</span><span class="tm" id="mA"></span></button>
+    <button class="tab" id="tS"><span class="tl">📦 쟁여둠</span><span class="tm" id="mS"></span></button>
+    <button class="tab" id="tB"><span class="tl">🛒 살 것</span><span class="tm" id="mB"></span></button>
+    <button class="tab" id="tU"><span class="tl">✓ 다 쓴 것</span><span class="tm" id="mU"></span></button>
+  </div>
+
+  <div class="tabhead withbtn">
+    <div><div class="kicker" id="kick">IN USE</div><div class="sect-title" id="title">사용 중</div></div>
+    <button class="add" id="openAdd">+ 제품 넣기</button>
+  </div>
+
+  <!-- 넣기 · 고치기 (누를 때만 열림) -->
+  <section class="sect fform" id="formSect" hidden>
+    <div><div class="kicker" id="fKick">NEW</div><div class="sect-title" id="fTitle" style="margin-bottom:0">새 제품 넣기</div></div>
+    <div class="row">
+      <label class="fld"><span>제품 이름 *</span><input id="fN" placeholder="예: 다이브인 세럼"></label>
+      <label class="fld"><span>브랜드</span><input id="fB" placeholder="예: 토리든"></label>
+    </div>
+    <div class="hint" id="fWarn" hidden></div>
+    <div class="flab">종류</div><div class="chips" id="fCat"></div>
+    <div class="flab">상태</div><div class="chips" id="fSt"></div>
+    <div class="row">
+      <label class="fld"><span>개수</span><input id="fQ" type="number" min="1" inputmode="numeric" value="1"></label>
+      <label class="fld"><span>보관 위치</span><input id="fL" placeholder="예: 화장대 1단"></label>
+    </div>
+    <div class="chips" id="fLoc"></div>
+    <select id="fHv" hidden aria-label="Home Vault 서랍에서 고르기"></select>
+    <div class="row">
+      <label class="fld"><span>유통기한</span><input id="fE" type="date"></label>
+      <label class="fld"><span>개봉한 날</span><input id="fO" type="date"></label>
+    </div>
+    <div class="chips" id="fEq"></div><!-- 유통기한 빠르게 (오늘부터) -->
+    <div class="chips" id="fOq"></div>
+    <div class="flab">개봉 후 사용기한</div>
+    <div class="chips" id="fPao"></div>
+    <div class="pao-help">뚜껑 열린 통 그림 속 숫자예요 (6M = 6개월). 개봉한 날을 적으면 유통기한과 비교해서 더 빠른 날로 알려줘요.</div>
+    <label class="fld"><span>메모 (선택)</span><textarea id="fM" rows="2" placeholder="사용감, 재구매 메모"></textarea></label>
+    <div class="row"><button class="add grow" id="fSave">넣기</button><button class="soft" id="fCancel">취소</button></div>
+  </section>
+
+  <div class="filters" id="filters"></div>
+  <div class="list" id="list"></div>
+
+  <div class="panel cfg" id="cfg">
+    <label>GitHub 아이디</label><input id="gu" autocomplete="off" autocapitalize="off">
+    <label>데이터 저장소 이름 (비공개 저장소 추천)</label><input id="gr" autocomplete="off" autocapitalize="off" placeholder="home-vault-data">
+    <label>토큰 (비밀번호처럼 보관)</label><input id="gt" type="password" autocomplete="off">
+    <div class="hint" style="margin-top:8px">Home Vault · Clean Quest와 같은 연결 정보를 함께 써요. 한 곳에서 연결했다면 여기도 이미 채워져 있어요. 데이터는 그 저장소의 cosmetic.json 에 저장돼요.</div>
+    <button class="chip" id="gshow" style="margin-top:10px">토큰 보기 / 숨기기</button>
+    <div class="row"><button class="add" id="gsave">저장 · 연결</button><button class="soft" id="gout">연결 해제</button><button class="soft" id="gtheme">테마 전환</button></div>
+    <div class="gap"></div>
+    <label>백업 · 복원 (JSON)</label>
+    <div class="bkrow"><button class="soft" id="bkDown">⬇ 파일로 저장</button><button class="soft" id="bkCopy">📋 복사</button><label class="soft">⬆ 파일 불러오기<input type="file" id="bkFile" accept=".json,application/json" hidden></label></div>
+    <textarea id="bkBox" placeholder="복사해 둔 백업을 여기에 붙여넣고 '붙여넣기로 복원'"></textarea>
+    <div class="row" style="margin-top:8px"><button class="soft" id="bkRestore" style="flex:1">붙여넣기로 복원</button></div>
+    <label>화면 크기</label>
+    <div class="chips"><button class="chip" data-z="1">기본</button><button class="chip" data-z="1.1">크게</button><button class="chip" data-z="1.2">아주 크게</button></div>
+    <label>글꼴</label>
+    <div class="chips"><button class="chip" data-f="noto">Inter · Noto Sans KR</button><button class="chip" data-f="jua">주아체 제목 + Noto Sans KR</button><button class="chip" data-f="gowun">고운돋움</button></div>
+  </div>
+
+  <footer class="foot">
+    <span class="lab"><i id="dot" class="off"></i>Cosmetic Vault v1.7</span>
+    <button class="fb" id="bCopy" title="보관 현황 복사" aria-label="보관 현황 복사">🔗</button>
+    <button class="fb" id="bCfg" title="설정" aria-label="설정">⚙</button>
+  </footer>
+</div>
+<div class="msg" id="msg" role="status" aria-live="polite"></div>
+<script>
+/* Cosmetic Vault — 화장품 재고 · 개봉 후 사용기한 · 다시 살 것
+   데이터는 GitHub 비공개 저장소의 cosmetic.json 하나 (Home Vault 와 같은 연결 정보 사용)
+   모든 변경은 op(fn) 하나로: 이 기기에 바로 적용 → 저장 → 화면 → GitHub 최신본에 같은 fn 을 다시 적용(병합) */
+
+/* =====================================================================
+   1. 설정값
+   ===================================================================== */
+var KEY="cosmeticvault:v1",CKEY="homevault:cfg",FILE="cosmetic.json";   /* CKEY = Home Vault · Clean Quest 와 같은 연결 정보 */
+var CATS=[
+  {id:"toner",label:"스킨/토너",icon:"💧"},{id:"serum",label:"세럼/앰플",icon:"✨"},{id:"cream",label:"크림/로션",icon:"🧴"},
+  {id:"mask",label:"마스크팩",icon:"🎭"},{id:"sun",label:"선케어",icon:"☀️"},{id:"clean",label:"클렌징",icon:"🫧"},{id:"etc",label:"메이크업/기타",icon:"💄"}];
+var CAT_IDS=CATS.map(function(c){return c.id});
+var STATUS={active:"사용 중",stock:"쟁여둠",used:"다 쓴 것"};
+var REMAIN=["여유","절반 이하","거의 소진"];
+var PAOS=[3,6,12,24];   /* 개봉 후 사용기한 (개월) */
+var EXP_QUICK=[["+1개월",1],["+3개월",3],["+6개월",6],["+1년",12],["+2년",24]];   /* 유통기한 빠르게 (오늘부터) */
+var SOON=30;            /* 기한이 이 날수 안으로 남으면 '임박' */
+var FEELS={again:"🔁 또 살래요",ok:"🙂 무난했어요",bad:"🙅 안 맞았어요"};   /* 다 쓴 것 한 줄 감상 */
+var LOW_LEFT=5;         /* 마스크팩 · 샘플이 이만큼 남으면 '🛒 재구매 O' 버튼을 보여줌 */
+var TABS={active:"tA",stock:"tS",buy:"tB",used:"tU"};
+var TAB_HEAD={active:["IN USE","사용 중"],stock:["STOCK","쟁여둔 것"],buy:["TO BUY","다시 살 것"],used:["USED UP","다 쓴 것"]};
+var FONTS={
+  noto:{body:"'Inter','Noto Sans KR','Gowun Dodum',sans-serif",title:"'Inter','Noto Sans KR','Gowun Dodum',sans-serif"},
+  jua:{body:"'Noto Sans KR','Gowun Dodum',sans-serif",title:"'Jua','Noto Sans KR',sans-serif"},
+  gowun:{body:"'Gowun Dodum','Noto Sans KR',sans-serif",title:"'Gowun Dodum','Noto Sans KR',sans-serif"}
+};
+
+/* =====================================================================
+   2. 상태
+   ===================================================================== */
+var CFG={user:"",repo:"",token:""};
+/* data · theme · font · zoom 만 저장하고, 나머지는 화면 상태 */
+var S={data:{items:[]},theme:"",font:"noto",zoom:1,
+  tab:"active",q:"",
+  cat:"all",     /* 종류 칩 */
+  cond:"all",    /* 기한 칩 (soon · past · nodate · sample) 또는 감상 칩 (f_again · f_ok · f_bad · f_none) */
+  form:null,     /* null = 닫힘 · "new" = 새로 넣기 · 그 외 = 고치는 제품 id */
+  f:null,        /* 넣기 칸의 칩 선택값 {cat, status, kind, pao} */
+  openArm:null,  /* 같은 종류를 이미 쓰는 중일 때 '그래도 열기' 확인 중인 제품 id */
+  open:{},       /* 자세히 펼친 카드 id */
+  usedN:20,      /* 다 쓴 것: 처음에 보여줄 제품 수 (더 보기로 늘어남) */
+  bkArm:false,bkData:null};
+
+/* =====================================================================
+   3. 작은 도구
+   ===================================================================== */
+function $(id){return document.getElementById(id)}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function clone(x){return x===undefined?undefined:JSON.parse(JSON.stringify(x))}
+function same(a,b){return JSON.stringify(a)===JSON.stringify(b)}
+function pad2(n){return n<10?"0"+n:""+n}
+function isoOf(t){return t.getFullYear()+"-"+pad2(t.getMonth()+1)+"-"+pad2(t.getDate())}
+function today(){return isoOf(new Date())}
+function isDate(x){return typeof x==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(x)}
+function dleft(x){if(!x)return null;var p=x.split("-"),t=new Date();t=new Date(t.getFullYear(),t.getMonth(),t.getDate());return Math.round((new Date(+p[0],+p[1]-1,+p[2])-t)/864e5)}
+function addDays(iso,n){var p=iso.split("-"),t=new Date(+p[0],+p[1]-1,+p[2]+n);return isoOf(t)}
+/* 개월 더하기 (1월 31일 + 1개월 = 2월 말일) */
+function addMonths(iso,m){var p=iso.split("-"),y=+p[0],mo=+p[1]-1+m,d=+p[2];var t=new Date(y,mo,1);var last=new Date(t.getFullYear(),t.getMonth()+1,0).getDate();t.setDate(Math.min(d,last));return isoOf(t)}
+/* 올해면 '3월 2일', 아니면 '27년 3월 2일' */
+function fmtDate(x){var p=x.split("-");return (+p[0]!==new Date().getFullYear()?p[0].slice(2)+"년 ":"")+(+p[1])+"월 "+(+p[2])+"일"}
+function normName(s){return String(s||"").trim().toLowerCase().replace(/\s+/g,"")}
+function chipRow(box,items,isOn,onPick,cls){box.textContent="";items.forEach(function(it){var b=el("button","chip"+(cls?" "+cls:"")+(isOn(it)?" on":""),it.label);b.onclick=function(){onPick(it)};box.appendChild(b)})}
+function onEnter(list,fn){list.forEach(function(i){i.onkeydown=function(e){if(e.key==="Enter")fn()}})}
+function copyText(t,ok){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){say(ok)},function(){say("복사 실패")});else say("복사를 지원하지 않아요")}
+function catOf(id){return CATS.filter(function(c){return c.id===id})[0]||CATS[CATS.length-1]}
+/* 초성 검색 (ㅌㄹㄷ → 토리든) */
+var CHO="ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
+function choOf(s){var o="";for(var i=0;i<s.length;i++){var k=s.charCodeAt(i);o+=(k>=0xAC00&&k<=0xD7A3)?CHO.charAt(Math.floor((k-0xAC00)/588)):s.charAt(i)}return o}
+function matcher(raw){var q=normName(raw),cho=/[ㄱ-ㅎ]/.test(q)?choOf(q):null;
+  return function(t){var n=normName(t);if(!n||!q)return false;return n.indexOf(q)>=0||(!!cho&&choOf(n).indexOf(cho)>=0)}}
+
+/* =====================================================================
+   4. 데이터 모양
+   item = {id, brand, name, category, status(active|stock|used), kind(main|sample), qty, remain,
+           location, opened, pao(개월), expiry, memo, feel(감상), buy(살 것에 넣은 날), done(다 쓴 날), tossed(버림), pack, started}
+   (예전 화면에서 내보낸 JSON 과 같은 이름 → 그대로 불러올 수 있음. 모르는 칸은 지우지 않고 둠)
+   ===================================================================== */
+function str(x){return typeof x==="string"?x.trim():""}
+function normItem(r,i){
+  if(!r||typeof r!=="object")return null;var name=str(r.name);if(!name)return null;
+  var o=Object.assign({},r);
+  o.id=str(r.id)||("i"+i+"_"+normName(name));
+  o.brand=str(r.brand);o.name=name;
+  o.category=CAT_IDS.indexOf(r.category)>=0?r.category:"etc";
+  o.status=STATUS[r.status]?r.status:"stock";
+  o.kind=r.kind==="sample"?"sample":"main";
+  o.qty=Math.max(1,Math.floor(+r.qty)||1);
+  o.remain=REMAIN.indexOf(r.remain)>=0?r.remain:"여유";
+  o.location=str(r.location);
+  o.opened=isDate(r.opened)?r.opened:"";
+  o.pao=Math.max(0,Math.min(60,Math.floor(+r.pao)||0));
+  o.expiry=isDate(r.expiry)?r.expiry:"";
+  o.memo=str(r.memo);
+  o.done=isDate(r.done)?r.done:"";
+  o.pack=Math.max(0,Math.floor(+r.pack)||0);   /* 한 번에 사는 개수 (샀어요 때 그대로 채움) */
+  if(!o.pack&&o.status==="stock")o.pack=o.qty;   /* v1.1 이전에 넣은 쟁여둔 것: 지금 개수를 묶음 개수로 */
+  o.feel=FEELS[r.feel]?r.feel:(r.repurchase===true?"again":"");   /* 써 본 느낌: again(또 살래요) · ok(무난) · bad(안 맞음) */
+  o.buy=isDate(r.buy)?r.buy:"";                  /* 🛒 살 것에 넣은 날 ('재구매 O' 를 눌렀을 때만) */
+  if(r.repurchase===true)o._old=1;delete o.repurchase;   /* v1.3 까지의 '또 살래요' → 아래 norm 에서 옮김 */
+  o.started=isDate(r.started)?r.started:"";      /* 마스크팩 · 샘플: 첫 장을 쓴 날 (얼마나 걸렸는지 계산용) */
+  if(r.tossed===true&&o.status==="used")o.tossed=true;else delete o.tossed;   /* 다 쓴 게 아니라 기한 지나 버림 */
+  return o;
+}
+function norm(d){
+  var L=Array.isArray(d)?d:(d&&Array.isArray(d.items)?d.items:[]),items=L.map(normItem).filter(Boolean);
+  /* 예전 '또 살래요'로 살 것에 있던 다 쓴 제품은 (쟁여둔 게 없으면) 살 것에 그대로 둠 */
+  var stocked={};items.forEach(function(x){if(x.status==="stock")stocked[pkey(x)]=1});
+  items.forEach(function(x){if(x._old){if(x.status==="used"&&!x.buy&&!stocked[pkey(x)])x.buy=x.done||"2000-01-01";delete x._old}});
+  return{items:items};
+}
+function findIt(d,id){return d.items.filter(function(x){return x.id===id})[0]||null}
+function pkey(it){return normName(it.brand+" "+it.name)}   /* 같은 제품 (브랜드 + 이름) */
+/* 같은 제품끼리 묶기 (처음 나온 순서 그대로) → [{k, items}] */
+function byKey(list){var g={},order=[];list.forEach(function(it){var k=pkey(it);if(!g[k]){g[k]=[];order.push(k)}g[k].push(it)});return order.map(function(k){return{k:k,items:g[k]}})}
+function sameKey(k){return S.data.items.filter(function(x){return pkey(x)===k})}
+function withStatus(s){return S.data.items.filter(function(x){return x.status===s})}
+function stored(){return S.data.items.filter(function(x){return x.status!=="used"})}
+function qtySum(L){var n=0;L.forEach(function(x){n+=x.qty});return n}
+/* 한 번 쓰면 끝나는 것 (마스크팩 · 샘플): 개봉 → 사용 중을 거치지 않고 개수만 줄임 */
+function isSingle(it){return it.category==="mask"||it.kind==="sample"}
+function unitOf(it){return it.category==="mask"?"장":"개"}
+
+/* 다 쓰는 데 걸린 날 (개봉한 날 또는 첫 장 쓴 날 → 다 쓴 날) */
+function daysBetween(a,b){var p=a.split("-"),q=b.split("-");return Math.round((new Date(+q[0],+q[1]-1,+q[2])-new Date(+p[0],+p[1]-1,+p[2]))/864e5)}
+function spanOf(it){var s=it.opened||it.started;if(it.status!=="used"||it.tossed||!s||!it.done||it.done<s)return null;return Math.max(1,daysBetween(s,it.done))}
+/* 같은 제품을 지난번까지 다 쓰는 데 걸린 날들 → {last, avg, n} */
+function spanStats(k){var L=sameKey(k).filter(function(x){return spanOf(x)!==null}).sort(function(a,b){return a.done<b.done?1:-1});
+  if(!L.length)return null;var t=0;L.forEach(function(x){t+=spanOf(x)});return{last:spanOf(L[0]),avg:Math.round(t/L.length),n:L.length}}
+/* 감상은 같은 제품 중 다 쓴 기록의 것을 우선 */
+function feelOf(k){var f="";sameKey(k).forEach(function(x){if(x.feel&&(!f||x.status==="used"))f=x.feel});return f}
+/* 한 번에 사는 개수 (지난번 묶음 중 가장 큰 것) */
+function packOf(k){var p=0;sameKey(k).forEach(function(x){if(x.pack>p)p=x.pack});return p}
+/* 실제 기한: 유통기한 vs (개봉한 날 + 개봉 후 사용기한) 중 빠른 날. 쟁여둔(안 연) 제품은 유통기한만 */
+function effExp(it){
+  var e=it.expiry,p=it.status!=="stock"&&it.opened&&it.pao>0?addMonths(it.opened,it.pao):"";
+  if(e&&p)return p<e?{date:p,src:"개봉 "+it.pao+"개월"}:{date:e,src:"유통기한"};
+  if(e)return{date:e,src:"유통기한"};if(p)return{date:p,src:"개봉 "+it.pao+"개월"};
+  return{date:"",src:""};
+}
+function daysOf(it){var x=effExp(it);return x.date?dleft(x.date):null}
+function isSoon(it){var d=daysOf(it);return d!==null&&d<=SOON}   /* 지난 것 포함 */
+function isPast(it){var d=daysOf(it);return d!==null&&d<0}
+function noDate(it){return daysOf(it)===null}
+function byExp(a,b){var x=daysOf(a),y=daysOf(b);if(x===null&&y===null)return 0;if(x===null)return 1;if(y===null)return -1;return x-y}
+
+/* 🛒 살 것 = '재구매 O'를 누른 제품 (브랜드+이름이 같은 것끼리 하나로) */
+function inBuy(k){return sameKey(k).some(function(x){return x.buy})}
+function groupInfo(G){
+  var st=G.items.filter(function(x){return x.status==="stock"}),act=G.items.filter(function(x){return x.status==="active"}),
+      used=G.items.filter(function(x){return x.status==="used"}).sort(function(a,b){return a.done<b.done?1:-1})[0],
+      rep=used||act[0]||st[0],P=[];
+  if(used)P.push("다 씀"+(used.done?" · "+fmtDate(used.done):""));
+  if(act.length)P.push("쓰는 중 (잔량 "+act[0].remain+")");
+  if(st.length)P.push("📦 쟁여둔 게 "+qtySum(st)+unitOf(st[0]));
+  return{k:G.k,it:rep,why:P.join(" · ")};
+}
+function buyList(){return byKey(S.data.items).filter(function(G){return G.items.some(function(x){return x.buy})}).map(groupInfo)}
+/* 🔁 또 살래요로 표시한 제품 중 살 것에 없는 것 */
+function likedList(){return byKey(S.data.items).filter(function(G){return feelOf(G.k)==="again"&&!G.items.some(function(x){return x.buy})}).map(groupInfo)}
+
+/* =====================================================================
+   5. 이 기기에 저장 · 불러오기
+   ===================================================================== */
+try{var raw=localStorage.getItem(KEY);if(raw){var p0=JSON.parse(raw);if(p0&&p0.data)S.data=norm(p0.data);if(p0&&p0.theme)S.theme=p0.theme;if(p0&&p0.font)S.font=p0.font;if(p0&&p0.zoom)S.zoom=p0.zoom}}catch(e){}
+try{var c0=localStorage.getItem(CKEY);if(c0){var q0=JSON.parse(c0);if(q0)CFG={user:q0.user||"",repo:q0.repo||"",token:q0.token||""}}}catch(e){}
+function cleanTok(t){t=String(t||"");var m=t.match(/(github_pat_|ghp_|gho_|ghu_|ghs_|ghr_)[A-Za-z0-9_]+/);return m?m[0]:t.replace(/[^\x21-\x7e]/g,"")}
+function cleanName(t){return String(t||"").replace(/[^A-Za-z0-9._-]/g,"")}
+CFG.token=cleanTok(CFG.token);CFG.user=cleanName(CFG.user);CFG.repo=cleanName(CFG.repo);
+uiLoad();   /* 네 앱 공통 화면 설정이 있으면 그걸로 */
+if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);
+function save(){try{localStorage.setItem(KEY,JSON.stringify({data:S.data,theme:S.theme,font:S.font,zoom:S.zoom}))}catch(e){}}
+function saveCfg(){try{localStorage.setItem(CKEY,JSON.stringify(CFG))}catch(e){}}
+
+/* =====================================================================
+   6. 알림 (화면 아래 · 실행 취소 버튼)
+   ===================================================================== */
+var msgT=null;
+/* acts = [[글자, 누르면 할 일], …] : 알림 안의 작은 버튼들 (다 썼어요 → 감상 · 다음 제품) */
+function say(m,undoable,acts){
+  var box=$("msg");box.textContent="";box.className="msg"+(acts&&acts.length?" wide":"");
+  var tx=el("span","mt",m||"");box.appendChild(tx);
+  var can=!!(undoable&&LAST_UNDO&&Date.now()-LAST_UNDO.at<2000);
+  if(acts&&acts.length){var row=el("span","macts");acts.forEach(function(a){var b=el("button","mact",a[0]);b.onclick=function(){a[1]()};row.appendChild(b)});box.appendChild(row)}
+  if(can){var u=LAST_UNDO,b=el("button","msg-undo","실행 취소");b.onclick=function(){if(LAST_UNDO!==u)return;LAST_UNDO=null;op(u.fn,{undo:true});say("되돌렸어요")};box.appendChild(b)}
+  clearTimeout(msgT);msgT=setTimeout(function(){$("msg").textContent="";$("msg").className="msg"},acts&&acts.length?12000:can?8000:4500);
+}
+
+/* =====================================================================
+   7. GitHub 동기화 — cosmetic.json 최신본에 같은 fn 을 다시 적용해서 올림 (병합). 409/422 충돌이면 다시
+   ===================================================================== */
+function synced(){return !!(CFG.user&&CFG.repo&&CFG.token)}
+function setDot(k){$("dot").className=k}
+function enc(t){return btoa(unescape(encodeURIComponent(t)))}
+function dec(b){return decodeURIComponent(escape(atob(b.replace(/\n/g,""))))}
+/* file 을 주면 같은 저장소의 다른 파일 (home.json 읽기용) */
+function url(file){return "https://api.github.com/repos/"+encodeURIComponent(CFG.user)+"/"+encodeURIComponent(CFG.repo)+"/contents/"+(file||FILE)}
+function hdr(){return{"Authorization":"Bearer "+CFG.token,"Accept":"application/vnd.github+json"}}
+function errText(e){var m=e&&e.message||"";
+  if(m==="401")return "토큰이 거부됐어요. 길이 "+CFG.token.length+" (보통 93), 끝 ..."+CFG.token.slice(-4);
+  if(m==="403")return "권한 없음: 토큰의 Contents를 Read and write로 해주세요";
+  if(m==="404")return "아이디 또는 저장소 이름을 확인해 주세요";
+  return "동기화 실패 ("+(m||"network")+")"}
+async function getRemote(){
+  var r=await fetch(url()+"?t="+Date.now(),{headers:hdr(),cache:"no-store"});
+  if(r.status===404)return{d:null,sha:null};
+  if(!r.ok)throw new Error(String(r.status));
+  var j=await r.json();return{d:norm(JSON.parse(dec(j.content))),sha:j.sha};
+}
+function putRemote(d,sha){
+  var body={message:"Update cosmetics",content:enc(JSON.stringify(d,null,1))};if(sha)body.sha=sha;
+  return fetch(url(),{method:"PUT",headers:hdr(),body:JSON.stringify(body)});
+}
+async function remoteApply(fn,tries){
+  var g=await getRemote(),out;
+  if(!g.d){
+    /* 파일이 아직 없으면(처음) 이 기기 데이터를 그대로 올림 — 이미 fn 이 적용돼 있으니 다시 적용하지 않음 */
+    if(!S.data.items.length)return S.data;
+    out=S.data;
+  }else{
+    out=norm(fn(clone(g.d)));
+    if(same(out,g.d))return g.d;
+  }
+  var r=await putRemote(out,g.sha);
+  if((r.status===409||r.status===422)&&(tries||0)<2)return remoteApply(fn,(tries||0)+1);
+  if(!r.ok)throw new Error(String(r.status));
+  return out;
+}
+
+/* =====================================================================
+   8. 실행 취소 — 바뀐 제품(id)만 기억했다가 그것만 되돌림 (다른 기기 변경은 그대로)
+   ===================================================================== */
+var LAST_UNDO=null;
+function diffPatch(a,b){
+  var am={},bm={},P=[];a.items.forEach(function(x,i){am[x.id]={v:x,i:i}});b.items.forEach(function(x){bm[x.id]=x});
+  Object.keys(am).concat(Object.keys(bm).filter(function(k){return !am[k]})).forEach(function(id){
+    var x=am[id]?am[id].v:undefined,y=bm[id];if(!same(x,y))P.push([id,am[id]?am[id].i:0,clone(x)])});
+  return P;
+}
+function patchFn(P){return function(d){P.forEach(function(p){
+  var id=p[0],idx=p[1],v=p[2],j=-1;d.items.forEach(function(x,i){if(x.id===id)j=i});
+  if(v===undefined){if(j>=0)d.items.splice(j,1)}else if(j>=0)d.items[j]=clone(v);else d.items.splice(Math.min(idx,d.items.length),0,clone(v));
+});return d}}
+
+/* =====================================================================
+   9. op(fn, o) — 모든 변경이 지나는 길
+   o.msg 알림 · o.canUndo 실행 취소 버튼 · o.undo 되돌리는 중. fn 안에서 쓸 id·날짜는 밖에서 미리 만들어야 원격 재적용 때도 같음
+   ===================================================================== */
+var chain=Promise.resolve();
+function op(fn,o){
+  o=o||{};
+  var before=clone(S.data);
+  S.data=norm(fn(clone(S.data)));
+  if(!o.undo){var P=diffPatch(before,S.data);LAST_UNDO=P.length?{fn:patchFn(P),at:Date.now()}:null}
+  save();render();
+  if(o.msg)say(o.msg,!!o.canUndo&&!o.undo);
+  if(!synced())return;
+  setDot("busy");
+  chain=chain.then(function(){return remoteApply(fn,0)}).then(function(d){S.data=d;save();render();setDot("")}).catch(function(e){setDot("err");say(errText(e))});
+}
+function pull(){
+  loadHomeLocal();
+  if(!synced()){setDot("off");return}
+  setDot("busy");
+  chain=chain.then(getRemote).then(function(g){if(g.d){S.data=g.d;save();render()}setDot("")})
+    .then(function(){return fetchHome().catch(function(){})})   /* Home Vault 서랍 이름 (실패해도 조용히) */
+    .catch(function(e){setDot("err");say(errText(e))});
+}
+/* Home Vault 서랍 이름 — 보관 위치 고르기용 (home.json 을 읽기만 함) */
+var HOMEZ=null;
+function loadHomeLocal(){var d=nbRead("homevault:v1");if(d&&Array.isArray(d.zones))HOMEZ=d.zones}
+async function fetchHome(){
+  var r=await fetch(url("home.json")+"?t="+Date.now(),{headers:hdr(),cache:"no-store"});
+  if(!r.ok)return;
+  var d=JSON.parse(dec((await r.json()).content));if(d&&Array.isArray(d.zones)){HOMEZ=d.zones;if(S.form)renderForm()}
+}
+function zShort(name){return String(name||"").replace(/^\S+\s/,"")}   /* 앞 이모지 빼기 */
+function boxPlace(z,b){return zShort(z.name)+" · "+b.name}             /* 예: 마켓비 서랍장 1 · 칸 3 */
+
+/* =====================================================================
+   10. 제품 동작
+   ===================================================================== */
+/* 같은 종류를 이미 쓰는 중인 본품 (마스크팩 · 샘플 제외) */
+function openSame(it){return S.data.items.filter(function(x){return x.status==="active"&&x.category===it.category&&!isSingle(x)&&pkey(x)!==pkey(it)})}
+/* 오늘 개봉: 여러 개면 1개만 떼어서 '사용 중'으로, 1개면 그대로 옮김
+   force = 다 썼어요 알림에서 고른 다음 제품 (중복 안내 건너뜀) */
+function openToday(it,force){
+  var dup=openSame(it);
+  if(dup.length&&S.openArm!==it.id&&!force){   /* 한 번 짚어주고, 한 번 더 누르면 열기 */
+    S.openArm=it.id;render();
+    say("💡 "+catOf(it.category).label+"에 이미 쓰는 중인 제품이 "+dup.length+"개 있어요 ("+dup.map(function(x){return x.name}).slice(0,3).join(", ")+"). 그래도 열려면 한 번 더 눌러 주세요");
+    setTimeout(function(){if(S.openArm===it.id){S.openArm=null;render()}},5000);return;
+  }
+  S.openArm=null;
+  var td=today(),nid=uid(),many=it.qty>1;
+  op(function(d){var x=findIt(d,it.id);if(!x||x.status!=="stock")return d;
+    if(x.qty>1){x.qty-=1;if(!findIt(d,nid))d.items.unshift(Object.assign(clone(x),{id:nid,qty:1,status:"active",opened:td,remain:"여유"}))}
+    else{x.status="active";x.opened=td;x.remain="여유"}
+    return d},{msg:"🔓 '"+it.name+"' 오늘 개봉 → 사용 중"+(many?" (1개)":""),canUndo:true});
+}
+/* 개수 ± : 1개에서 − 하면 '다 쓴 것'으로 (마스크팩 · 샘플) */
+function stepQty(it,delta){
+  var td=today(),gone=delta<0&&it.qty<=1,u=unitOf(it);
+  if(gone){op(function(d){var x=findIt(d,it.id);if(x){if(isSingle(x)&&!x.started)x.started=td;x.status="used";x.done=td}return d});afterDone(it);return}
+  op(function(d){var x=findIt(d,it.id);if(!x)return d;
+    if(delta<0&&isSingle(x)&&!x.started)x.started=td;   /* 첫 장 쓴 날 */
+    if(delta<0&&x.qty<=1){x.status="used";x.done=td}   /* 다른 기기에서 먼저 줄였으면 여기서 다 씀 */
+    else x.qty=Math.max(1,x.qty+delta);
+    return d},delta<0&&isSingle(it)?{msg:"'"+it.name+"' 1"+u+" 썼어요 · "+(it.qty-1)+u+" 남음",canUndo:true}:{});
+}
+/* 🗑 버렸어요: 기한 지난 걸 버림 → 다 쓴 것에 '버림'으로 (Clean Quest +10 XP) */
+function toss(it){
+  var td=today();
+  op(function(d){var x=findIt(d,it.id);if(x){x.status="used";x.done=td;x.tossed=true}return d},
+     {msg:"🗑 '"+it.name+"' 버렸어요 → 다 쓴 것 (Clean Quest +10 XP)",canUndo:true});
+}
+function finish(it){
+  var td=today();
+  op(function(d){var x=findIt(d,it.id);if(x){x.status="used";x.done=td}return d});
+  afterDone(it);
+}
+/* 다 쓴 다음: 감상 칩 + 쟁여둔 같은 종류 중 기한이 제일 빠른 것 열기 */
+function nextToOpen(it){
+  return S.data.items.filter(function(x){return x.status==="stock"&&x.category===it.category&&x.id!==it.id&&isSingle(x)===isSingle(it)}).sort(byExp)[0]||null;
+}
+function afterDone(it){
+  var A=Object.keys(FEELS).map(function(f){return[FEELS[f].split(" ")[0]+" "+{again:"또 살래요",ok:"무난",bad:"안 맞음"}[f],function(){setFeel(it,f)}]});
+  var nx=nextToOpen(it);
+  if(nx&&!isSingle(nx))A.push(["📦 다음: "+nx.name+" 열기",function(){openToday(nx,true)}]);
+  say("✓ '"+it.name+"' 다 썼어요. 어땠어요?",true,A);
+}
+function cycleRemain(it){
+  var next=REMAIN[(REMAIN.indexOf(it.remain)+1)%REMAIN.length];
+  op(function(d){var x=findIt(d,it.id);if(x)x.remain=next;return d});
+}
+/* 🛒 재구매 O: 살 것에 넣기 / 빼기 (같은 제품 모두) */
+function setBuy(it,on){
+  var k=pkey(it),td=today();
+  op(function(d){d.items.forEach(function(x){if(pkey(x)===k)x.buy=on?td:""});return d},
+     {msg:on?"🛒 '"+it.name+"' 살 것에 넣었어요":"'"+it.name+"' 살 것에서 뺐어요",canUndo:true});
+}
+/* 다 쓴 것 감상: 또 살래요 · 무난했어요 · 안 맞았어요 (살 것과는 따로). 같은 걸 다시 누르면 지움 */
+function setFeel(it,v){
+  var k=pkey(it),cur=feelOf(k),nv=cur===v?"":v;
+  op(function(d){d.items.forEach(function(x){if(pkey(x)===k)x.feel=nv});return d},
+     {msg:nv?"'"+it.name+"' "+FEELS[nv]:"'"+it.name+"' 감상을 지웠어요",canUndo:true});
+}
+function removeIt(it,ids){
+  ids=ids||[it.id];
+  op(function(d){d.items=d.items.filter(function(x){return ids.indexOf(x.id)<0});return d},{msg:"'"+it.name+"' "+(ids.length>1?"기록 "+ids.length+"개를 ":"")+"지웠어요",canUndo:true});
+}
+/* 샀어요: 같은 제품을 쟁여둠에 새로 넣고, 유통기한을 적을 수 있게 바로 고치기 칸을 엶 */
+function bought(it){
+  var k=pkey(it),pack=Math.max(1,packOf(k));   /* 지난번에 산 개수 그대로 (마스크팩 30장 등) */
+  var nid=uid(),n={id:nid,brand:it.brand,name:it.name,category:it.category,status:"stock",kind:it.kind,qty:pack,pack:pack,remain:"여유",
+    location:it.location,opened:"",pao:it.pao,expiry:"",memo:"",feel:"",buy:"",done:""};
+  op(function(d){d.items.forEach(function(x){if(pkey(x)===k)x.buy=""});if(!findIt(d,nid))d.items.unshift(clone(n));return d},{msg:"📦 '"+it.name+"' 쟁여둠에 넣었어요. 유통기한을 적어 주세요",canUndo:true});
+  S.tab="stock";openForm(nid);
+}
+
+/* =====================================================================
+   11. 넣기 · 고치기 칸
+   ===================================================================== */
+function openForm(id){
+  var it=id&&id!=="new"?findIt(S.data,id):null;
+  S.form=it?it.id:"new";
+  S.f=it?{cat:it.category,status:it.status,kind:it.kind,pao:it.pao}
+        :{cat:S.cat!=="all"?S.cat:"toner",status:S.tab==="stock"?"stock":"active",kind:"main",pao:0};
+  $("fN").value=it?it.name:"";$("fB").value=it?it.brand:"";$("fQ").value=it?it.qty:1;$("fL").value=it?it.location:"";
+  $("fE").value=it?it.expiry:"";$("fO").value=it?it.opened:"";$("fM").value=it?it.memo:"";
+  render();
+  var s=$("formSect");if(s.scrollIntoView)s.scrollIntoView({behavior:"smooth",block:"start"});
+  setTimeout(function(){$("fN").focus()},0);
+}
+function closeForm(){S.form=null;S.f=null;render()}
+function renderForm(){
+  var F=$("formSect");F.hidden=!S.form;$("openAdd").hidden=!!S.form||S.tab==="buy"||S.tab==="used"||!!S.q;
+  if(!S.form)return;
+  var f=S.f,editing=S.form!=="new";
+  F.classList.toggle("fedit",editing);
+  $("fKick").textContent=editing?"EDIT":"NEW";$("fTitle").textContent=editing?"제품 고치기":"새 제품 넣기";$("fSave").textContent=editing?"고친 내용 저장":"넣기";
+  chipRow($("fCat"),CATS.map(function(c){return{label:c.icon+" "+c.label,id:c.id}}),function(c){return f.cat===c.id},function(c){f.cat=c.id;renderForm()},"sm");
+  var sts=editing?["active","stock","used"]:["active","stock"];
+  chipRow($("fSt"),sts.map(function(k){return{label:STATUS[k],k:k}}),function(c){return f.status===c.k},function(c){f.status=c.k;renderForm()},"sm");
+  /* 같은 줄 끝에 샘플 표시 (켜고 끄기) */
+  var kb=el("button","chip sm"+(f.kind==="sample"?" on":""),"🧪 샘플 · 파우치");kb.style.marginLeft="auto";kb.onclick=function(){f.kind=f.kind==="sample"?"main":"sample";renderForm()};$("fSt").appendChild(kb);
+  /* 위치: 이미 쓰는 위치를 칩으로 (많이 쓴 순 6개) */
+  var cnt={};S.data.items.forEach(function(x){if(x.location)cnt[x.location]=(cnt[x.location]||0)+1});
+  var locs=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a]}).slice(0,6);
+  chipRow($("fLoc"),locs.map(function(l){return{label:"📍 "+l,l:l}}),function(c){return $("fL").value.trim()===c.l},function(c){$("fL").value=c.l;renderForm()},"sm");
+  /* 🏠 Home Vault 서랍에서 고르기 (구역별로 묶음) */
+  var hs=$("fHv");hs.textContent="";hs.hidden=!(HOMEZ&&HOMEZ.length);
+  if(!hs.hidden){
+    var o0=el("option",null,"🏠 Home Vault 서랍에서 고르기…");o0.value="";hs.appendChild(o0);
+    HOMEZ.forEach(function(z){if(!z||!Array.isArray(z.boxes)||!z.boxes.length)return;var g=document.createElement("optgroup");g.label=String(z.name||"");
+      z.boxes.forEach(function(b){var v=boxPlace(z,b),o=el("option",null,b.name);o.value=v;if($("fL").value.trim()===v)o.selected=true;g.appendChild(o)});hs.appendChild(g)});
+    hs.onchange=function(){if(hs.value){$("fL").value=hs.value;renderForm()}};
+  }
+  chipRow($("fEq"),[{label:"유통기한 →",m:0}].concat(EXP_QUICK.map(function(x){return{label:x[0],m:x[1]}})),function(){return false},function(c){if(c.m)$("fE").value=addMonths(today(),c.m)},"sm");
+  $("fEq").firstChild.className="chip sm lbl";$("fEq").firstChild.disabled=true;
+  chipRow($("fOq"),[{label:"개봉한 날 →"},{label:"오늘 열었어요",t:1}],function(){return false},function(c){if(c.t)$("fO").value=today()},"sm");
+  $("fOq").firstChild.className="chip sm lbl";$("fOq").firstChild.disabled=true;
+  var pl=[{label:"없음",m:0}].concat(PAOS.map(function(m){return{label:m+"개월",m:m}}));
+  if(f.pao&&PAOS.indexOf(f.pao)<0)pl.push({label:f.pao+"개월",m:f.pao});
+  chipRow($("fPao"),pl,function(c){return f.pao===c.m},function(c){f.pao=c.m;renderForm()},"sm");
+  var wk=normName($("fB").value+" "+$("fN").value),wf=$("fN").value.trim()?feelOf(wk):"",W=$("fWarn");
+  W.hidden=!(wf==="bad"||wf==="ok");W.textContent=wf==="bad"?"⚠ 예전에 '안 맞았어요'라고 적은 제품이에요":wf==="ok"?"지난번 감상: 🙂 무난했어요":"";W.className="hint "+(wf==="bad"?"warnline":"");
+}
+function saveForm(){
+  var name=$("fN").value.trim();if(!name){say("제품 이름을 적어 주세요");$("fN").focus();return}
+  var f=S.f,id=S.form==="new"?uid():S.form,editing=S.form!=="new",td=today();
+  var v={brand:$("fB").value.trim(),name:name,category:f.cat,status:f.status,kind:f.kind,qty:Math.max(1,Math.floor(+$("fQ").value)||1),
+    location:$("fL").value.trim(),opened:$("fO").value||"",pao:f.pao,expiry:$("fE").value||"",memo:$("fM").value.trim()};
+  if(v.status==="active"&&!v.opened&&!editing)v.opened=td;   /* 새로 '사용 중'으로 넣으면 오늘 연 걸로 */
+  S.form=null;S.f=null;
+  if(editing)op(function(d){var x=findIt(d,id);if(x){Object.assign(x,v);if(v.status==="used"&&!x.done)x.done=td;if(v.status==="stock"&&v.qty>x.pack)x.pack=v.qty;if(v.status!=="used")delete x.tossed}return d},{msg:"'"+name+"' 고쳤어요",canUndo:true});
+  else{S.tab=v.status;S.cat="all";S.cond="all";
+    op(function(d){if(!findIt(d,id))d.items.unshift(Object.assign({id:id,remain:"여유",done:"",pack:v.qty},v));return d},{msg:"'"+name+"' 넣었어요 → "+STATUS[v.status]})}
+}
+
+/* =====================================================================
+   12. 화면
+   ===================================================================== */
+function render(){renderTabs();renderToday();renderForm();renderFilters();renderList()}
+function clearSearch(){S.q="";$("q").value=""}
+function openTab(t){if(S.q)clearSearch();if(S.tab!==t){S.tab=t;S.cat="all";S.cond="all";S.usedN=20}render()}
+function renderTabs(){
+  var act=withStatus("active"),st=withStatus("stock"),buy=buyList().length,cur=S.q?"":S.tab;
+  $("count").textContent=qtySum(act)+qtySum(st);
+  Object.keys(TABS).forEach(function(k){$(TABS[k]).className="tab"+(cur===k?" on":"")});
+  var sa=act.filter(isSoon).length,ss=st.filter(isSoon).length;
+  $("mA").textContent=act.length+(sa?" · ⚠"+sa:"");$("mA").className="tm"+(sa?" warn":"");
+  $("mS").textContent=qtySum(st)+"개"+(ss?" · ⚠"+ss:"");$("mS").className="tm"+(ss?" warn":"");
+  $("mB").textContent=buy?buy+"개":"없음";
+  $("mU").textContent=byKey(withStatus("used")).length;   /* 다 쓴 것 = 제품 수 */
+  var h=S.q?["SEARCH","'"+S.q+"' 찾은 제품"]:TAB_HEAD[S.tab];$("kick").textContent=h[0];$("title").textContent=h[1];
+  $("qClear").hidden=!S.q;
+}
+/* 오늘 챙길 것: 기한 임박(사용 중 · 쟁여둠 따로) · 다시 살 것 */
+function renderToday(){
+  var T=$("today");T.textContent="";if(S.q){T.hidden=true;return}
+  var sa=withStatus("active").filter(isSoon).length,ss=withStatus("stock").filter(isSoon).length,b=buyList().length,L=[];
+  if(sa)L.push(["⚠ 쓰는 중 기한 임박 "+sa,"warnc",function(){openTab("active");S.cond="soon";render()}]);
+  if(ss)L.push(["⚠ 쟁여둔 것 기한 임박 "+ss,"warnc",function(){openTab("stock");S.cond="soon";render()}]);
+  if(b)L.push(["🛒 다시 살 것 "+b,"",function(){openTab("buy")}]);
+  T.hidden=!L.length;if(!L.length)return;
+  T.appendChild(el("span","lbl","오늘 챙길 것"));
+  L.forEach(function(x){var c=el("button","chip "+x[1],x[0]);c.onclick=x[2];T.appendChild(c)});
+}
+function tabItems(){return withStatus(S.tab)}
+/* 칩 두 줄: ① 종류 (전체 + 있는 종류만)  ② 조건 (있는 것만, 다시 누르면 해제)
+   list = 셀 대상 (제품 또는 제품 묶음의 대표) · conds = [[key, 글자, 맞는지, 칩 모양]] */
+function filterRows(W,list,conds,minConds){
+  W.hidden=!list.length;if(!list.length)return;
+  if(S.cat!=="all"&&!list.some(function(x){return x.category===S.cat}))S.cat="all";
+  var cats=[{label:"전체 "+list.length,k:"all"}];
+  CATS.forEach(function(c){var n=list.filter(function(x){return x.category===c.id}).length;if(n)cats.push({label:c.icon+" "+c.label+" "+n,k:c.id})});
+  var r1=el("div","chips");chipRow(r1,cats,function(c){return S.cat===c.k},function(c){S.cat=c.k;render()},"sm");W.appendChild(r1);
+  var inCat=list.filter(function(x){return S.cat==="all"||x.category===S.cat}),cl=[];
+  conds.forEach(function(c){var n=inCat.filter(c[2]).length;if(n)cl.push({label:c[1]+" "+n,k:c[0],cls:c[3]||""})});
+  if(S.cond!=="all"&&!cl.some(function(c){return c.k===S.cond}))S.cond="all";
+  if(cl.length>=(minConds||1)||S.cond!=="all"){
+    var r2=el("div","chips");
+    cl.forEach(function(c){var b=el("button","chip sm"+(c.cls?" "+c.cls:"")+(S.cond===c.k?" on":""),c.label);b.onclick=function(){S.cond=S.cond===c.k?"all":c.k;render()};r2.appendChild(b)});
+    W.appendChild(r2);
+  }
+}
+/* 사용 중 · 쟁여둠: 종류 + 기한 칩 · 다 쓴 것: 종류 + 감상 칩 (제품 수 기준) */
+var COND_EXP=[["soon","⚠ "+SOON+"일 안",isSoon,"warnc"],["past","기한 지남",isPast,"warnc"],["nodate","기한 없음",noDate],["sample","🧪 샘플",function(x){return x.kind==="sample"}]];
+var COND_FEEL=[["again","🔁 또 살래요"],["ok","🙂 무난"],["bad","🙅 안 맞음"],["none","감상 없음"]].map(function(f){return["f_"+f[0],f[1],function(x){return (feelOf(pkey(x))||"none")===f[0]}]});
+function renderFilters(){
+  var W=$("filters");W.textContent="";
+  if(S.q||S.tab==="buy"){W.hidden=true;return}
+  if(S.tab==="used")filterRows(W,byKey(tabItems()).map(function(G){return G.items[G.items.length-1]}),COND_FEEL,2);
+  else filterRows(W,tabItems(),COND_EXP,1);
+}
+
+function renderList(){
+  var L=$("list");L.textContent="";L.className="list two";
+  if(S.q){
+    var m=matcher(S.q),hits=S.data.items.filter(function(x){return m(x.name)||m(x.brand)||m(x.location)||m(x.memo)||m(catOf(x.category).label)});
+    var rank={active:0,stock:1,used:2};hits.sort(function(a,b){return (rank[a.status]-rank[b.status])||byExp(a,b)});
+    if(!hits.length){L.appendChild(el("div","empty","찾는 제품이 없어요"));return}
+    hits.forEach(function(it){L.appendChild(card(it,true))});return;
+  }
+  if(S.tab==="buy"){
+    var B=buyList(),Lk=likedList();
+    if(!B.length)L.appendChild(el("div","empty","살 게 없어요. 다 쓴 제품에서 '🛒 재구매 O'를 누르면 여기에 담겨요"));
+    B.forEach(function(b){L.appendChild(buyCard(b))});
+    if(B.length){var cb=el("button","soft morebtn","📋 살 것 목록 복사");cb.onclick=copyBuy;L.appendChild(cb)}
+    if(Lk.length){L.appendChild(el("div","sublabel","🔁 또 살래요로 표시한 제품 "+Lk.length));Lk.forEach(function(b){b.liked=true;L.appendChild(buyCard(b))})}
+    return;
+  }
+  var cond=COND_EXP.concat(COND_FEEL).filter(function(c){return c[0]===S.cond})[0];
+  var rows=tabItems().filter(function(x){return (S.cat==="all"||x.category===S.cat)&&(!cond||cond[2](x))});
+  if(S.tab==="used")rows.sort(function(a,b){return a.done<b.done?1:a.done>b.done?-1:0});else rows.sort(byExp);
+  if(!rows.length){L.appendChild(el("div","empty",{active:"사용 중인 제품이 없어요. 쟁여둔 걸 '🔓 오늘 개봉'하거나 '+ 제품 넣기'로 넣어 보세요",stock:"쟁여둔 제품이 없어요",used:"아직 다 쓴 제품이 없어요"}[S.tab]));return}
+  if(S.tab==="used"){   /* 같은 제품은 카드 하나로 (가장 최근 기록 + 몇 번 다 썼는지) */
+    var gs=byKey(rows);
+    gs.slice(0,S.usedN).forEach(function(G){L.appendChild(card(G.items[0],false,G.items.map(function(x){return x.id})))});
+    if(gs.length>S.usedN){var mb=el("button","soft morebtn","이전 기록 "+(gs.length-S.usedN)+"개 더 보기");mb.onclick=function(){S.usedN+=20;render()};L.appendChild(mb)}
+    return;
+  }
+  rows.forEach(function(it){L.appendChild(card(it,false))});
+}
+/* 기한 자세히: 유통기한 · 개봉 후 사용기한을 둘 다 보여줌 (위 줄은 둘 중 빠른 날) */
+function dateDetail(it){
+  if(it.status==="used")return "";
+  var P=[];
+  if(it.pao>0){
+    if(it.status==="stock")P.push("개봉 후 "+it.pao+"개월 (열면 그날부터 계산)");
+    else if(it.opened)P.push("개봉 "+fmtDate(it.opened)+" + "+it.pao+"개월 → "+fmtDate(addMonths(it.opened,it.pao)));
+    else P.push("개봉 후 "+it.pao+"개월 (개봉한 날을 적으면 계산)");
+    if(it.expiry&&effExp(it).src!=="유통기한")P.push("유통기한 "+fmtDate(it.expiry));   /* 위 줄에 이미 유통기한이 보이면 또 쓰지 않음 */
+  }else if(it.status==="active"&&it.opened)P.push("개봉 "+fmtDate(it.opened)+" · 개봉 후 기간 안 적음");
+  return P.join(" · ");
+}
+/* D-day 배지 */
+function ddEl(d){
+  var e=el("span","dd",d<0?"지남 "+(-d)+"일":d===0?"오늘까지":"D-"+d);if(d<0)e.className="dd bad";else if(d<=SOON)e.className="dd warn";return e}
+function mbtn(box,label,cls,fn){var b=el("button","mchip"+(cls?" "+cls:""),label);b.onclick=fn;box.appendChild(b);return b}
+/* 제품 카드 */
+/* 제품 카드 = 머리(브랜드 · 이름 · 기한 줄) + 자세히(접힘) + 버튼 줄
+   ids = 다 쓴 것에서 같은 제품 기록들 */
+function card(it,showStatus,ids){
+  var row=el("div","item wrap"+(it.status==="used"?" used":"")),tx=el("div","txt"),k=pkey(it);
+  if(it.brand)tx.appendChild(el("div","brand",it.brand));
+  tx.appendChild(el("div","t",it.name+(it.qty>1&&it.status!=="used"?" · "+it.qty+unitOf(it):"")));
+  tx.appendChild(cardMeta(it,showStatus,ids));
+  cardMore(tx,it,k);
+  row.appendChild(el("div","ico",catOf(it.category).icon));row.appendChild(tx);
+  var ed=el("button","rb","✎");ed.setAttribute("aria-label",it.name+" 고치기");ed.onclick=function(){openForm(it.id)};
+  var del=el("button","rb del","✕");del.setAttribute("aria-label",it.name+" 지우기");del.onclick=function(){removeIt(it,ids)};
+  row.appendChild(ed);row.appendChild(del);
+  row.appendChild(cardActions(it,k));
+  return row;
+}
+/* 기한 줄: [D-day] 개봉 6개월 · 27년 4월 24일까지 · 📍 위치 (다 쓴 것은 다 쓴 날) */
+function cardMeta(it,showStatus,ids){
+  var m=el("div","d");
+  if(it.status==="used")m.appendChild(el("span",null,(it.tossed?"🗑 ":"✓ ")+(it.done?fmtDate(it.done)+"에 ":"")+(it.tossed?"버림":"다 씀")+(ids&&ids.length>1?" · 모두 "+ids.length+"번":"")));
+  else{var x=effExp(it),d=x.date?dleft(x.date):null;
+    if(d!==null){m.appendChild(ddEl(d));m.appendChild(el("span",null,x.src+" · "+fmtDate(x.date)+"까지"))}else m.appendChild(el("span",null,"기한 없음"))}
+  if(showStatus)m.appendChild(el("span","tag",STATUS[it.status]));
+  if(it.kind==="sample")m.appendChild(el("span","tag","샘플"));
+  if(it.location)m.appendChild(el("span",null,"📍 "+it.location));
+  return m;
+}
+/* 자세한 줄들 (기본은 접힘 · '자세히'나 카드 글자를 누르면 펼침)
+   접어도 늘 보이는 것: 안 맞았던 제품 경고 · 살 것에 있음 */
+function cardMore(tx,it,k){
+  var sp=spanStats(k),fl=feelOf(k),more=[],dt=dateDetail(it);
+  if(dt)more.push(["",dt]);
+  if(it.status==="used"&&spanOf(it)!==null)more.push(["","⏱ "+fmtDate(it.opened||it.started)+(it.opened?" 개봉":"부터")+" → "+spanOf(it)+"일 만에 다 씀"+(sp&&sp.n>1?" (평균 "+sp.avg+"일)":"")]);
+  else if(it.status==="active"&&sp)more.push(["","⏱ 지난번엔 "+sp.last+"일 만에 다 썼어요"+(sp.n>1?" (평균 "+sp.avg+"일)":"")+(it.opened?" → "+fmtDate(addDays(it.opened,sp.avg))+"쯤":"")]);
+  if(fl&&it.status!=="used"&&fl!=="bad")more.push(["feel "+fl,"지난번 감상: "+FEELS[fl]]);
+  if(it.memo)more.push(["","📝 "+it.memo]);
+  var opened=!!S.open[it.id];
+  if(opened)more.forEach(function(x){tx.appendChild(el("div","memo "+x[0],x[1]))});
+  if(fl==="bad"&&it.status!=="used")tx.appendChild(el("div","memo feel bad","⚠ 지난번 감상: "+FEELS.bad));
+  if(inBuy(k))tx.appendChild(el("div","memo again buy","🛒 살 것에 있어요"));
+  if(!more.length)return;
+  var toggle=function(){S.open[it.id]=!opened;render()};
+  var mo=el("button","more",opened?"접기 ▴":"자세히 ▾");mo.setAttribute("aria-expanded",opened?"true":"false");mo.onclick=toggle;tx.appendChild(mo);
+  tx.onclick=function(e){if(e.target===tx||e.target.closest(".t,.brand,.memo"))toggle()};
+}
+/* 버튼 줄: 쟁여둠(− 개수 + · 1장 썼어요/오늘 개봉) · 사용 중(잔량 · 다 썼어요) · 다 쓴 것(감상) · 🛒 재구매 O */
+function cardActions(it,k){
+  var ia=el("div","iacts"),ib=inBuy(k);
+  if(it.status!=="used"&&isPast(it))mbtn(ia,"🗑 버렸어요","warn",function(){toss(it)});   /* 기한 지남 */
+  if(it.status==="stock"){
+    var sp=el("span","stp"),mi=el("button",null,"−"),pl=el("button",null,"+");
+    mi.setAttribute("aria-label",it.name+" 하나 썼어요");pl.setAttribute("aria-label",it.name+" 하나 더");
+    mi.onclick=function(){stepQty(it,-1)};pl.onclick=function(){stepQty(it,1)};
+    sp.appendChild(mi);sp.appendChild(el("span","v",it.qty+unitOf(it)));sp.appendChild(pl);ia.appendChild(sp);
+    if(isSingle(it))mbtn(ia,"✓ 1"+unitOf(it)+" 썼어요","acc",function(){stepQty(it,-1)});   /* 마스크팩 · 샘플: 개수만 줄임 */
+    else if(S.openArm===it.id)mbtn(ia,"⚠ 이미 "+openSame(it).length+"개 쓰는 중 · 그래도 열기","warn",function(){openToday(it)});
+    else mbtn(ia,"🔓 오늘 개봉","acc",function(){openToday(it)});
+  }
+  if(it.status==="active"){
+    mbtn(ia,"잔량: "+it.remain+" ↻",it.remain==="거의 소진"?"warn":"",function(){cycleRemain(it)});
+    mbtn(ia,"✓ 다 썼어요","",function(){finish(it)});
+  }
+  if(it.status==="used"){   /* 감상: 셋 중 하나 (살 것과는 따로) */
+    var cf=feelOf(k);
+    Object.keys(FEELS).forEach(function(f){mbtn(ia,FEELS[f]+(cf===f?" ✓":""),cf===f?(f==="bad"?"warn":"on"):"",function(){setFeel(it,f)})});
+  }
+  /* 🛒 재구매 O: 다 쓴 것 · 거의 소진 · 마스크팩/샘플 조금 남았을 때 (이미 살 것에 있으면 늘) */
+  if(it.status==="used"||(it.status==="active"&&it.remain==="거의 소진")||(it.status==="stock"&&isSingle(it)&&it.qty<=LOW_LEFT)||ib)
+    mbtn(ia,ib?"🛒 살 것에 있음 ✓":"🛒 재구매 O",ib?"acc":"",function(){setBuy(it,!ib)});
+  return ia;
+}
+/* 살 것 복사: □ 브랜드 이름 (30장) — 쇼핑 앱 검색 · 메모에 붙여넣기 */
+function copyBuy(){
+  var t=buyList().map(function(b){var it=b.it,pk=packOf(b.k);
+    return "□ "+(it.brand?it.brand+" ":"")+it.name+(pk>1?" ("+pk+unitOf(it)+")":"")}).join("\n");
+  copyText(t,"살 것 목록을 복사했어요");
+}
+/* 다시 살 것 카드 */
+function buyCard(b){
+  var it=b.it,row=el("div","item wrap"+(b.liked?" later":"")),tx=el("div","txt");
+  if(it.brand)tx.appendChild(el("div","brand",it.brand));
+  tx.appendChild(el("div","t",it.name));
+  var m=el("div","d");m.appendChild(el("span",null,b.why));if(it.location)m.appendChild(el("span",null,"📍 "+it.location));tx.appendChild(m);
+  row.appendChild(el("div","ico",catOf(it.category).icon));row.appendChild(tx);
+  var ia=el("div","iacts");
+  if(b.liked)mbtn(ia,"🛒 재구매 O","acc",function(){setBuy(it,true)});
+  else{mbtn(ia,"📦 샀어요 → 쟁여둠","acc",function(){bought(it)});mbtn(ia,"안 살래요","",function(){setBuy(it,false)})}
+  row.appendChild(ia);return row;
+}
+
+/* =====================================================================
+   13. 설정 · 글꼴 · 화면 크기 · 백업
+   ===================================================================== */
+function toggleTheme(){
+  var dark=document.documentElement.getAttribute("data-theme")==="dark"||(!S.theme&&window.matchMedia("(prefers-color-scheme: dark)").matches);
+  S.theme=dark?"light":"dark";document.documentElement.setAttribute("data-theme",S.theme);save();uiSave();
+}
+function markChips(attr,isOn){document.querySelectorAll("["+attr+"]").forEach(function(b){b.className="chip"+(isOn(b)?" on":"")})}
+function applyFont(){var f=FONTS[S.font]||FONTS.noto,r=document.documentElement.style;r.setProperty("--body",f.body);r.setProperty("--title",f.title);markChips("data-f",function(b){return b.dataset.f===S.font})}
+function applyZoom(){$("mainCard").style.zoom=S.zoom;markChips("data-z",function(b){return +b.dataset.z===S.zoom})}
+function backupText(){return JSON.stringify({app:"cosmetic-vault",version:1,savedAt:new Date().toISOString(),data:S.data},null,1)}
+/* 이 앱 백업 · 예전 화면의 'JSON 내보내기'(제품 배열) 둘 다 받음 */
+function readBackup(text){var o=JSON.parse(text),d=o&&o.data?o.data:o,n=norm(d);if(!Array.isArray(d)&&!(d&&Array.isArray(d.items)))throw new Error("not");return n}
+function armRestore(d,label){
+  S.bkData=d;S.bkArm=true;$("bkRestore").textContent="정말 복원할까요? (제품 "+d.items.length+"개) 한 번 더 누르기";
+  say(label+" 확인했어요. 지금 데이터가 이 백업으로 바뀌어요");
+}
+function doRestore(){var d=S.bkData;S.bkArm=false;S.bkData=null;$("bkRestore").textContent="붙여넣기로 복원";
+  op(function(){return clone(d)},{msg:"백업에서 복원했어요",canUndo:true})}
+
+/* =====================================================================
+   14. 버튼 연결
+   ===================================================================== */
+Object.keys(TABS).forEach(function(k){$(TABS[k]).onclick=function(){openTab(k)}});
+$("q").oninput=function(){S.q=this.value.trim();render()};
+$("qClear").onclick=function(){clearSearch();render();$("q").focus()};
+$("openAdd").onclick=function(){openForm("new")};
+$("fSave").onclick=saveForm;
+$("fCancel").onclick=closeForm;
+onEnter([$("fN"),$("fB"),$("fL")],saveForm);
+$("fL").oninput=$("fN").oninput=$("fB").oninput=function(){renderForm()};
+$("bCopy").onclick=function(){
+  var L=[];CATS.forEach(function(c){var its=stored().filter(function(x){return x.category===c.id}).sort(byExp);if(!its.length)return;
+    L.push(c.icon+" "+c.label);its.forEach(function(x){var d=daysOf(x);L.push("- "+(x.brand?x.brand+" ":"")+x.name+(x.qty>1?" ×"+x.qty:"")+" ("+STATUS[x.status]+(d===null?"":d<0?" · 기한 지남":" · D-"+d)+")")})});
+  var B=buyList();if(B.length){L.push("🛒 다시 살 것");B.forEach(function(b){L.push("- "+(b.it.brand?b.it.brand+" ":"")+b.it.name)})}
+  copyText(L.join("\n")||"보관 중인 제품이 없어요","보관 현황을 복사했어요");
+};
+$("bCfg").onclick=function(){$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;$("cfg").classList.toggle("show")};
+$("gshow").onclick=function(){var i=$("gt");i.type=i.type==="password"?"text":"password"};
+$("gtheme").onclick=toggleTheme;
+$("gsave").onclick=function(){
+  CFG={user:cleanName($("gu").value),repo:cleanName($("gr").value),token:cleanTok($("gt").value)};$("gu").value=CFG.user;$("gr").value=CFG.repo;$("gt").value=CFG.token;saveCfg();
+  if(!synced()){setDot("off");say("세 칸을 모두 채워 주세요");return}
+  op(function(d){return d});pull();$("cfg").classList.remove("show");
+};
+$("gout").onclick=function(){CFG={user:"",repo:"",token:""};saveCfg();$("gu").value=$("gr").value=$("gt").value="";setDot("off");say("이 기기에서 연결을 해제했어요 (Home Vault 도 함께 해제돼요)")};
+document.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){S.font=b.dataset.f;save();uiSave();applyFont()}});
+document.querySelectorAll("[data-z]").forEach(function(b){b.onclick=function(){S.zoom=+b.dataset.z;save();uiSave();applyZoom()}});
+$("bkDown").onclick=function(){
+  try{var t=backupText(),u=URL.createObjectURL(new Blob([t],{type:"application/json"})),a=document.createElement("a");
+    a.href=u;a.download="cosmetic-vault-"+today()+".json";document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(u)},500);
+    say("백업 파일을 저장했어요 (노션 안에서는 막힐 수 있어요 → 그땐 '복사')")}catch(e){say("여기서는 파일 저장이 안 돼요. '복사'를 써 주세요")}
+};
+$("bkCopy").onclick=function(){var t=backupText();$("bkBox").value=t;copyText(t,"백업 내용을 복사했어요")};
+$("bkRestore").onclick=function(){
+  if(S.bkArm&&S.bkData){doRestore();return}
+  var v=$("bkBox").value.trim();if(!v){say("백업 글자를 칸에 붙여넣어 주세요");return}
+  try{armRestore(readBackup(v),"붙여넣은 백업")}catch(e){say("Cosmetic Vault 백업 형식이 아니에요")}
+};
+$("bkFile").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){try{$("bkBox").value=String(r.result);armRestore(readBackup(String(r.result)),"'"+f.name+"' 파일")}catch(e){say("Cosmetic Vault 백업 파일이 아니에요")}};r.readAsText(f);this.value=""};
+/* 다른 앱에 갔다가 돌아오면 최신 내용 받아오기 */
+document.addEventListener("visibilitychange",function(){if(!document.hidden)pull()});
+
+/* =====================================================================
+   네 앱 공통 — 화면 설정 함께 쓰기 · 앱 바 숫자
+   Clean Quest · Link Vault · Home Vault · Cosmetic Vault 네 파일에 똑같은 코드 (고칠 땐 네 곳 같이)
+   네 앱이 같은 주소(yunsaera.github.io/link-vault)라서 서로의 '이 기기 저장소'를 바로 읽을 수 있음
+   ===================================================================== */
+/* 테마 · 글꼴 · 화면 크기: 한 앱에서 바꾸면 네 앱 모두 (vault:ui) */
+function uiLoad(){try{var u=JSON.parse(localStorage.getItem("vault:ui")||"null");if(u){if(typeof u.theme==="string")S.theme=u.theme;if(u.font)S.font=u.font;if(u.zoom)S.zoom=+u.zoom}}catch(e){}}
+function uiSave(){try{localStorage.setItem("vault:ui",JSON.stringify({theme:S.theme,font:S.font,zoom:S.zoom}))}catch(e){}}
+function uiApply(){var r=document.documentElement;if(S.theme)r.setAttribute("data-theme",S.theme);else r.removeAttribute("data-theme");applyFont();applyZoom()}
+/* 앱 바 숫자: 🏠 식품 3일 안 · 지남 / 🧴 화장품 30일 안 · 지남 (각 앱의 ⚠ 숫자와 같은 기준, 지금 앱은 빼고) */
+function nbDays(x){if(typeof x!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(x))return null;var p=x.split("-"),t=new Date();t=new Date(t.getFullYear(),t.getMonth(),t.getDate());return Math.round((new Date(+p[0],+p[1]-1,+p[2])-t)/864e5)}
+function nbRead(k){try{var p=JSON.parse(localStorage.getItem(k)||"null");return p&&p.data?p.data:null}catch(e){return null}}
+function nbIso(t){return t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2)}
+/* 화장품 실제 기한: 유통기한 vs 개봉한 날 + 개봉 후 개월 (쟁여둔 건 유통기한만) 중 빠른 날 */
+function nbCosDays(x){
+  var e=x.expiry||"",p="";
+  if(x.status!=="stock"&&nbDays(x.opened)!==null&&+x.pao>0){var q=x.opened.split("-"),t=new Date(+q[0],+q[1]-1+(+x.pao),1),last=new Date(t.getFullYear(),t.getMonth()+1,0).getDate();t.setDate(Math.min(+q[2],last));p=nbIso(t)}
+  return nbDays(p&&(!e||p<e)?p:e);
+}
+function navCounts(){
+  var c={},h=nbRead("homevault:v1"),m=nbRead("cosmeticvault:v1");
+  if(h&&Array.isArray(h.fridge))c["home.html"]=h.fridge.filter(function(f){var d=f?nbDays(f.exp):null;return d!==null&&d<=3}).length;
+  if(m&&Array.isArray(m.items))c["cosmetic.html"]=m.items.filter(function(x){if(!x||x.status==="used")return false;var d=nbCosDays(x);return d!==null&&d<=30}).length;
+  return c;
+}
+function navBadges(){
+  var c=navCounts();
+  document.querySelectorAll(".appnav a").forEach(function(a){
+    var old=a.querySelector(".nb");if(old)a.removeChild(old);
+    var n=c[a.getAttribute("href")];if(!n||a.classList.contains("on"))return;
+    var b=document.createElement("span");b.className="nb";b.textContent=n>9?"9+":String(n);a.setAttribute("title","기한 챙길 것 "+n+"개");a.appendChild(b);
+  });
+}
+/* 다른 탭 · 같은 노션 페이지의 다른 블록에서 바꾸면 바로 따라감 */
+window.addEventListener("storage",function(e){if(e.key==="vault:ui"){uiLoad();uiApply()}navBadges()});
+document.addEventListener("visibilitychange",function(){if(!document.hidden)navBadges()});
+
+/* =====================================================================
+   15. 시작
+   ===================================================================== */
+applyFont();applyZoom();
+loadHomeLocal();
+/* 다른 앱에서 넘어올 때: ?q= (Home Vault 검색) · ?cond=past (Clean Quest '버리러 가기') */
+try{var qs=new URLSearchParams(location.search),q1=qs.get("q");
+  if(q1){S.q=q1.trim();$("q").value=S.q}
+  if(qs.get("cond")==="past"){S.tab=withStatus("active").some(isPast)?"active":"stock";S.cond="past"}
+}catch(e){}
+render();navBadges();pull();
+</script>
+</body>
+</html>
